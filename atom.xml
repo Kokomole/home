@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-04T17:45:00.556Z</updated>
+    <updated>2020-07-04T17:47:03.232Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2020, Min Zhu</rights>
     <entry>
         <title type="html"><![CDATA[肿瘤药临床试验设计]]></title>
-        <id>https://kokomole.github.io/onco-trials-design/</id>
-        <link href="https://kokomole.github.io/onco-trials-design/">
+        <id>https://kokomole.github.io/post/onco-trials-design/</id>
+        <link href="https://kokomole.github.io/post/onco-trials-design/">
         </link>
         <updated>2020-07-04T14:52:33.000Z</updated>
         <content type="html"><![CDATA[<h1 id="指导原则">指导原则</h1>
@@ -57,8 +57,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[利用Python绘制血药浓度-时间曲线]]></title>
-        <id>https://kokomole.github.io/WHuL6tMJp/</id>
-        <link href="https://kokomole.github.io/WHuL6tMJp/">
+        <id>https://kokomole.github.io/post/WHuL6tMJp/</id>
+        <link href="https://kokomole.github.io/post/WHuL6tMJp/">
         </link>
         <updated>2020-03-28T15:15:49.000Z</updated>
         <content type="html"><![CDATA[<p>血药浓度-时间曲线一般是通过拟合所测定的血药浓度点而画出来的，但是在某些时候，如阅读文献时，我们需要根据别人报道的PK参数来画出药时曲线。Python语法简单，拥有丰富的开源库，下面尝试通过Python来根据已知的血药浓度公式绘制药时曲线。</p>
@@ -587,8 +587,8 @@ plt.show()
     </entry>
     <entry>
         <title type="html"><![CDATA[优化采样]]></title>
-        <id>https://kokomole.github.io/optimal-sampling-theory/</id>
-        <link href="https://kokomole.github.io/optimal-sampling-theory/">
+        <id>https://kokomole.github.io/post/optimal-sampling-theory/</id>
+        <link href="https://kokomole.github.io/post/optimal-sampling-theory/">
         </link>
         <updated>2020-03-27T19:45:27.000Z</updated>
         <content type="html"><![CDATA[<h1 id="费雪信息">费雪信息</h1>
@@ -636,8 +636,8 @@ plt.show()
     </entry>
     <entry>
         <title type="html"><![CDATA[群体药动学模型]]></title>
-        <id>https://kokomole.github.io/PPK-theory/</id>
-        <link href="https://kokomole.github.io/PPK-theory/">
+        <id>https://kokomole.github.io/post/PPK-theory/</id>
+        <link href="https://kokomole.github.io/post/PPK-theory/">
         </link>
         <updated>2020-03-25T17:36:21.000Z</updated>
         <content type="html"><![CDATA[<p>在经典药代动力学中，我们可以通过对受试者密集采样，绘制完整的血药浓度-时间曲线，计算Ka、CL、V等一级药动学参数或Cmax、AUC等表征药物暴露的参数。但是在实际临床应用中有这样的问题：我们无法对每一个人进行密集采样，而变异是普遍存在的，药物在每个人中的代谢情况都不一样，如何描述每一个个体中药物的代谢呢？</p>
@@ -679,8 +679,8 @@ plt.show()
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://kokomole.github.io/hello-gridea/</id>
-        <link href="https://kokomole.github.io/hello-gridea/">
+        <id>https://kokomole.github.io/post/hello-gridea/</id>
+        <link href="https://kokomole.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
