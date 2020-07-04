@@ -1,0 +1,284 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PSN | Min Zhu</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1593885595653">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="PSN | Min Zhu - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+Perl-speaks-NONMEM
+
+Perl-speaks-NONMEM (PsN) is a collection of Perl modules and programs aiding
+in the development of ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1593885595653" alt="">
+  </a>
+  <h1 class="site-title">
+    Min Zhu
+  </h1>
+  <p class="site-description">
+    厚积薄发
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              PSN
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-05
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <hr>
+<p>Perl-speaks-NONMEM</p>
+<hr>
+<p>Perl-speaks-NONMEM (PsN) is a collection of Perl modules and programs aiding<br>
+in the development of non-linear mixed effect models using NONMEM. The<br>
+functionality ranges from solutions to simpler tasks such as parameter<br>
+estimate extraction from output files, data file sub setting and resampling,<br>
+to advanced computer-intensive statistical methods. PsN includes stand-alone<br>
+tools for the end-user as well as development libraries for method developers.</p>
+<p>Please find more information on the webpage: https://uupharmacometrics.github.io/PsN</p>
+<hr>
+<p>Installation</p>
+<hr>
+<ul>
+<li>
+<p>PsN4 requires at least Perl version 5.10.1 (please note that users of<br>
+the free version of ActiveState Perl probably need an even higher version)</p>
+</li>
+<li>
+<p>Depending on your Perl distribution you may have to install the following<br>
+perl packages which are required for PsN4:</p>
+</li>
+</ul>
+<p>Math::Random<br>
+Moose<br>
+MooseX::Params::Validate<br>
+Storable::Store (Unix only)<br>
+YAML::XS</p>
+<ul>
+<li>Recommended perl packages, not absolutely required when running PsN<br>
+but necessary for some features:</li>
+</ul>
+<p>Statistics::Distributions<br>
+Archive::Zip<br>
+File::Copy::Recursive</p>
+<p>All available from CPAN ( www.cpan.org )</p>
+<ul>
+<li>Before installing PsN, verify that all NONMEM installations you intend to<br>
+use can be run directly via the nmfe (or NMQual) scripts and that they<br>
+produce complete output files. If running NONMEM with nmfe (or NMQual) does<br>
+not work then PsN will not work.</li>
+</ul>
+<p>If you plan to use the parallelization features of NONMEM7.2 you must first<br>
+verify that you can run NONMEM in parallel directly with nmfe72.</p>
+<p>This version of PsN supports NMQual8. Please read psn_configuration.pdf<br>
+regarding how to configure PsN to run with NMQual8.</p>
+<ul>
+<li>
+<p>Unpack the installation package downloaded from psn.sf.net. It will<br>
+create a directory called PsN-Source. Run the installation script<br>
+setup.pl from within PsN-Source.</p>
+</li>
+<li>
+<p>More detailed installation instructions are found<br>
+on the PsN website https://uupharmacometrics.github.io/PsN under<br>
+Installation.</p>
+</li>
+<li>
+<p>The installation script can automatically generate a minimal configuration<br>
+file psn.conf, both on Windows and Unix-type systems. If PsN is to be run on<br>
+a cluster and/or with NMQual then some manual editing of psn.conf is still<br>
+needed, see psn_configuration.pdf</p>
+</li>
+</ul>
+<hr>
+<p>Documentation</p>
+<hr>
+<p>All documentation is found in the doc subdirectory of the PsN<br>
+installation directory. During installation it is also possible<br>
+to have all documentation copied to a user-specified directory.</p>
+<p>All documentation can also be downloaded from<br>
+the PsN website https://uupharmacometrics.github.io/PsN</p>
+<hr>
+<p>Testing</p>
+<hr>
+<p>To install and run the PsN test suite see the developers_guide.pdf<br>
+on the homepage</p>
+<hr>
+<p>Licensing</p>
+<hr>
+<p>This program is free software: you can redistribute it and/or modify<br>
+it under the terms of the GNU General Public License as published by<br>
+the Free Software Foundation, either version 2 of the License, or<br>
+(at your option) any later version.</p>
+<p>Please find the GPL version 2 in the file called LICENSE</p>
+<hr>
+<p>Authors</p>
+<hr>
+<p>Please see the file called AUTHORS</p>
+<hr>
+<p>Dependencies</p>
+<hr>
+<ul>
+<li>Xpose must, if used, be version 4.2.1 or later to handle PsN-3.5.3 or later<br>
+output format. It is recommended to use the latest Xpose release<br>
+from http://xpose.sf.net</li>
+</ul>
+<hr>
+<p>Known issues</p>
+<hr>
+<ul>
+<li>
+<p>Windows users need to be careful to choose<br>
+a Perl version where the extra modules needed for PsN are available. See the<br>
+instructions on https://uupharmacometrics.github.io/PsN/install.html</p>
+</li>
+<li>
+<p>Installation problem on some Windows systems where<br>
+perl 'system' command does not work. Make sure perl module File::Copy::Recursive<br>
+is installed <em>before</em> (re)running the installation script setup.pl</p>
+</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/onco-trials-design/">
+              <h3 class="post-title">
+                肿瘤药临床试验设计
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
