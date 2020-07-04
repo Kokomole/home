@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-04T16:26:01.625Z</updated>
+    <updated>2020-07-04T16:32:21.280Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -53,8 +53,6 @@
 </ul>
 <p>无缝设计</p>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1593877760604.jpg" alt="图片" width="300" height="300" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://upload-images.jianshu.io/upload_images/13970747-f7ca1cbea64b5da2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片1" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://upload-images.jianshu.io/upload_images/13970747-f7ca1cbea64b5da2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/340" alt="图片2" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
