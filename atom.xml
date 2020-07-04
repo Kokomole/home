@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-02T17:36:15.819Z</updated>
+    <updated>2020-07-04T15:14:02.537Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -10,6 +10,50 @@
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Min Zhu</rights>
+    <entry>
+        <title type="html"><![CDATA[肿瘤药临床试验设计]]></title>
+        <id>https://kokomole.github.io/post/onco-trials-design/</id>
+        <link href="https://kokomole.github.io/post/onco-trials-design/">
+        </link>
+        <updated>2020-07-04T14:52:33.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="指导原则">指导原则</h1>
+<h2 id="ich">ICH</h2>
+<ul>
+<li>临床研究一般考虑（E8）</li>
+</ul>
+<h2 id="fda">FDA</h2>
+<ul>
+<li>Master protocols: effect clinical trial design strategies to expedite development of oncology drugs and biologics</li>
+<li>Expansion cohorts: use in FIH clinical trials</li>
+<li>Adaptive design</li>
+</ul>
+<h1 id="文献">文献</h1>
+<h2 id="nejm">NEJM</h2>
+<p>伞式设计：一个药，多个适应症 （pembrolizumab、Avelumab）</p>
+<p>篮式设计：一个适应症，多个药</p>
+<p>平台式设计：多个药，多个适应症</p>
+<h2 id="clinical-cancer-research">Clinical Cancer Research</h2>
+<p>Accuracy, safety, and Reliability of Novel Phase 1</p>
+<h2 id="journal-of-the-royal-statistics">journal of the royal statistics</h2>
+<p>67, 723-740 Chu,Y</p>
+<h1 id="名词">名词</h1>
+<p>化药：MTD（maximum tolerated dose）</p>
+<p>生物药：OBD（optimal biological dose）</p>
+<p>Phase 1 设计：</p>
+<ul>
+<li>
+<p>algorithm-based designs: 3+3</p>
+</li>
+<li>
+<p>model-based designs: CRM, EWOC, BLRM</p>
+</li>
+<li>
+<p>model-assisted designs: mTPI, BOIN, Keyboard design</p>
+</li>
+</ul>
+<p>无缝设计</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[利用Python绘制血药浓度-时间曲线]]></title>
         <id>https://kokomole.github.io/post/WHuL6tMJp/</id>
