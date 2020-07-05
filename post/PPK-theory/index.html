@@ -1,102 +1,102 @@
+
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+<meta charset="utf-8" >
+
 <title>群体药动学模型 | Min Zhu</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1593886773944">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="厚积薄发">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1593921884801">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="群体药动学模型 | Min Zhu - Atom Feed" href="https://kokomole.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="在经典药代动力学中，我们可以通过对受试者密集采样，绘制完整的血药浓度-时间曲线，计算Ka、CL、V等一级药动学参数或Cmax、AUC等表征药物暴露的参数。但是在实际临床应用中有这样的问题：我们无法对每一个人进行密集采样，而变异是普遍存在的，..." />
-    <meta name="keywords" content="PKPD" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1593886773944" alt="">
-  </a>
-  <h1 class="site-title">
-    Min Zhu
-  </h1>
-  <p class="site-description">
-    厚积薄发
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/post/home" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-        <a href="https://github.com/Kokomole" target="_blank">
-          <i class="ri-github-line"></i>
-        </a>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://kokomole.github.io">
+        <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1593921884801" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://kokomole.github.io">
+        <h1 class="site-title">Min Zhu</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
   </div>
 </div>
 
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/post/home" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
         <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              群体药动学模型
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-03-26
-              </span>
-              <span>
-                6 min read
-              </span>
-              
-                <a href="https://kokomole.github.io/tag/J6CH1jv5Lk/" class="post-tag">
-                  # PKPD
-                </a>
-              
-            </div>
+          
+          <h2 class="post-title">群体药动学模型</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-03-26</span>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>在经典药代动力学中，我们可以通过对受试者密集采样，绘制完整的血药浓度-时间曲线，计算Ka、CL、V等一级药动学参数或Cmax、AUC等表征药物暴露的参数。但是在实际临床应用中有这样的问题：我们无法对每一个人进行密集采样，而变异是普遍存在的，药物在每个人中的代谢情况都不一样，如何描述每一个个体中药物的代谢呢？</p>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://kokomole.github.io/tag/J6CH1jv5Lk/">
+                    PKPD
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在经典药代动力学中，我们可以通过对受试者密集采样，绘制完整的血药浓度-时间曲线，计算Ka、CL、V等一级药动学参数或Cmax、AUC等表征药物暴露的参数。但是在实际临床应用中有这样的问题：我们无法对每一个人进行密集采样，而变异是普遍存在的，药物在每个人中的代谢情况都不一样，如何描述每一个个体中药物的代谢呢？</p>
 <p>我们知道，统计学是研究和测量随机现象的；因此，为了研究药物在一个群体中代谢情况，我们可以借助统计学这一工具。药代动力学和统计学的结合，就是群体药代动力学（population pharmacokinetics，popPK）。</p>
 <p>在建立PPK模型时，我们的数据是n个受试者的m个血药浓度，如何来利用这堆数据呢？</p>
 <h1 id="1-结构模型">1. 结构模型</h1>
@@ -132,88 +132,65 @@
 <p>固定效应是可解释的变异，它在参数层面上对一部分个体间变异进行了解释；随机效应是无法解释的变异，它对应了固定效应未能解释的那部分个体间变异和残差变异，在参数和函数值2个层面上对随机因素进行了描述。</p>
 <p>因此，PPK模型是一个<strong>多层嵌套</strong>的非线性混合效应模型，个体间变异嵌套于参数这一层，而残差变异嵌套于函数值这一层。</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#1-%E7%BB%93%E6%9E%84%E6%A8%A1%E5%9E%8B">1. 结构模型</a></li>
-<li><a href="#2-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E6%A8%A1%E5%9E%8B">2. 统计学模型</a>
-<ul>
-<li><a href="#21-%E4%B8%AA%E4%BD%93%E9%97%B4%E5%8F%98%E5%BC%82">2.1 个体间变异</a></li>
-<li><a href="#22-%E6%AE%8B%E5%B7%AE%E5%8F%98%E5%BC%82">2.2 残差变异</a></li>
-</ul>
-</li>
-<li><a href="#3-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B">3. 基础模型</a></li>
-<li><a href="#4-%E5%8D%8F%E5%8F%98%E9%87%8F%E6%A8%A1%E5%9E%8B">4. 协变量模型</a></li>
-<li><a href="#5-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B">5. 非线性混合效应模型</a></li>
-</ul>
-
-              </div>
-            </div>
-          </article>
+          </div>
         </div>
 
         
           <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://kokomole.github.io/post/hello-gridea/">
+            <a class="purple-link" href="https://kokomole.github.io/post/hello-gridea/">
               <h3 class="post-title">
-                Hello Gridea
+                下一篇：Hello Gridea
               </h3>
             </a>
           </div>
-        
+          
+      </div>
 
-        
+      
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+      <div class="site-footer">
+  <div class="slogan">厚积薄发</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="fab fa-zhihu"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
-      </div>
+
     </div>
+    <script type="application/javascript">
 
-    <script>
-      hljs.initHighlightingOnLoad()
+hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+</script>
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+
   </body>
 </html>
