@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-08T15:57:12.192Z</updated>
+    <updated>2020-07-08T15:58:35.495Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -10,126 +10,6 @@
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Min Zhu</rights>
-    <entry>
-        <title type="html"><![CDATA[PSN]]></title>
-        <id>https://kokomole.github.io/post/4_j6HjOck/</id>
-        <link href="https://kokomole.github.io/post/4_j6HjOck/">
-        </link>
-        <updated>2020-07-04T17:51:10.000Z</updated>
-        <content type="html"><![CDATA[<hr>
-<p>Perl-speaks-NONMEM</p>
-<hr>
-<p>Perl-speaks-NONMEM (PsN) is a collection of Perl modules and programs aiding<br>
-in the development of non-linear mixed effect models using NONMEM. The<br>
-functionality ranges from solutions to simpler tasks such as parameter<br>
-estimate extraction from output files, data file sub setting and resampling,<br>
-to advanced computer-intensive statistical methods. PsN includes stand-alone<br>
-tools for the end-user as well as development libraries for method developers.</p>
-<p>Please find more information on the webpage: https://uupharmacometrics.github.io/PsN</p>
-<hr>
-<p>Installation</p>
-<hr>
-<ul>
-<li>
-<p>PsN4 requires at least Perl version 5.10.1 (please note that users of<br>
-the free version of ActiveState Perl probably need an even higher version)</p>
-</li>
-<li>
-<p>Depending on your Perl distribution you may have to install the following<br>
-perl packages which are required for PsN4:</p>
-</li>
-</ul>
-<p>Math::Random<br>
-Moose<br>
-MooseX::Params::Validate<br>
-Storable::Store (Unix only)<br>
-YAML::XS</p>
-<ul>
-<li>Recommended perl packages, not absolutely required when running PsN<br>
-but necessary for some features:</li>
-</ul>
-<p>Statistics::Distributions<br>
-Archive::Zip<br>
-File::Copy::Recursive</p>
-<p>All available from CPAN ( www.cpan.org )</p>
-<ul>
-<li>Before installing PsN, verify that all NONMEM installations you intend to<br>
-use can be run directly via the nmfe (or NMQual) scripts and that they<br>
-produce complete output files. If running NONMEM with nmfe (or NMQual) does<br>
-not work then PsN will not work.</li>
-</ul>
-<p>If you plan to use the parallelization features of NONMEM7.2 you must first<br>
-verify that you can run NONMEM in parallel directly with nmfe72.</p>
-<p>This version of PsN supports NMQual8. Please read psn_configuration.pdf<br>
-regarding how to configure PsN to run with NMQual8.</p>
-<ul>
-<li>
-<p>Unpack the installation package downloaded from psn.sf.net. It will<br>
-create a directory called PsN-Source. Run the installation script<br>
-setup.pl from within PsN-Source.</p>
-</li>
-<li>
-<p>More detailed installation instructions are found<br>
-on the PsN website https://uupharmacometrics.github.io/PsN under<br>
-Installation.</p>
-</li>
-<li>
-<p>The installation script can automatically generate a minimal configuration<br>
-file psn.conf, both on Windows and Unix-type systems. If PsN is to be run on<br>
-a cluster and/or with NMQual then some manual editing of psn.conf is still<br>
-needed, see psn_configuration.pdf</p>
-</li>
-</ul>
-<hr>
-<p>Documentation</p>
-<hr>
-<p>All documentation is found in the doc subdirectory of the PsN<br>
-installation directory. During installation it is also possible<br>
-to have all documentation copied to a user-specified directory.</p>
-<p>All documentation can also be downloaded from<br>
-the PsN website https://uupharmacometrics.github.io/PsN</p>
-<hr>
-<p>Testing</p>
-<hr>
-<p>To install and run the PsN test suite see the developers_guide.pdf<br>
-on the homepage</p>
-<hr>
-<p>Licensing</p>
-<hr>
-<p>This program is free software: you can redistribute it and/or modify<br>
-it under the terms of the GNU General Public License as published by<br>
-the Free Software Foundation, either version 2 of the License, or<br>
-(at your option) any later version.</p>
-<p>Please find the GPL version 2 in the file called LICENSE</p>
-<hr>
-<p>Authors</p>
-<hr>
-<p>Please see the file called AUTHORS</p>
-<hr>
-<p>Dependencies</p>
-<hr>
-<ul>
-<li>Xpose must, if used, be version 4.2.1 or later to handle PsN-3.5.3 or later<br>
-output format. It is recommended to use the latest Xpose release<br>
-from http://xpose.sf.net</li>
-</ul>
-<hr>
-<p>Known issues</p>
-<hr>
-<ul>
-<li>
-<p>Windows users need to be careful to choose<br>
-a Perl version where the extra modules needed for PsN are available. See the<br>
-instructions on https://uupharmacometrics.github.io/PsN/install.html</p>
-</li>
-<li>
-<p>Installation problem on some Windows systems where<br>
-perl 'system' command does not work. Make sure perl module File::Copy::Recursive<br>
-is installed <em>before</em> (re)running the installation script setup.pl</p>
-</li>
-</ul>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[肿瘤药临床试验设计]]></title>
         <id>https://kokomole.github.io/post/onco-trials-design/</id>
