@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-08T18:11:16.839Z</updated>
+    <updated>2020-07-11T07:23:03.831Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -10,6 +10,139 @@
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Min Zhu</rights>
+    <entry>
+        <title type="html"><![CDATA[SCM]]></title>
+        <id>https://kokomole.github.io/post/SCM/</id>
+        <link href="https://kokomole.github.io/post/SCM/">
+        </link>
+        <updated>2020-07-11T07:19:56.000Z</updated>
+        <content type="html"><![CDATA[<p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
+<pre><code class="language-fortran">SCM -config_file = xxx.scm
+</code></pre>
+<p>同时需要一份SCM文件，示例如下：</p>
+<pre><code class="language-fortran">model = 3.mod
+search_direction = both
+p_forward = 0.05
+p_backward = 0.01
+continuous_covariates = WT,AST,ALT,ALB
+categorical_covariates = SEX,CYP3A5
+time_varying = WT,AST,ALT,ALB
+
+[test_relations]
+CL = WT,AST,ALT,ALB,SEX,CYP3A5
+
+[valid_states]
+continuous = 1,5
+categorical = 1,2
+</code></pre>
+<h1 id="数据文件与控制文件">数据文件与控制文件</h1>
+<p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxxx</code>的形式。</p>
+<h1 id="基本变量">基本变量</h1>
+<h2 id="必需的变量">必需的变量</h2>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>目的</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model</td>
+<td>基础模型</td>
+<td>默认没有</td>
+</tr>
+<tr>
+<td>search_direction</td>
+<td>筛选方向</td>
+<td>forward / backward / both</td>
+</tr>
+<tr>
+<td>continuous_covariates</td>
+<td>连续型协变量</td>
+<td>逗号分隔，不能加空格</td>
+</tr>
+<tr>
+<td>categorical_covariates</td>
+<td>分类型协变量</td>
+<td>逗号分隔，不能加空格</td>
+</tr>
+</tbody>
+</table>
+<h2 id="可选的变量">可选的变量</h2>
+<p>time_varying用于个体的协变量在整个过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。</p>
+<p>所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
+<pre><code class="language-fortran">$ERROR
+	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
+	Y = IPRED + ERR(1)*W
+	IRES = Dv - IPRED
+	IWRES = IPRES / W
+
+$SIGMA
+	1 FIX
+</code></pre>
+<h1 id="scm文件的配置">SCM文件的配置</h1>
+<h2 id="test_relations">[test_relations]</h2>
+<p>定义协变量应该加到哪个参数上。</p>
+<h2 id="valid_states">[valid_states]</h2>
+<p>定义协变量加入的形式。列表中的第一个是1。</p>
+<p>states可以自己在<code>[code]</code>里面自己定义，也可使用固定的。固定的states如下：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>states</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续型</td>
+<td>1</td>
+<td>none</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>2</td>
+<td>linear</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>3</td>
+<td>hockey-stick (分段线性)</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>4</td>
+<td>exponential</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>5</td>
+<td>power</td>
+</tr>
+<tr>
+<td>分类型</td>
+<td>1</td>
+<td>none</td>
+</tr>
+<tr>
+<td>分类型</td>
+<td>2</td>
+<td>linear</td>
+</tr>
+</tbody>
+</table>
+<h2 id="included_relations">[included_relations]</h2>
+<p>定义在一开始就加入的协变量。示例：</p>
+<pre><code>CL = WT-2,AGE-4
+</code></pre>
+<h1 id="结果文件">结果文件</h1>
+<h2 id="logfile">logfile</h2>
+<p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[说一说在我老家，庄稼的种植情况]]></title>
         <id>https://kokomole.github.io/post/CQ9zJV_eF/</id>
