@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-11T07:23:03.831Z</updated>
+    <updated>2020-07-11T07:25:47.037Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -17,10 +17,10 @@
         </link>
         <updated>2020-07-11T07:19:56.000Z</updated>
         <content type="html"><![CDATA[<p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
-<pre><code class="language-fortran">SCM -config_file = xxx.scm
+<pre><code>SCM -config_file = xxx.scm
 </code></pre>
 <p>同时需要一份SCM文件，示例如下：</p>
-<pre><code class="language-fortran">model = 3.mod
+<pre><code>model = 3.mod
 search_direction = both
 p_forward = 0.05
 p_backward = 0.01
@@ -73,7 +73,7 @@ categorical = 1,2
 <h2 id="可选的变量">可选的变量</h2>
 <p>time_varying用于个体的协变量在整个过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。</p>
 <p>所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
-<pre><code class="language-fortran">$ERROR
+<pre><code>$ERROR
 	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
 	Y = IPRED + ERR(1)*W
 	IRES = Dv - IPRED
