@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu</title>
-    <updated>2020-07-11T08:27:20.412Z</updated>
+    <updated>2020-07-14T15:39:35.995Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -34,6 +34,9 @@ CL = WT,AST,ALT,ALB,SEX,CYP3A5
 [valid_states]
 continuous = 1,5
 categorical = 1,2
+
+[code]
+CL:AST-5 = exponential
 </code></pre>
 <h1 id="数据文件与控制文件">数据文件与控制文件</h1>
 <p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxxx</code>的形式。</p>
