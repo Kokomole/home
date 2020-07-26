@@ -2,24 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>目录 | Min Zhu&#39;s Blog</title>
+<title>NONMEM的一些使用笔记 | Min Zhu&#39;s Blog</title>
 <link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1595778972204">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="目录 | Min Zhu&#39;s Blog - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="NONMEM的一些使用笔记 | Min Zhu&#39;s Blog - Atom Feed" href="https://kokomole.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="😀这是Zhu Min的个人主页。我将在这里记录自己学习临床药理学、阅读书籍和文献的笔记。
-我想要学习的东西包括：
-
-药物代谢动力学和药物效应动力学
-统计学
-NONMEM和R语言
-
-
-因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己..." />
+    <meta name="description" content="ID可识别位数的设置
+问题描述
+在NM7中，ID的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”受试者，在输出的结果表格里全部显示为“101000”，从第6..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -94,11 +88,11 @@ NONMEM和R语言
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              目录
+              NONMEM的一些使用笔记
             </h2>
             <div class="post-info">
               <span>
-                2020-03-28
+                2020-07-26
               </span>
               <span>
                 1 min read
@@ -108,26 +102,34 @@ NONMEM和R语言
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>😀这是Zhu Min的个人主页。我将在这里记录自己学习临床药理学、阅读书籍和文献的笔记。</p>
-<p>我想要学习的东西包括：</p>
-<ol>
-<li>药物代谢动力学和药物效应动力学</li>
-<li>统计学</li>
-<li>NONMEM和R语言</li>
-</ol>
-<blockquote>
-<p>因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己是明珠，而不能与瓦砾碌碌为伍，遂逐渐远离世间，疏避人群，结果在内心不断地用愤懑和羞怒饲育着自己懦弱的自尊心。世上每个人都是驯兽师，而那匹猛兽，就是每人各自的性情。对我而言，猛兽就是这自大的羞耻心了。</p>
-<p>如今想起来，我真是空费了自己那一点仅有的才能，徒然在口头上卖弄着什么“人生一事不为则太长，欲为一事则太短”的警句，可事实是，唯恐暴露才华不足的卑怯的畏惧，和厌恶钻研刻苦的惰怠，就是我的全部了。</p>
-</blockquote>
+                <h1 id="id可识别位数的设置">ID可识别位数的设置</h1>
+<h2 id="问题描述">问题描述</h2>
+<p>在NM7中，<code>ID</code>的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”受试者，在输出的结果表格里全部显示为“101000”，从第6位开始的都无法识别。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#id%E5%8F%AF%E8%AF%86%E5%88%AB%E4%BD%8D%E6%95%B0%E7%9A%84%E8%AE%BE%E7%BD%AE">ID可识别位数的设置</a>
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0">问题描述</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/Emax-model/">
+              <h3 class="post-title">
+                Emax模型
+              </h3>
+            </a>
+          </div>
         
 
         
