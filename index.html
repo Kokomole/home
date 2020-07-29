@@ -1,322 +1,260 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>Min Zhu&#39;s Blog</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1595778972204">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1596038184324">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Min Zhu&#39;s Blog - Atom Feed" href="https://kokomole.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="<i>Stay hungry, stay foolish.</i>" />
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="&lt;i&gt;Stay hungry, stay foolish.&lt;/i&gt;">
+    
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1595778972204" alt="">
-  </a>
-  <h1 class="site-title">
-    Min Zhu&#39;s Blog
-  </h1>
-  <p class="site-description">
-    <i>Stay hungry, stay foolish.</i>
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/post/home" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-        <a href="https://github.com/Kokomole" target="_blank">
-          <i class="ri-github-line"></i>
-        </a>
-      
-    
-      
-        <a href="https://twitter.com/Min_Zhu_" target="_blank">
-          <i class="ri-twitter-line"></i>
-        </a>
-      
-    
-      
-    
-      
-        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
-          <i class="ri-zhihu-line"></i>
-        </a>
-      
-    
-      
-    
-  </div>
-</div>
+    <div id="app" class="main">
 
-    
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/slThQw6eD/">
-        <h2 class="post-title">NONMEM的一些使用笔记</h2>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://kokomole.github.io">
+        <img src="https://kokomole.github.io/images/avatar.png?v=1596038184324" class="site-logo">
+        <h1 class="site-title">Min Zhu&#39;s Blog</h1>
       </a>
-      <div class="post-info">
-        <span>
-          2020-07-26
-        </span>
-        <span>
-          1 min read
-        </span>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/Emax-model/">
-        <h2 class="post-title">Emax模型</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-07-16
-        </span>
-        <span>
-          15 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/48k-qTg8l/" class="post-tag">
-            # Pharmacometrics
-          </a>
-        
-          <a href="https://kokomole.github.io/tag/p8CZdCYOQR/" class="post-tag">
-            # PK/PD
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/SCM/">
-        <h2 class="post-title">SCM</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-07-11
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/I3GiWgukV/" class="post-tag">
-            # NONMEM
-          </a>
-        
-          <a href="https://kokomole.github.io/tag/0zAkllb8ck/" class="post-tag">
-            # PsN
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/CQ9zJV_eF/">
-        <h2 class="post-title">说一说在我老家，庄稼的种植情况</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-07-09
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/wgDoxpmRf/" class="post-tag">
-            # 大咕咕咕鸡
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/onco-trials-design/">
-        <h2 class="post-title">肿瘤药临床试验设计</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-07-04
-        </span>
-        <span>
-          1 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/fbHzXZhIS/" class="post-tag">
-            # 肿瘤
-          </a>
-        
-          <a href="https://kokomole.github.io/tag/oUPjtKmIbv/" class="post-tag">
-            # 临床试验
-          </a>
-        
-          <a href="https://kokomole.github.io/tag/2Pw1SVfh9I/" class="post-tag">
-            # 统计学
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/WHuL6tMJp/">
-        <h2 class="post-title">利用Python绘制血药浓度-时间曲线</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-28
-        </span>
-        <span>
-          27 min read
-        </span>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/optimal-sampling-theory/">
-        <h2 class="post-title">优化采样</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-28
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/J6CH1jv5Lk/" class="post-tag">
-            # PKPD
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/PPK-theory/">
-        <h2 class="post-title">群体药动学模型</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-26
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/J6CH1jv5Lk/" class="post-tag">
-            # PKPD
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://kokomole.github.io/post/hello-gridea/">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://kokomole.github.io/tag/7gdueHZ_H/" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-      </div>
-    </article>
-  
-</div>
-
-    
-        <div class="pagination-container">
-  
-  
-</div>
-
-    
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
     </div>
+    <div>
+      
+        
+          <a href="/post/home" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <i>Stay hungry, stay foolish.</i>
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/slThQw6eD/">
+                  <h2 class="post-title">NONMEM的一些使用笔记</h2>
+                </a>
+                <div class="post-date">
+                  2020-07-26
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/Emax-model/">
+                  <h2 class="post-title">Emax模型</h2>
+                </a>
+                <div class="post-date">
+                  2020-07-16
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/SCM/">
+                  <h2 class="post-title">SCM</h2>
+                </a>
+                <div class="post-date">
+                  2020-07-11
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/CQ9zJV_eF/">
+                  <h2 class="post-title">说一说在我老家，庄稼的种植情况</h2>
+                </a>
+                <div class="post-date">
+                  2020-07-09
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/onco-trials-design/">
+                  <h2 class="post-title">肿瘤药临床试验设计</h2>
+                </a>
+                <div class="post-date">
+                  2020-07-04
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/WHuL6tMJp/">
+                  <h2 class="post-title">利用Python绘制血药浓度-时间曲线</h2>
+                </a>
+                <div class="post-date">
+                  2020-03-28
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/optimal-sampling-theory/">
+                  <h2 class="post-title">优化采样</h2>
+                </a>
+                <div class="post-date">
+                  2020-03-28
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/PPK-theory/">
+                  <h2 class="post-title">群体药动学模型</h2>
+                </a>
+                <div class="post-date">
+                  2020-03-26
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://kokomole.github.io/post/hello-gridea/">
+                  <h2 class="post-title">Hello Gridea</h2>
+                </a>
+                <div class="post-date">
+                  2018-12-12
+                </div>
+                <div class="post-abstract">
+                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
   </body>
 </html>

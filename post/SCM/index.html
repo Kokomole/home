@@ -1,13 +1,20 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>SCM | Min Zhu&#39;s Blog</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1595778972204">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1596038184324">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="SCM | Min Zhu&#39;s Blog - Atom Feed" href="https://kokomole.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
@@ -17,102 +24,81 @@ SCM -config_file = xxx.scm
 同时需要一份SCM文件，示例如下：
 model =..." />
     <meta name="keywords" content="NONMEM,PsN" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1595778972204" alt="">
-  </a>
-  <h1 class="site-title">
-    Min Zhu&#39;s Blog
-  </h1>
-  <p class="site-description">
-    <i>Stay hungry, stay foolish.</i>
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://kokomole.github.io">
+        <img src="https://kokomole.github.io/images/avatar.png?v=1596038184324" class="site-logo">
+        <h1 class="site-title">Min Zhu&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/post/home" class="menu">
-          首页
-        </a>
+        
+          <a href="/post/home" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-        <a href="https://github.com/Kokomole" target="_blank">
-          <i class="ri-github-line"></i>
-        </a>
+        
       
-    
+        
       
-        <a href="https://twitter.com/Min_Zhu_" target="_blank">
-          <i class="ri-twitter-line"></i>
-        </a>
+        
       
-    
+        
       
-    
+        
       
-        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
-          <i class="ri-zhihu-line"></i>
-        </a>
-      
-    
-      
-    
+    </div>
+    <div class="site-description">
+      <i>Stay hungry, stay foolish.</i>
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              SCM
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-07-11
-              </span>
-              <span>
-                2 min read
-              </span>
-              
-                <a href="https://kokomole.github.io/tag/I3GiWgukV/" class="post-tag">
-                  # NONMEM
-                </a>
-              
-                <a href="https://kokomole.github.io/tag/0zAkllb8ck/" class="post-tag">
-                  # PsN
-                </a>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">SCM</h2>
+            <div class="post-date">2020-07-11</div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
+            <div class="post-content" v-pre>
+              <p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
 <pre><code>SCM -config_file = xxx.scm
 </code></pre>
 <p>同时需要一份SCM文件，示例如下：</p>
@@ -241,97 +227,57 @@ $SIGMA
 <h2 id="logfile">logfile</h2>
 <p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%96%87%E4%BB%B6">数据文件与控制文件</a></li>
-<li><a href="#%E5%9F%BA%E6%9C%AC%E5%8F%98%E9%87%8F">基本变量</a>
-<ul>
-<li><a href="#%E5%BF%85%E9%9C%80%E7%9A%84%E5%8F%98%E9%87%8F">必需的变量</a></li>
-<li><a href="#%E5%8F%AF%E9%80%89%E7%9A%84%E5%8F%98%E9%87%8F">可选的变量</a></li>
-</ul>
-</li>
-<li><a href="#scm%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE">SCM文件的配置</a>
-<ul>
-<li><a href="#test_relations">[test_relations]</a></li>
-<li><a href="#valid_states">[valid_states]</a></li>
-<li><a href="#included_relations">[included_relations]</a></li>
-</ul>
-</li>
-<li><a href="#%E7%BB%93%E6%9E%9C%E6%96%87%E4%BB%B6">结果文件</a>
-<ul>
-<li><a href="#logfile">logfile</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://kokomole.github.io/tag/I3GiWgukV/" class="tag">
+                    NONMEM
+                  </a>
+                
+                  <a href="https://kokomole.github.io/tag/0zAkllb8ck/" class="tag">
+                    PsN
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://kokomole.github.io/post/CQ9zJV_eF/">
+                  <h3 class="post-title">
+                    说一说在我老家，庄稼的种植情况
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://kokomole.github.io/post/CQ9zJV_eF/">
-              <h3 class="post-title">
-                说一说在我老家，庄稼的种植情况
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+        </div>
       </div>
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+</script>
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+
+
+
+
   </body>
 </html>
