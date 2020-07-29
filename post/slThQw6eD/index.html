@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NONMEM的一些使用笔记 | Min Zhu&#39;s Blog</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1596042992812">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1596046900318">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="NONMEM的一些使用笔记 | Min Zhu&#39;s Blog - Atom Feed" href="https://kokomole.github.io/atom.xml">
@@ -13,7 +13,7 @@
 
     <meta name="description" content="ID可识别位数的设置
 问题描述
-在NM7中，ID的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”受试者，在输出的结果表格里全部显示为“101000”，从第6..." />
+在NM7中，ID的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”的受试者，在输出的结果表格里全部显示为“101000”，即从..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1596042992812" alt="">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1596046900318" alt="">
   </a>
   <h1 class="site-title">
     Min Zhu&#39;s Blog
@@ -95,7 +95,7 @@
                 2020-07-26
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
@@ -104,7 +104,19 @@
               <div class="post-content">
                 <h1 id="id可识别位数的设置">ID可识别位数的设置</h1>
 <h2 id="问题描述">问题描述</h2>
-<p>在NM7中，<code>ID</code>的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”受试者，在输出的结果表格里全部显示为“101000”，从第6位开始的都无法识别。</p>
+<p>在NM7中，<code>ID</code>的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”的受试者，在输出的结果表格里全部显示为“101000”，即从第6位开始的都无法识别。</p>
+<h2 id="原因解析">原因解析</h2>
+<p>NM使用Fortran语言编写，输出表格所有字段的默认格式是<code>s1PE11.4</code>。此格式为科学计数法，允许11个字符的总宽度，包括符号和小数位数。小数点前面有1位，后面有4位，示例如下：-1.2345E+01。因此，在默认设置下，最多显示识别5位数字。</p>
+<h2 id="解决方案">解决方案</h2>
+<p>使用<code>LFORMAT</code>和<code>RFORMAT</code>选项来对数据的位数进行设置。在<code>$TABLE</code>模块加入以下代码：</p>
+<pre><code>$TABLE ID DOSE WT TIME NOPRINT 
+FILE=./filename.tbl
+RFORMAT=&quot;(F15.0,&quot; 
+RFORMAT=&quot;7(s1PE11.4))&quot;
+</code></pre>
+<p>代码的第1行是我们需要输出的4个变量：<code>ID</code>、<code>DOSE</code>、<code>WT</code>、<code>TIME</code>；第2行是输出表格的路径及文件名。</p>
+<p>在第3行，我们对第1个变量（即<code>ID</code>）的格式进行了设置。Fortran的浮点数表示格式为<code>Fw.d</code>，整数部分有w个字符，小数部分有d个字符。因此代码中的<code>F15.0</code>表示<code>ID</code>是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位<code>ID</code>的使用。</p>
+<p>在第4行，我们将剩下的变量设置为仍然使用默认格式<code>s1PE11.4</code>。前面的<code>7</code>表示除了第1个<code>ID</code>之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以是7，是因为除了自己定义输出的<code>DOSE</code>、<code>WT</code>、<code>TIME</code>外，通常会自动输出<code>DV</code>、<code>PRED</code>、<code>RES</code>、<code>WRES</code>这4个变量，所以很多时候在设置变量数时需要加4。</p>
 
               </div>
               <div class="toc-container">
@@ -112,6 +124,8 @@
 <li><a href="#id%E5%8F%AF%E8%AF%86%E5%88%AB%E4%BD%8D%E6%95%B0%E7%9A%84%E8%AE%BE%E7%BD%AE">ID可识别位数的设置</a>
 <ul>
 <li><a href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0">问题描述</a></li>
+<li><a href="#%E5%8E%9F%E5%9B%A0%E8%A7%A3%E6%9E%90">原因解析</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">解决方案</a></li>
 </ul>
 </li>
 </ul>
