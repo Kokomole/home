@@ -2,13 +2,63 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Min Zhu&apos;s Blog</title>
-    <updated>2020-07-31T17:03:22.070Z</updated>
+    <updated>2020-07-31T17:39:29.866Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Min Zhu&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[GitHub使用笔记]]></title>
+        <id>https://kokomole.github.io/post/Np4gd15X1/</id>
+        <link href="https://kokomole.github.io/post/Np4gd15X1/">
+        </link>
+        <updated>2020-07-31T17:31:36.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="github本地仓库配置">GitHub本地仓库配置</h1>
+<ol>
+<li>
+<p>输入用户名和邮箱</p>
+<pre><code>git config --global user.name &quot;xxx&quot;
+git config --global user.email &quot;xxx@xxx.com&quot;
+</code></pre>
+</li>
+<li>
+<p>验证</p>
+<pre><code>git config --list --global
+</code></pre>
+</li>
+<li>
+<p>初始化仓库</p>
+<pre><code>git init
+</code></pre>
+</li>
+<li>
+<p>建立SSH</p>
+<pre><code>ssh-keygen -t rsa -C &quot;xxx@xxx.com&quot;
+</code></pre>
+</li>
+<li>
+<p>在本地用户目录下找到<code>.ssh</code>文件夹，复制<code>id_rsa.pub</code>文件的内容，在GitHub网站设置里新建ssh，将复制的内容贴进去</p>
+</li>
+<li>
+<p>测试是否连接成功</p>
+<pre><code>ssh -T git@github.com
+</code></pre>
+<p>由于所在网络防火墙的原因，这一步可能报错：ssh_exchange_identification: read: Connection reset by peer</p>
+</li>
+</ol>
+<p>此时已经完成与本地仓库的连接。</p>
+<h1 id="github的基本操作">GitHub的基本操作</h1>
+<ul>
+<li>
+<p>克隆项目</p>
+<pre><code>git clone url
+</code></pre>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NONMEM的一些使用笔记]]></title>
         <id>https://kokomole.github.io/post/slThQw6eD/</id>
