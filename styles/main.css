@@ -2127,11 +2127,11 @@ body {
         color: #e67700;
         border-bottom: 1px solid #e67700 !important;
       }.nav-item-active {
-      background: #f9f9f9fe;
+      background: #fffffffe;
     }
 
     .nav-item:hover {
-      background: #f9f9f9fe;
+      background: #fffffffe;
       color: rgba(0, 0, 0, 0.98);
     }.markdownIt-TOC a {
       color: #fff;
