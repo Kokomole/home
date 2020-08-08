@@ -2076,7 +2076,7 @@ body {
       border-bottom-color: #212529;
     }
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
-      background: #adb5bdfe;
+      background: #dee2e6fe;
     }h1, h2, h3, h4, h5, h6 {
       color: #343a40;
     }
@@ -2117,11 +2117,15 @@ body {
     }
     .nav-toggle .line {
       background-color:  !important;
-    }
-      .nav-item a {
-        color:  #212529;
+    }.nav-item a {
+        color: #212529;
+      }
+      .nav-item-active a {
+        color: #212529;
+        border-bottom: 1px solid #212529 !important;
       }.nav-item a:hover {
         color: #e67700;
+        border-bottom: 1px solid #e67700 !important;
       }.nav-item-active {
       background: #f9f9f9fe;
     }
