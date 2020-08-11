@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#343a40">
 <title>首页 | Kokomo</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1596989002030">
+<link rel="shortcut icon" href="/favicon.ico?v=1597161738491">
 <link rel="stylesheet" href="/media/css/muse.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -783,6 +783,88 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/sZ6lMB3-6/"" data-c="
+          &lt;h1 id=&#34;主题设置&#34;&gt;主题设置&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;一套常用主题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;mytheme &amp;lt;- theme(panel.grid.major = element_line(colour = &amp;quot;grey85&amp;quot;, size = 0.25), 
+                 panel.grid.minor = element_line(colour = &amp;quot;grey85&amp;quot;, size = 0.25),
+                 panel.background = element_blank(),
+                 panel.border = element_rect(fill=NA,color = &amp;quot;black&amp;quot;),
+                 plot.title = element_text(hjust = 0.5),
+                 plot.subtitle = element_text(hjust = 0.5),
+                 plot.caption = element_text(),
+                 legend.position = &amp;quot;bottom&amp;quot;,
+                 legend.key = element_blank(),
+                 strip.background = element_rect(color = &amp;quot;black&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1597161252037.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;画板（Panel）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;# 网格线（grid）
+panel.grid.major = element_line(colour = &amp;quot;grey85&amp;quot;, size = 0.25) # 主要网格线
+panel.grid.minor = element_line(colour = &amp;quot;grey85&amp;quot;, size = 0.25) # 次要网格线
+# 无网格线
+panel.grid = element_blank()
+
+# 背景：建议用空白
+panel.background = element_blank()
+
+# 边界：建议用黑色
+panel.border = element_rect(fill=NA,color = &amp;quot;black&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1597161263926.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;条带（Strip）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;# 边界颜色（color）建议用黑色
+# 填充色（fill）建议用默认的灰色，或设为白色
+strip.background = element_rect(color = &amp;quot;black&amp;quot;)
+strip.background.x = element_rect(color = &amp;quot;black&amp;quot;,fill = &amp;quot;white&amp;quot;)
+strip.background.y = element_rect(color = &amp;quot;black&amp;quot;)
+
+# 位置：建议用inside（默认，不用特别设置）
+strip.placement = &amp;quot;outside&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1597161273003.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;图例（Legend）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;# 位置：建议放底部
+legend.position = &amp;quot;bottom&amp;quot;
+
+# 图标：建议设为空白
+legend.key = element_blank()
+
+# 背景：建议不设（默认），或边界用黑色
+legend.background = element_rect(color = &amp;quot;black&amp;quot;),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;4&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1597161282047.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;字体字号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;# 字体设置
+windowsFonts(Times=windowsFont(&amp;quot;Times New Roman&amp;quot;)) # 将Windows系统中的某字体赋值给Times
+
+# 统一设置：使用text()，各元素也可在各个地方分别设置
+text = element_text(family=&amp;quot;Times&amp;quot;, face=&amp;quot;bold&amp;quot;, size=12)
+
+# 标题
+plot.title = element_text(hjust = 0.5) # 标题居中
+plot.subtitle = element_text(hjust = 0.5) # 副标题
+plot.caption = element_text() # 说明文字
+
+# 各元素
+axis.title.x = element_text(size = 10)
+strip.text.y = element_text(size = 10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;5&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1597161290232.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+">ggplot画图</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/Np4gd15X1/"" data-c="
