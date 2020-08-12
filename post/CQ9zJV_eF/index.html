@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#343a40">
 <title>说一说在我老家，庄稼的种植情况 | Kokomo</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1597161738491">
+<link rel="shortcut icon" href="/favicon.ico?v=1597247828546">
 <link rel="stylesheet" href="/media/css/muse.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -73,8 +73,6 @@
           
             
             
-              
-            
             <li class="nav-item ">
               
               
@@ -85,8 +83,6 @@
             </li>
           
             
-            
-              
             
             <li class="nav-item ">
               
@@ -99,8 +95,6 @@
           
             
             
-              
-            
             <li class="nav-item ">
               
               
@@ -112,8 +106,6 @@
           
             
             
-              
-            
             <li class="nav-item ">
               
               
@@ -123,16 +115,6 @@
               
             </li>
           
-          
-            
-              <li class="nav-item ">
-                <a href="/friends/" target="_self">
-                  
-                    <i class="fa fa-address-book"></i> 友情链接
-                  
-                </a>
-              </li>
-            
           
           
             <li id="fa_search" class="nav-item">
@@ -803,6 +785,65 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/pnysYBaKA/"" data-c="
+          &lt;h1 id=&#34;gof图&#34;&gt;GOF图&lt;/h1&gt;
+&lt;h3 id=&#34;gof图概述&#34;&gt;GOF图概述&lt;/h3&gt;
+&lt;p&gt;拟合优度（Goodness of fitness，GOF）图可以显示预测值对实测值的拟合程度。&lt;/p&gt;
+&lt;h3 id=&#34;普通gof图&#34;&gt;普通GOF图&lt;/h3&gt;
+&lt;p&gt;几个注意点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NM输出表格会带有&lt;code&gt;TABLE NO. 1&lt;/code&gt;，因此读取时第一行要跳过&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;plot_GOF &amp;lt;- function(input_file){
+  # 读取数据，跳过第一行
+  fit &amp;lt;- read.table(input_file,skip=1,header = T)
+  # 去掉给药事件所对应的行（可选）
+  fit &amp;lt;- fit[-which(fit$DV==0),]
+  # DV - PRED
+  p1 &amp;lt;- ggplot(fit)+
+    # 点
+    geom_point(aes(x=PRED,y=DV),shape = 1,col = &amp;quot;blue&amp;quot;) +
+    # 回归曲线：loess回归，可以选择是否显示回归曲线的置信区间，span参数用于调节回归曲线的形状
+    geom_smooth(aes(x=PRED,y=DV),se = F,size = 1,method = &amp;quot;loess&amp;quot;,col = &amp;quot;red&amp;quot;,span = 2) +  
+    # 参考线：黑色虚线
+    geom_abline(slope = 1,linetype = 2,col = &amp;quot;black) +
+    # 标题、坐标轴
+    labs(title =&amp;quot;DV - PRED&amp;quot;,x = &amp;quot;PRED&amp;quot;,y = &amp;quot;DV&amp;quot;) +
+    # 坐标轴范围（可选）
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+  p2 &amp;lt;- ggplot(fit) +
+    geom_point(aes(x=IPRED,y=DV),shape = 1,col = &amp;quot;blue&amp;quot;) +
+    geom_smooth(aes(x=IPRED,y=DV),se = F,size = 1,method = &amp;quot;loess&amp;quot;,col = &amp;quot;red&amp;quot;,span = 5) +
+    geom_abline(slope = 1,linetype = 2) +
+    labs(title =&amp;quot;DV - IPRED&amp;quot;,x = &amp;quot;IPRED&amp;quot;,y = &amp;quot;DV&amp;quot;) +
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+  p3 &amp;lt;- ggplot(fit) +
+    geom_point(aes(x=PRED,y=CWRES),shape = 1,col = &amp;quot;blue&amp;quot;) +
+    geom_smooth(aes(x=PRED,y=CWRES),se = T,size = 1,method = &amp;quot;loess&amp;quot;,col = &amp;quot;red&amp;quot;,span = 5) +
+    # 水平参考线
+    geom_hline(aes(yintercept=0),linetype = 2) +
+    geom_hline(aes(yintercept=-2),linetype = 2) +
+    geom_hline(aes(yintercept=2),linetype = 2) +
+    labs(title =&amp;quot;CWRES - PRED&amp;quot;,x = &amp;quot;PRED&amp;quot;,y = &amp;quot;CWRES&amp;quot;) +
+    mytheme 
+  p4 &amp;lt;- ggplot(fit)+
+    geom_point(aes(x=TIME,y=CWRES),shape = 1,col = &amp;quot;blue&amp;quot;) +
+    geom_smooth(aes(x=TIME,y=CWRES),se = T,size = 1,method = &amp;quot;loess&amp;quot;,col = &amp;quot;red&amp;quot;) +
+    geom_hline(aes(yintercept=0),linetype = 2) +
+    geom_hline(aes(yintercept=-2),linetype = 2) +
+    geom_hline(aes(yintercept=2),linetype = 2) +
+    labs(title =&amp;quot;CWRES - TIME&amp;quot;,x = &amp;quot;TIME&amp;quot;,y = &amp;quot;CWRES&amp;quot;) +
+    mytheme 
+  # 将4张图画在一起
+  plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+}
+&lt;/code&gt;&lt;/pre&gt;
+">PopPK模型评价画图代码</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/sZ6lMB3-6/"" data-c="
