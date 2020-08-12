@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#343a40">
 <title>利用Python绘制血药浓度-时间曲线 | Kokomo</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1597247828546">
+<link rel="shortcut icon" href="/favicon.ico?v=1597250712911">
 <link rel="stylesheet" href="/media/css/muse.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1548,11 +1548,23 @@ plt.show()
     geom_hline(aes(yintercept=-2),linetype = 2) +
     geom_hline(aes(yintercept=2),linetype = 2) +
     labs(title =&amp;quot;CWRES - TIME&amp;quot;,x = &amp;quot;TIME&amp;quot;,y = &amp;quot;CWRES&amp;quot;) +
-    mytheme 
+   mytheme 
   # 将4张图画在一起
   plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+
 }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;分组gof图&#34;&gt;分组GOF图&lt;/h3&gt;
+&lt;p&gt;在有些情况下，如药物浓度含有总浓度和游离浓度，或纳入了来自不同来源的试验数据等，数据的模型拟合是同时进行的，但想看一下这些亚组各自的拟合效果，则需要对不同的实测值、预测值分别画GOF图。&lt;/p&gt;
+&lt;p&gt;区分的方法主要有2种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;画在同一张图里，用颜色等区分&lt;/li&gt;
+&lt;li&gt;画在不同的图里&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;坐标的选择&#34;&gt;坐标的选择&lt;/h3&gt;
+&lt;h1 id=&#34;参数与协变量的相关性&#34;&gt;参数与协变量的相关性&lt;/h1&gt;
+&lt;h1 id=&#34;vpc&#34;&gt;VPC&lt;/h1&gt;
+&lt;h1 id=&#34;npde&#34;&gt;NPDE&lt;/h1&gt;
 ">PopPK模型评价画图代码</a>
       </div>
       
