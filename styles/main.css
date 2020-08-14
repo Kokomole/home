@@ -2067,30 +2067,30 @@ body {
       font-size: 16px !important
     }
     body {
-      color: #212529;
+      color: #000000;
     }
     .next-md-body {
-      color: #212529;
+      color: #000000;
     }
     .next-md-body h1, .next-md-body h2 {
-      border-bottom-color: #212529;
+      border-bottom-color: #000000;
     }
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
       background: #e9eceffe;
     }h1, h2, h3, h4, h5, h6 {
-      color: #343a40;
+      color: #000000;
     }
     
     .archive-timeline-title::before {
-      background-color: #343a40;
+      background-color: #000000;
     }
     
     .post-title-link::before {
-      background-color: #343a40;
+      background-color: #000000;
     }
     
     .node-title::before {
-      background-color: #343a40;
+      background-color: #000000;
     }a {
       color: #495057;
     }
@@ -2117,21 +2117,17 @@ body {
     }
     .nav-toggle .line {
       background-color:  !important;
-    }.nav-item a {
-        color: #212529;
-      }
-      .nav-item-active a {
-        color: #212529;
-        border-bottom: 1px solid #212529 !important;
+    }
+      .nav-item a {
+        color:  #000000;
       }.nav-item a:hover {
         color: #e67700;
-        border-bottom: 1px solid #e67700 !important;
       }.nav-item-active {
-      background: #fffffffe;
+      background: #FFFFFFfe;
     }
 
     .nav-item:hover {
-      background: #fffffffe;
+      background: #FFFFFFfe;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
@@ -2157,40 +2153,40 @@ body {
       color: #fd7e14;
       border-bottom-color: #fd7e14;
     }.active-current > a {
-      color: #5c7cfa !important;
-      border-bottom-color: #5c7cfa !important;
+      color: #4dabf7 !important;
+      border-bottom-color: #4dabf7 !important;
     }
     .sidebar-title-active {
-      color: #5c7cfa;
-      border-bottom-color: #5c7cfa;
+      color: #4dabf7;
+      border-bottom-color: #4dabf7;
     }
     .sidebar-title-item:hover {
-      color: #5c7cfa !important;
+      color: #4dabf7 !important;
     }
     .active-show > a {
-      color: #5c7cfa;
-      border-bottom-color: #5c7cfa;
+      color: #4dabf7;
+      border-bottom-color: #4dabf7;
     }
     .active-hidden > a {
-      color: #5c7cfa;
-      border-bottom-color: #5c7cfa;
+      color: #4dabf7;
+      border-bottom-color: #4dabf7;
     }.bg-color {
-      background-color: #fffffffe;
+      background-color: #FFFFFFfe;
     }
     .site-meta {
-      background: #343a40 !important;
+      background: #FFFFFF !important;
     }
     .head-top-line {
-      background: #343a40;
+      background: #FFFFFF;
     }
     .brand {
-      background: #343a40fe;
+      background: #FFFFFFfe;
     }
     .main-title, .brand {
-      color: #fff !important;
+      color: #000000 !important;
     }
     .mist .site-title i {
-      background: #fffffffe;
+      background: #000000fe;
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
