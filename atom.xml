@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-21T17:36:46.739Z</updated>
+    <updated>2020-08-21T17:45:24.290Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -736,7 +736,7 @@ text(-0.02*(max(x)-min(x)),-(max(x) - min(x))*0.1,&quot;0&quot;)
         <updated>2020-08-11T15:40:31.000Z</updated>
         <content type="html"><![CDATA[<h1 id="1-主题设置">1. 主题设置</h1>
 <h2 id="11-一套常用主题">1.1 一套常用主题</h2>
-<pre><code class="language-R">mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
+<pre><code>mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
                  panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25),
                  panel.background = element_blank(),
                  panel.border = element_rect(fill=NA,color = &quot;black&quot;),
@@ -749,7 +749,7 @@ text(-0.02*(max(x)-min(x)),-(max(x) - min(x))*0.1,&quot;0&quot;)
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1597161252037.png" alt="" loading="lazy"></figure>
 <h2 id="12-画板panel">1.2 画板（Panel）</h2>
-<pre><code class="language-R"># 网格线（grid）
+<pre><code># 网格线（grid）
 panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25) # 主要网格线
 panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25) # 次要网格线
 # 无网格线
@@ -763,7 +763,7 @@ panel.border = element_rect(fill=NA,color = &quot;black&quot;)
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1597161263926.jpg" alt="" loading="lazy"></figure>
 <h2 id="13-条带strip">1.3 条带（Strip）</h2>
-<pre><code class="language-R"># 边界颜色（color）建议用黑色
+<pre><code># 边界颜色（color）建议用黑色
 # 填充色（fill）建议用默认的灰色，或设为白色
 strip.background = element_rect(color = &quot;black&quot;)
 strip.background.x = element_rect(color = &quot;black&quot;,fill = &quot;white&quot;)
@@ -774,7 +774,7 @@ strip.placement = &quot;outside&quot;
 </code></pre>
 <figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1597161273003.png" alt="" loading="lazy"></figure>
 <h2 id="14-图例legend">1.4 图例（Legend）</h2>
-<pre><code class="language-R"># 位置：建议放底部
+<pre><code># 位置：建议放底部
 legend.position = &quot;bottom&quot;
 
 # 图标：建议设为空白
@@ -785,7 +785,7 @@ legend.background = element_rect(color = &quot;black&quot;),
 </code></pre>
 <figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
 <h2 id="15-字体字号">1.5 字体字号</h2>
-<pre><code class="language-R"># 字体设置
+<pre><code># 字体设置
 windowsFonts(Times=windowsFont(&quot;Times New Roman&quot;)) # 将Windows系统中的某字体赋值给Times
 
 # 统一设置：使用text()，各元素也可在各个地方分别设置
@@ -1047,7 +1047,7 @@ RFORMAT=&quot;7(s1PE11.4))&quot;
 <pre><code>SCM -config_file=xxx.scm
 </code></pre>
 <p>同时需要一份SCM文件，示例如下：</p>
-<pre><code class="language-Fortran">model = 3.mod
+<pre><code>model = 3.mod
 search_direction = both
 p_forward = 0.05
 p_backward = 0.01

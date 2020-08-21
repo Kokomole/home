@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ggplot画图 | Kokomo</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598031401240">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598031919994">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="ggplot画图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
@@ -24,7 +24,7 @@ mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;,
       <div class="main-content">
         <div class="site-header">
   <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598031401240" alt="">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598031919994" alt="">
   </a>
   <h1 class="site-title">
     Kokomo
@@ -113,7 +113,7 @@ mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;,
               <div class="post-content">
                 <h1 id="1-主题设置">1. 主题设置</h1>
 <h2 id="11-一套常用主题">1.1 一套常用主题</h2>
-<pre><code class="language-R">mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
+<pre><code>mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
                  panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25),
                  panel.background = element_blank(),
                  panel.border = element_rect(fill=NA,color = &quot;black&quot;),
@@ -126,7 +126,7 @@ mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;,
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1597161252037.png" alt="" loading="lazy"></figure>
 <h2 id="12-画板panel">1.2 画板（Panel）</h2>
-<pre><code class="language-R"># 网格线（grid）
+<pre><code># 网格线（grid）
 panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25) # 主要网格线
 panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25) # 次要网格线
 # 无网格线
@@ -140,7 +140,7 @@ panel.border = element_rect(fill=NA,color = &quot;black&quot;)
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1597161263926.jpg" alt="" loading="lazy"></figure>
 <h2 id="13-条带strip">1.3 条带（Strip）</h2>
-<pre><code class="language-R"># 边界颜色（color）建议用黑色
+<pre><code># 边界颜色（color）建议用黑色
 # 填充色（fill）建议用默认的灰色，或设为白色
 strip.background = element_rect(color = &quot;black&quot;)
 strip.background.x = element_rect(color = &quot;black&quot;,fill = &quot;white&quot;)
@@ -151,7 +151,7 @@ strip.placement = &quot;outside&quot;
 </code></pre>
 <figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1597161273003.png" alt="" loading="lazy"></figure>
 <h2 id="14-图例legend">1.4 图例（Legend）</h2>
-<pre><code class="language-R"># 位置：建议放底部
+<pre><code># 位置：建议放底部
 legend.position = &quot;bottom&quot;
 
 # 图标：建议设为空白
@@ -162,7 +162,7 @@ legend.background = element_rect(color = &quot;black&quot;),
 </code></pre>
 <figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
 <h2 id="15-字体字号">1.5 字体字号</h2>
-<pre><code class="language-R"># 字体设置
+<pre><code># 字体设置
 windowsFonts(Times=windowsFont(&quot;Times New Roman&quot;)) # 将Windows系统中的某字体赋值给Times
 
 # 统一设置：使用text()，各元素也可在各个地方分别设置
