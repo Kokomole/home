@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-21T17:48:10.865Z</updated>
+    <updated>2020-08-21T17:50:25.718Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -781,7 +781,7 @@ legend.position = &quot;bottom&quot;
 legend.key = element_blank()
 
 # 背景：建议不设（默认），或边界用黑色
-legend.background = element_rect(color = &quot;black&quot;),
+legend.background = element_rect(color = &quot;black&quot;)
 </code></pre>
 <figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
 <h2 id="15-字体字号">1.5 字体字号</h2>
