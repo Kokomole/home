@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-21T03:31:54.974Z</updated>
+    <updated>2020-08-21T17:16:12.649Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -10,90 +10,111 @@
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Kokomo</rights>
     <entry>
-        <title type="html"><![CDATA[PopPK模型评价画图代码]]></title>
-        <id>https://kokomole.github.io/post/pnysYBaKA/</id>
-        <link href="https://kokomole.github.io/post/pnysYBaKA/">
+        <title type="html"><![CDATA[R基础画图]]></title>
+        <id>https://kokomole.github.io/post/R-base-plot/</id>
+        <link href="https://kokomole.github.io/post/R-base-plot/">
         </link>
-        <updated>2020-08-12T15:28:40.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="gof图">GOF图</h1>
-<h3 id="gof图概述">GOF图概述</h3>
-<p>拟合优度（Goodness of fitness，GOF）图可以显示预测值对实测值的拟合程度。</p>
-<h3 id="普通gof图">普通GOF图</h3>
-<p>几个注意点：</p>
+        <updated>2020-08-21T16:52:38.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="常用命令">常用命令</h1>
 <ul>
-<li>NM输出表格会带有<code>TABLE NO. 1</code>，因此读取时第一行要跳过</li>
+<li>设置初始环境</li>
 </ul>
-<pre><code>plot_GOF &lt;- function(input_file){
-  # 读取数据，跳过第一行
-  fit &lt;- read.table(input_file,skip=1,header = T)
-  # 去掉给药事件所对应的行（可选）
-  fit &lt;- fit[-which(fit$DV==0),]
-  # DV - PRED
-  p1 &lt;- ggplot(fit)+
-    # 点
-    geom_point(aes(x=PRED,y=DV),shape = 1,col = &quot;blue&quot;) +
-    # 回归曲线：loess回归，可以选择是否显示回归曲线的置信区间，span参数用于调节回归曲线的形状
-    geom_smooth(aes(x=PRED,y=DV),se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;,span = 2) +  
-    # 参考线：黑色虚线
-    geom_abline(slope = 1,linetype = 2,col = &quot;black) +
-    # 标题、坐标轴
-    labs(title =&quot;DV - PRED&quot;,x = &quot;PRED&quot;,y = &quot;DV&quot;) +
-    # 坐标轴范围（可选）
-    xlim(0,10) + ylim(0,10) +
-    mytheme 
-  p2 &lt;- ggplot(fit) +
-    geom_point(aes(x=IPRED,y=DV),shape = 1,col = &quot;blue&quot;) +
-    geom_smooth(aes(x=IPRED,y=DV),se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;,span = 5) +
-    geom_abline(slope = 1,linetype = 2) +
-    labs(title =&quot;DV - IPRED&quot;,x = &quot;IPRED&quot;,y = &quot;DV&quot;) +
-    xlim(0,10) + ylim(0,10) +
-    mytheme 
-  p3 &lt;- ggplot(fit) +
-    geom_point(aes(x=PRED,y=CWRES),shape = 1,col = &quot;blue&quot;) +
-    geom_smooth(aes(x=PRED,y=CWRES),se = T,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;,span = 5) +
-    # 水平参考线
-    geom_hline(aes(yintercept=0),linetype = 2) +
-    geom_hline(aes(yintercept=-2),linetype = 2) +
-    geom_hline(aes(yintercept=2),linetype = 2) +
-    labs(title =&quot;CWRES - PRED&quot;,x = &quot;PRED&quot;,y = &quot;CWRES&quot;) +
-    mytheme 
-  p4 &lt;- ggplot(fit)+
-    geom_point(aes(x=TIME,y=CWRES),shape = 1,col = &quot;blue&quot;) +
-    geom_smooth(aes(x=TIME,y=CWRES),se = T,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
-    geom_hline(aes(yintercept=0),linetype = 2) +
-    geom_hline(aes(yintercept=-2),linetype = 2) +
-    geom_hline(aes(yintercept=2),linetype = 2) +
-    labs(title =&quot;CWRES - TIME&quot;,x = &quot;TIME&quot;,y = &quot;CWRES&quot;) +
-   mytheme 
-  # 将4张图画在一起
-  plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
-
-}
+<pre><code>opar&lt;-par(no.readonly=TRUE)
+par(mfrow=c(1,2))
+par(opar)
 </code></pre>
-<h3 id="分组gof图">分组GOF图</h3>
-<p>在有些情况下，如药物浓度含有总浓度和游离浓度，或纳入了来自不同来源的试验数据等，数据的模型拟合是同时进行的，但想看一下这些亚组各自的拟合效果，则需要对不同的实测值、预测值分别画GOF图。</p>
-<p>区分的方法主要有2种：</p>
 <ul>
-<li>画在同一张图里，用颜色等区分</li>
-<li>画在不同的图里</li>
+<li>画显函数图像</li>
 </ul>
-<h3 id="坐标的选择">坐标的选择</h3>
-<h1 id="参数与协变量的相关性">参数与协变量的相关性</h1>
-<h1 id="vpc">VPC</h1>
-<h1 id="npde">NPDE</h1>
+<pre><code># Sigmoid function
+curve(1/(1+exp(-x)),-10,10,main=&quot;Sigmoid function&quot;)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1598029780311.png" alt="" loading="lazy"></figure>
+<ul>
+<li>分布直方图 + 概率密度曲线</li>
+</ul>
+<pre><code>THETA &lt;- rnorm(100000,mean = -1.48,sd = 0.8056)
+hist(THETA, freq=FALSE, breaks=50 ,main = &quot;THETA&quot;) 
+lines(density(THETA), col=&quot;blue&quot;, lwd=2)
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1598029857300.png" alt="" loading="lazy"></figure>
+<ul>
+<li>在已有的图上画曲线；增加图例</li>
+</ul>
+<pre><code>c &lt;- seq(0,100,0.01)
+RO1 &lt;- c/(2+c); RO2 &lt;- c/(4+c); RO3 &lt;- c/(8+c)
+plot(c,RO1,type = &quot;l&quot;,col=&quot;black&quot;,xlab = &quot;C&quot;,ylab = &quot;RO&quot;)
+lines(c,RO2,col=&quot;red&quot;); lines(c,RO3,col=&quot;blue&quot;)
+legend.txt &lt;- c(&quot;KD=2&quot;,&quot;KD=4&quot;,&quot;KD=8&quot;)
+legend(60,0.6,legend.txt,col = c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;),lty=1)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1598029883325.png" alt="" loading="lazy"></figure>
+<h1 id="坐标轴加箭头">坐标轴加箭头</h1>
+<p>在R的基础画图系统中，将原坐标轴改成笛卡尔坐标系的方法是：去掉原坐标轴，自己绘制坐标轴<a href="#refer-anchor-1"><sup>1</sup></a>。</p>
+<p>可以先利用<code>axes=F</code>设置不显示坐标轴，再利用<code>arrows()</code>增加箭头，参数的顺序依次为x轴最小值，y轴最小值，x轴最大值，y轴最大值。</p>
+<pre><code>x1&lt;-seq(0,8,0.001)
+y1&lt;-x1
+plot(x1,y1,type = &quot;l&quot;,bty=&quot;l&quot;,xlim = c(0,9),ylim = c(0,9),axes = F)  # 设置不显示坐标轴
+arrows(c(0,0),c(0,0),c(0,9),c(9,0),0.05)  # 增加箭头
+lines(c(7,7),c(0,7),lty=2)
+lines(c(0,7),c(7,7),lty=2)
+title(main=&quot;Figure C&quot;)
+points(7,7,cex=1.5,pch=16)
+text(7.5,6.5,&quot;A&quot;)
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1598030007395.png" alt="" loading="lazy"></figure>
+<p>此时需要自己手动添加坐标轴刻度。</p>
+<pre><code>x &lt;- seq(-1, 2, by=0.01)
+y &lt;- 0.5*x - 0.3*x^2 + 0.4*x^3
+plot(x, y, type=&quot;l&quot;, xaxt='n', yaxt='n', bty='n', xlab='', ylab='', col=&quot;blue&quot;)
+
+# 箭头
+arrows(min(x), 0, max(x), 0, lwd=1, length=0.15)
+arrows(0, min(y), 0, max(y), lwd=1, length=0.15)
+text(max(x)-0.3, -0.3,&quot;X  axis&quot;)
+text(-0.4, max(y)-0.2,&quot;Y axis&quot;)
+
+# 画x轴刻度
+k1 = ceiling(range(x)[1])
+k2 = floor(range(x)[2]-1)
+k = 0.5  # k为刻度
+for (i in seq(k1,k2,k)) {
+  n = 10
+  if(i == 0 ) next()  # 跳过原点
+  lines(rep(i,n),seq(0,k*0.3,length.out = n),type = &quot;l&quot;)  # 垂直X轴的直线长度
+  text(i,-(max(x) - min(x) )*0.1,i)
+}
+
+# 画y轴刻度
+k1 =ceiling(range(y)[1]) 
+k2 = floor(range(y)[2]-1)
+k = 1
+for (i in seq(k1,k2,k)) {
+  n = 10
+  if(i == 0 ) next()
+  lines(seq(0,k*0.05,length.out = n),rep(i,n),type = &quot;l&quot;)
+  text(-0.02*(max(x)-min(x)),i,i)
+}
+
+## 画原点
+text(-0.02*(max(x)-min(x)),-(max(x) - min(x))*0.1,&quot;0&quot;)
+
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1598030038762.png" alt="" loading="lazy"></figure>
+<h1 id="参考文献">参考文献</h1>
+<div id="refer-anchor-1"></div>
+<p>[1] https://www.zsccy.xyz/post/2019-04-26-rplotarrows/</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[ggplot画图]]></title>
-        <id>https://kokomole.github.io/post/sZ6lMB3-6/</id>
-        <link href="https://kokomole.github.io/post/sZ6lMB3-6/">
+        <id>https://kokomole.github.io/post/ggplot-note/</id>
+        <link href="https://kokomole.github.io/post/ggplot-note/">
         </link>
         <updated>2020-08-11T15:40:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="主题设置">主题设置</h1>
-<ul>
-<li>一套常用主题</li>
-</ul>
-<pre><code>mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
+        <content type="html"><![CDATA[<h1 id="1-主题设置">1. 主题设置</h1>
+<h2 id="11-一套常用主题">1.1 一套常用主题</h2>
+<pre><code class="language-R">mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
                  panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25),
                  panel.background = element_blank(),
                  panel.border = element_rect(fill=NA,color = &quot;black&quot;),
@@ -105,10 +126,8 @@
                  strip.background = element_rect(color = &quot;black&quot;))
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1597161252037.png" alt="" loading="lazy"></figure>
-<ul>
-<li>画板（Panel）</li>
-</ul>
-<pre><code># 网格线（grid）
+<h2 id="12-画板panel">1.2 画板（Panel）</h2>
+<pre><code class="language-R"># 网格线（grid）
 panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25) # 主要网格线
 panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25) # 次要网格线
 # 无网格线
@@ -121,10 +140,8 @@ panel.background = element_blank()
 panel.border = element_rect(fill=NA,color = &quot;black&quot;)
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1597161263926.jpg" alt="" loading="lazy"></figure>
-<ul>
-<li>条带（Strip）</li>
-</ul>
-<pre><code># 边界颜色（color）建议用黑色
+<h2 id="13-条带strip">1.3 条带（Strip）</h2>
+<pre><code class="language-R"># 边界颜色（color）建议用黑色
 # 填充色（fill）建议用默认的灰色，或设为白色
 strip.background = element_rect(color = &quot;black&quot;)
 strip.background.x = element_rect(color = &quot;black&quot;,fill = &quot;white&quot;)
@@ -134,10 +151,8 @@ strip.background.y = element_rect(color = &quot;black&quot;)
 strip.placement = &quot;outside&quot;
 </code></pre>
 <figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1597161273003.png" alt="" loading="lazy"></figure>
-<ul>
-<li>图例（Legend）</li>
-</ul>
-<pre><code># 位置：建议放底部
+<h2 id="14-图例legend">1.4 图例（Legend）</h2>
+<pre><code class="language-R"># 位置：建议放底部
 legend.position = &quot;bottom&quot;
 
 # 图标：建议设为空白
@@ -147,10 +162,8 @@ legend.key = element_blank()
 legend.background = element_rect(color = &quot;black&quot;),
 </code></pre>
 <figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
-<ul>
-<li>字体字号</li>
-</ul>
-<pre><code># 字体设置
+<h2 id="15-字体字号">1.5 字体字号</h2>
+<pre><code class="language-R"># 字体设置
 windowsFonts(Times=windowsFont(&quot;Times New Roman&quot;)) # 将Windows系统中的某字体赋值给Times
 
 # 统一设置：使用text()，各元素也可在各个地方分别设置
@@ -170,8 +183,8 @@ strip.text.y = element_text(size = 10)
     </entry>
     <entry>
         <title type="html"><![CDATA[GitHub使用笔记]]></title>
-        <id>https://kokomole.github.io/post/Np4gd15X1/</id>
-        <link href="https://kokomole.github.io/post/Np4gd15X1/">
+        <id>https://kokomole.github.io/post/github-note/</id>
+        <link href="https://kokomole.github.io/post/github-note/">
         </link>
         <updated>2020-07-31T17:31:36.000Z</updated>
         <content type="html"><![CDATA[<h1 id="github本地仓库配置">GitHub本地仓库配置</h1>
@@ -219,26 +232,37 @@ git config --global user.email &quot;xxx@xxx.com&quot;
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[NONMEM的一些使用笔记]]></title>
-        <id>https://kokomole.github.io/post/slThQw6eD/</id>
-        <link href="https://kokomole.github.io/post/slThQw6eD/">
+        <title type="html"><![CDATA[NONMEM笔记]]></title>
+        <id>https://kokomole.github.io/post/NM-note/</id>
+        <link href="https://kokomole.github.io/post/NM-note/">
         </link>
         <updated>2020-07-26T15:53:42.000Z</updated>
         <content type="html"><![CDATA[<h1 id="id可识别位数的设置">ID可识别位数的设置</h1>
-<h3 id="问题描述">问题描述</h3>
+<h2 id="问题描述">问题描述</h2>
 <p>在NM7中，<code>ID</code>的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”的受试者，在输出的结果表格里全部显示为“101000”，即从第6位开始的都无法识别。</p>
-<h3 id="原因解析">原因解析</h3>
+<h2 id="原因解析">原因解析</h2>
 <p>NM使用Fortran语言编写，输出表格所有字段的默认格式是<code>s1PE11.4</code>。此格式为科学计数法，允许11个字符的总宽度，包括符号和小数位数。小数点前面有1位，后面有4位，示例如下：-1.2345E+01。因此，在默认设置下，最多显示识别5位数字。</p>
-<h3 id="解决方案">解决方案</h3>
+<h2 id="解决方案">解决方案</h2>
 <p>使用<code>LFORMAT</code>和<code>RFORMAT</code>选项来对数据的位数进行设置。在<code>$TABLE</code>模块加入以下代码：</p>
 <pre><code>$TABLE ID DOSE WT TIME NOPRINT 
 FILE=./filename.tbl
 RFORMAT=&quot;(F15.0,&quot; 
 RFORMAT=&quot;7(s1PE11.4))&quot;
 </code></pre>
-<p>代码的第1行是我们需要输出的4个变量：<code>ID</code>、<code>DOSE</code>、<code>WT</code>、<code>TIME</code>；第2行是输出表格的路径及文件名。</p>
-<p>在第3行，我们对第1个变量（即<code>ID</code>）的格式进行了设置。Fortran的浮点数表示格式为<code>Fw.d</code>，整数部分有w个字符，小数部分有d个字符。因此代码中的<code>F15.0</code>表示<code>ID</code>是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位<code>ID</code>的使用。</p>
-<p>在第4行，我们将剩下的变量设置为仍然使用默认格式<code>s1PE11.4</code>。前面的<code>7</code>表示除了第1个<code>ID</code>之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以是7，是因为除了自己定义输出的<code>DOSE</code>、<code>WT</code>、<code>TIME</code>外，通常会自动输出<code>DV</code>、<code>PRED</code>、<code>RES</code>、<code>WRES</code>这4个变量，所以很多时候在设置变量数时需要加4。</p>
+<p>代码的第1行是我们需要输出的4个变量：ID、DOSE、WT、TIME；第2行是输出表格的路径及文件名。</p>
+<p>在第3行，我们对第1个变量（即ID）的格式进行了设置。Fortran的浮点数表示格式为<code>Fw.d</code>，整数部分有w个字符，小数部分有d个字符。因此代码中的<code>F15.0</code>表示ID是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位ID的使用。</p>
+<p>在第4行，我们将剩下的变量设置为仍然使用默认格式<code>s1PE11.4</code>。前面的<code>7</code>表示除了第1个ID之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以是7，是因为除了自己定义输出的DOSE、WT、TIME外，通常会自动输出<code>DV</code>、<code>PRED</code>、<code>RES</code>、<code>WRES</code>这4个变量，所以很多时候在设置变量数时需要加4。</p>
+<h1 id="pirana">Pirana</h1>
+<ul>
+<li>查看正在进行的任务</li>
+</ul>
+<pre><code>qstat -f
+</code></pre>
+<ul>
+<li>结束任务xxx</li>
+</ul>
+<pre><code>qdel xxx
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -392,16 +416,16 @@ RFORMAT=&quot;7(s1PE11.4))&quot;
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[SCM]]></title>
+        <title type="html"><![CDATA[PsN笔记之一——SCM]]></title>
         <id>https://kokomole.github.io/post/SCM/</id>
         <link href="https://kokomole.github.io/post/SCM/">
         </link>
         <updated>2020-07-11T07:19:56.000Z</updated>
         <content type="html"><![CDATA[<p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
-<pre><code>SCM -config_file = xxx.scm
+<pre><code>SCM -config_file=xxx.scm
 </code></pre>
 <p>同时需要一份SCM文件，示例如下：</p>
-<pre><code>model = 3.mod
+<pre><code class="language-Fortran">model = 3.mod
 search_direction = both
 p_forward = 0.05
 p_backward = 0.01
@@ -419,9 +443,9 @@ categorical = 1,2
 [code]
 CL:AST-5 = exponential
 </code></pre>
-<h1 id="数据文件与控制文件">数据文件与控制文件</h1>
+<h1 id="1-数据文件与控制文件">1. 数据文件与控制文件</h1>
 <p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxxx</code>的形式。</p>
-<h1 id="基本变量">基本变量</h1>
+<h1 id="2-基本变量">2. 基本变量</h1>
 <h2 id="必需的变量">必需的变量</h2>
 <table>
 <thead>
@@ -466,7 +490,7 @@ CL:AST-5 = exponential
 $SIGMA
 	1 FIX
 </code></pre>
-<h1 id="scm文件的配置">SCM文件的配置</h1>
+<h1 id="3-scm文件的配置">3. SCM文件的配置</h1>
 <h2 id="test_relations">[test_relations]</h2>
 <p>定义协变量应该加到哪个参数上。</p>
 <h2 id="valid_states">[valid_states]</h2>
@@ -522,7 +546,7 @@ $SIGMA
 <p>定义在一开始就加入的协变量。示例：</p>
 <pre><code>CL = WT-2,AGE-4
 </code></pre>
-<h1 id="结果文件">结果文件</h1>
+<h1 id="4-结果文件">4. 结果文件</h1>
 <h2 id="logfile">logfile</h2>
 <p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
 ]]></content>
@@ -583,13 +607,12 @@ $SIGMA
 </li>
 </ul>
 <p>无缝设计</p>
-<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1593877760604.jpg" alt="图片" width="300" height="300" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[利用Python绘制血药浓度-时间曲线]]></title>
-        <id>https://kokomole.github.io/post/WHuL6tMJp/</id>
-        <link href="https://kokomole.github.io/post/WHuL6tMJp/">
+        <id>https://kokomole.github.io/post/python-pkcurve/</id>
+        <link href="https://kokomole.github.io/post/python-pkcurve/">
         </link>
         <updated>2020-03-28T15:15:49.000Z</updated>
         <content type="html"><![CDATA[<p>血药浓度-时间曲线一般是通过拟合所测定的血药浓度点而画出来的，但是在某些时候，如阅读文献时，我们需要根据别人报道的PK参数来画出药时曲线。Python语法简单，拥有丰富的开源库，下面尝试通过Python来根据已知的血药浓度公式绘制药时曲线。</p>
@@ -623,7 +646,7 @@ plt.ylabel('c (ng/ml)')
 plt.show()
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1585409307541.png" alt="" loading="lazy"></figure>
-<h1 id="12-多剂量给药">1.2 多剂量给药</h1>
+<h2 id="12-多剂量给药">1.2 多剂量给药</h2>
 <p>单剂量搞定，下面考虑多剂量给药的图形。对于多剂量给药，我们一般需要使血药浓度达到稳态。</p>
 <p>以model1为例，首先求算其表达式。设置给药间隔<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi><mo>=</mo><mn>5</mn><mi>h</mi></mrow><annotation encoding="application/x-tex">\tau =5h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord mathdefault">h</span></span></span></span>，给药次数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">n=10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>。在第1个给药周期内，其血药浓度为第1次给药后的浓度；在第2个给药周期内，其血药浓度为第1次给药后5~10 h内的浓度加上第2次给药后0~5 h内的浓度；以此类推。显然，多剂量给药，其体内药量是一个分段函数：</p>
 <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi>X</mi><mn>0</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mi>t</mi></mrow></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> </mtext><mi>n</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>5</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi>X</mi><mn>0</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>1</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>5</mn><mo>)</mo></mrow></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> </mtext><mi>n</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mn>5</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>10</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi>X</mi><mn>0</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>1</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>5</mn><mo>)</mo></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>2</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>10</mn><mo>)</mo></mrow></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> </mtext><mi>n</mi><mo>=</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>10</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mo>⋯</mo></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msub><mi>X</mi><mn>0</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mi>t</mi></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>1</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>5</mn><mo>)</mo></mrow></msup><mo>+</mo><msub><mi>X</mi><mn>2</mn></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>(</mo><mi>t</mi><mo>−</mo><mn>10</mn><mo>)</mo></mrow></msup><mo>+</mo><mo>⋯</mo><mo>+</mo><msub><mi>X</mi><mi>n</mi></msub><mo>⋅</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>k</mi><mo>⋅</mo><mo>[</mo><mi>t</mi><mo>−</mo><mn>5</mn><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>]</mo></mrow></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> </mtext><mi>n</mi><mo>=</mo><mi>n</mi><mo separator="true">,</mo><mn>5</mn><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>5</mn><mi>n</mi></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{cases}
@@ -783,7 +806,7 @@ plt.show()
 <li>model3：Yoo2012</li>
 <li>model4：JSM2016</li>
 </ol>
-<p>#2.1 model1单剂量</p>
+<h2 id="21-model1单剂量">2.1 model1单剂量</h2>
 <p>先解决绘制model1的问题。文献中给出了隔室模型的示意图：</p>
 <figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1585410469035.png" alt="" loading="lazy"></figure>
 <p>根据上图，写出微分方程组：</p>
@@ -886,7 +909,7 @@ eq=y(x).diff(x,1)-3.4*exp(-1.7*x)+0.148*y(x)
 print(dsolve(Eq(eq,0),y(x)))
 </code></pre>
 <p>结果依然如此。错误的原因我还没有找到，此问题悬而未决。对于问题二，目前我也没找到相关的方法，也有待解决。</p>
-<h1 id="22-model1多剂量">2.2 model1多剂量</h1>
+<h2 id="22-model1多剂量">2.2 model1多剂量</h2>
 <p>画出了model1的单剂量给药的血药浓度图，多剂量该如何画呢？参考画一室模型多剂量给药的方法，先生成散点，由于没有借助通式，代码非常长。</p>
 <pre><code># Feng2008 多剂量
 
@@ -1102,7 +1125,7 @@ plt.show()
 <p>此段代码过于冗长，有待优化。</p>
 <p>图形如下：</p>
 <figure data-type="image" tabindex="7"><img src="https://kokomole.github.io/post-images/1585410770297.png" alt="" loading="lazy"></figure>
-<h1 id="23-model2-3-4">2.3 model2、3、4</h1>
+<h2 id="23-model2-3-4">2.3 model2、3、4</h2>
 <p>model1完成，下面画model2、3、4，步骤几乎完全一样，只是模型稍有不同。model2的模型和model1完全一致；model3中，利培酮多了一个周边室，是一个三室模型，所以方程更复杂一点；</p>
 <figure data-type="image" tabindex="8"><img src="https://kokomole.github.io/post-images/1585410902053.png" alt="" loading="lazy"></figure>
 <p>model4中吸收部位有一个向9-羟利培酮转化的过程。</p>
@@ -1113,17 +1136,16 @@ plt.show()
 <img src="https://kokomole.github.io/post-images/1585411064296.png" alt="" loading="lazy"></p>
 <p>将4篇文献中的总浓度画在同一张图上，可以比较4个模型的稳态血药浓度范围：</p>
 <figure data-type="image" tabindex="10"><img src="https://kokomole.github.io/post-images/1585411099649.png" alt="" loading="lazy"></figure>
-<p>根据客户即可</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[优化采样]]></title>
-        <id>https://kokomole.github.io/post/optimal-sampling-theory/</id>
-        <link href="https://kokomole.github.io/post/optimal-sampling-theory/">
+        <id>https://kokomole.github.io/post/optimal-sampling/</id>
+        <link href="https://kokomole.github.io/post/optimal-sampling/">
         </link>
         <updated>2020-03-27T19:45:27.000Z</updated>
         <content type="html"><![CDATA[<h1 id="费雪信息">费雪信息</h1>
-<p>有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个独立同分布（i.i.d）的观测样本<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>X</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>X</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">X_1,X_2,\cdots,X_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，它们服从概率分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>X</mi><mo separator="true">,</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(X,\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>为概率分布表达式中的一个未知参数，它是一个标量。由于这<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>次观测是互相独立的，则运用概率的乘法公式，可计算出在参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>的条件下，从分布中经随机抽样得到上述<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个样本的概率：</p>
+<p>有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个独立同分布（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi mathvariant="normal">.</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">i.i.d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord">.</span><span class="mord mathdefault">d</span></span></span></span>）的观测样本<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>X</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>X</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">X_1,X_2,\cdots,X_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，它们服从概率分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>X</mi><mo separator="true">,</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(X,\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>为概率分布表达式中的一个未知参数，它是一个标量。由于这<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>次观测互相独立，则运用概率的乘法公式，可计算出在参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>的条件下，从分布中经随机抽样得到上述<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个样本的概率：</p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><mi>X</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>)</mo><mo>=</mo><mi>f</mi><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo><mo>⋅</mo><mi>f</mi><mo>(</mo><msub><mi>X</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo><mo>⋯</mo><mi>f</mi><mo>(</mo><msub><mi>X</mi><mi>n</mi></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(X|\theta)=f(X_1,\theta)\cdot f(X_2,\theta)\cdots f(X_n,\theta)=\prod_{i=1}^{n}f(X_i,\theta)
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span></span></p>
 <p>我们将这个概率称为似然函数（likelihood），即</p>
@@ -1151,7 +1173,7 @@ plt.show()
 （3）费雪信息是MLE估计方程的方差，即：</p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mo>(</mo><mi>θ</mi><mo>)</mo><mo>=</mo><mi>V</mi><mi>a</mi><mi>r</mi><mo>(</mo><mi>S</mi><mo>(</mo><mi>X</mi><mo separator="true">,</mo><mi>θ</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">I(\theta)=Var(S(X,\theta))
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
-<p>通过观察，可以发现费雪信息<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">I(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的表达式是将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">S(X_i,\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>求和之后再求方差的形式；而对于2个独立样本<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>，有：</p>
+<p>通过观察，可以发现费雪信息<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">I(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的表达式是将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">S(X_i,\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>求和之后再求方差的形式；而对于2个独立样本<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>，有</p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>a</mi><mi>r</mi><mo>(</mo><mi>X</mi><mo>+</mo><mi>Y</mi><mo>)</mo><mo>=</mo><mi>V</mi><mi>a</mi><mi>r</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>+</mo><mi>V</mi><mi>a</mi><mi>r</mi><mo>(</mo><mi>Y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Var(X+Y)=Var(X)+Var(Y)
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mclose">)</span></span></span></span></span></p>
 <p>我们称为“和的方差等于方差之和”。也就是说<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">I(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>实际上是一个求和的形式。当独立观测的次数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>越多时，费雪信息就越大，即得到的关于总体参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>信息越多，对其估计越准确，这也是符合常理的。</p>

@@ -1,0 +1,286 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>R基础画图 | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598030169943">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="R基础画图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="常用命令
+
+设置初始环境
+
+opar&lt;-par(no.readonly=TRUE)
+par(mfrow=c(1,2))
+par(opar)
+
+
+画显函数图像
+
+# Sigmoid function
+curve(1/(1+exp(-x)..." />
+    <meta name="keywords" content="R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598030169943" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              R基础画图
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-22
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://kokomole.github.io/tag/5HFVLJKS7/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="常用命令">常用命令</h1>
+<ul>
+<li>设置初始环境</li>
+</ul>
+<pre><code>opar&lt;-par(no.readonly=TRUE)
+par(mfrow=c(1,2))
+par(opar)
+</code></pre>
+<ul>
+<li>画显函数图像</li>
+</ul>
+<pre><code># Sigmoid function
+curve(1/(1+exp(-x)),-10,10,main=&quot;Sigmoid function&quot;)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1598029780311.png" alt="" loading="lazy"></figure>
+<ul>
+<li>分布直方图 + 概率密度曲线</li>
+</ul>
+<pre><code>THETA &lt;- rnorm(100000,mean = -1.48,sd = 0.8056)
+hist(THETA, freq=FALSE, breaks=50 ,main = &quot;THETA&quot;) 
+lines(density(THETA), col=&quot;blue&quot;, lwd=2)
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1598029857300.png" alt="" loading="lazy"></figure>
+<ul>
+<li>在已有的图上画曲线；增加图例</li>
+</ul>
+<pre><code>c &lt;- seq(0,100,0.01)
+RO1 &lt;- c/(2+c); RO2 &lt;- c/(4+c); RO3 &lt;- c/(8+c)
+plot(c,RO1,type = &quot;l&quot;,col=&quot;black&quot;,xlab = &quot;C&quot;,ylab = &quot;RO&quot;)
+lines(c,RO2,col=&quot;red&quot;); lines(c,RO3,col=&quot;blue&quot;)
+legend.txt &lt;- c(&quot;KD=2&quot;,&quot;KD=4&quot;,&quot;KD=8&quot;)
+legend(60,0.6,legend.txt,col = c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;),lty=1)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1598029883325.png" alt="" loading="lazy"></figure>
+<h1 id="坐标轴加箭头">坐标轴加箭头</h1>
+<p>在R的基础画图系统中，将原坐标轴改成笛卡尔坐标系的方法是：去掉原坐标轴，自己绘制坐标轴<a href="#refer-anchor-1"><sup>1</sup></a>。</p>
+<p>可以先利用<code>axes=F</code>设置不显示坐标轴，再利用<code>arrows()</code>增加箭头，参数的顺序依次为x轴最小值，y轴最小值，x轴最大值，y轴最大值。</p>
+<pre><code>x1&lt;-seq(0,8,0.001)
+y1&lt;-x1
+plot(x1,y1,type = &quot;l&quot;,bty=&quot;l&quot;,xlim = c(0,9),ylim = c(0,9),axes = F)  # 设置不显示坐标轴
+arrows(c(0,0),c(0,0),c(0,9),c(9,0),0.05)  # 增加箭头
+lines(c(7,7),c(0,7),lty=2)
+lines(c(0,7),c(7,7),lty=2)
+title(main=&quot;Figure C&quot;)
+points(7,7,cex=1.5,pch=16)
+text(7.5,6.5,&quot;A&quot;)
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1598030007395.png" alt="" loading="lazy"></figure>
+<p>此时需要自己手动添加坐标轴刻度。</p>
+<pre><code>x &lt;- seq(-1, 2, by=0.01)
+y &lt;- 0.5*x - 0.3*x^2 + 0.4*x^3
+plot(x, y, type=&quot;l&quot;, xaxt='n', yaxt='n', bty='n', xlab='', ylab='', col=&quot;blue&quot;)
+
+# 箭头
+arrows(min(x), 0, max(x), 0, lwd=1, length=0.15)
+arrows(0, min(y), 0, max(y), lwd=1, length=0.15)
+text(max(x)-0.3, -0.3,&quot;X  axis&quot;)
+text(-0.4, max(y)-0.2,&quot;Y axis&quot;)
+
+# 画x轴刻度
+k1 = ceiling(range(x)[1])
+k2 = floor(range(x)[2]-1)
+k = 0.5  # k为刻度
+for (i in seq(k1,k2,k)) {
+  n = 10
+  if(i == 0 ) next()  # 跳过原点
+  lines(rep(i,n),seq(0,k*0.3,length.out = n),type = &quot;l&quot;)  # 垂直X轴的直线长度
+  text(i,-(max(x) - min(x) )*0.1,i)
+}
+
+# 画y轴刻度
+k1 =ceiling(range(y)[1]) 
+k2 = floor(range(y)[2]-1)
+k = 1
+for (i in seq(k1,k2,k)) {
+  n = 10
+  if(i == 0 ) next()
+  lines(seq(0,k*0.05,length.out = n),rep(i,n),type = &quot;l&quot;)
+  text(-0.02*(max(x)-min(x)),i,i)
+}
+
+## 画原点
+text(-0.02*(max(x)-min(x)),-(max(x) - min(x))*0.1,&quot;0&quot;)
+
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1598030038762.png" alt="" loading="lazy"></figure>
+<h1 id="参考文献">参考文献</h1>
+<div id="refer-anchor-1"></div>
+<p>[1] https://www.zsccy.xyz/post/2019-04-26-rplotarrows/</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">常用命令</a></li>
+<li><a href="#%E5%9D%90%E6%A0%87%E8%BD%B4%E5%8A%A0%E7%AE%AD%E5%A4%B4">坐标轴加箭头</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">参考文献</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/ggplot-note/">
+              <h3 class="post-title">
+                ggplot画图
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

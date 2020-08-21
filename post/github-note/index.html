@@ -2,19 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Kokomo</title>
+<title>GitHub使用笔记 | Kokomo</title>
 <link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598030169943">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="GitHub使用笔记 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="博主是谁
-按照惯例，这里应是一段洋洋洒洒的自我介绍，但本人从来都不擅长此环节。一方面由于博主对于“我是谁”的哲学问题一直欠缺深入的思考，另一方面则是因为博主的个人履历实在太过潦草，真正写起来总会发现“言之无物”，难以下笔。
-所以仔细想来，这..." />
-    <meta name="keywords" content="" />
+    <meta name="description" content="GitHub本地仓库配置
+
+
+输入用户名和邮箱
+git config --global user.name &quot;xxx&quot;
+git config --global user.email &quot;xxx@xxx.com&q..." />
+    <meta name="keywords" content="Git" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -88,39 +91,72 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              GitHub使用笔记
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-08-01
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
+              
+                <a href="https://kokomole.github.io/tag/FCB0GewSO/" class="post-tag">
+                  # Git
+                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="博主是谁">博主是谁</h2>
-<p>按照惯例，这里应是一段洋洋洒洒的自我介绍，但本人从来都不擅长此环节。一方面由于博主对于“<strong>我是谁</strong>”的哲学问题一直欠缺深入的思考，另一方面则是因为博主的个人履历实在太过潦草，真正写起来总会发现“言之无物”，难以下笔。</p>
-<p>所以仔细想来，这个一直以来的“老大难”环节，恐怕是因为本人怯于面对这个废柴的自己吧。</p>
-<blockquote>
-<p>因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己是明珠，而不能与瓦砾碌碌为伍。遂逐渐远离世间，疏避人群，结果在内心不断地用愤懑和羞怒饲育着自己懦弱的自尊心。</p>
-<p>世界上每个人都是驯兽师吧，而那匹猛兽，就是每人各自的性情。如今想起来，我真是空费了自己那一点仅有的才能，徒然在口头上卖弄着什么“人生一世一事不为则太长，欲为一事则太短”的警句。可事实是，唯恐暴露才华不足的卑怯的畏惧、和厌恶钻研刻苦的惰怠，就是我的全部了。</p>
-</blockquote>
-<h2 id="关于本站">关于本站</h2>
-<p>本博客使用<a href="https://github.com/getgridea/gridea">Gridea</a>配置，作者是<a href="https://fehey.com/">Eryou Hao</a>。</p>
+                <h1 id="github本地仓库配置">GitHub本地仓库配置</h1>
+<ol>
+<li>
+<p>输入用户名和邮箱</p>
+<pre><code>git config --global user.name &quot;xxx&quot;
+git config --global user.email &quot;xxx@xxx.com&quot;
+</code></pre>
+</li>
+<li>
+<p>验证</p>
+<pre><code>git config --list --global
+</code></pre>
+</li>
+<li>
+<p>初始化仓库</p>
+<pre><code>git init
+</code></pre>
+</li>
+<li>
+<p>建立SSH</p>
+<pre><code>ssh-keygen -t rsa -C &quot;xxx@xxx.com&quot;
+</code></pre>
+</li>
+<li>
+<p>在本地用户目录下找到<code>.ssh</code>文件夹，复制<code>id_rsa.pub</code>文件的内容，在GitHub网站设置里新建ssh，将复制的内容贴进去</p>
+</li>
+<li>
+<p>测试是否连接成功</p>
+<pre><code>ssh -T git@github.com
+</code></pre>
+<p>由于所在网络防火墙的原因，这一步可能报错：ssh_exchange_identification: read: Connection reset by peer</p>
+</li>
+</ol>
+<p>此时已经完成与本地仓库的连接。</p>
+<h1 id="github的基本操作">GitHub的基本操作</h1>
+<ul>
+<li>
+<p>克隆项目</p>
+<pre><code>git clone url
+</code></pre>
+</li>
+</ul>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">博主是谁</a></li>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">关于本站</a></li>
-</ul>
-</li>
+<li><a href="#github%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E9%85%8D%E7%BD%AE">GitHub本地仓库配置</a></li>
+<li><a href="#github%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">GitHub的基本操作</a></li>
 </ul>
 
               </div>
@@ -128,6 +164,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/NM-note/">
+              <h3 class="post-title">
+                NONMEM笔记
+              </h3>
+            </a>
+          </div>
         
 
         

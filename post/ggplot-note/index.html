@@ -1,0 +1,265 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ggplot画图 | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598030169943">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="ggplot画图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1. 主题设置
+1.1 一套常用主题
+mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
+     ..." />
+    <meta name="keywords" content="R,ggplot2" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598030169943" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              ggplot画图
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-11
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://kokomole.github.io/tag/5HFVLJKS7/" class="post-tag">
+                  # R
+                </a>
+              
+                <a href="https://kokomole.github.io/tag/p-XbLjM2CJ/" class="post-tag">
+                  # ggplot2
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="1-主题设置">1. 主题设置</h1>
+<h2 id="11-一套常用主题">1.1 一套常用主题</h2>
+<pre><code class="language-R">mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
+                 panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25),
+                 panel.background = element_blank(),
+                 panel.border = element_rect(fill=NA,color = &quot;black&quot;),
+                 plot.title = element_text(hjust = 0.5),
+                 plot.subtitle = element_text(hjust = 0.5),
+                 plot.caption = element_text(),
+                 legend.position = &quot;bottom&quot;,
+                 legend.key = element_blank(),
+                 strip.background = element_rect(color = &quot;black&quot;))
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1597161252037.png" alt="" loading="lazy"></figure>
+<h2 id="12-画板panel">1.2 画板（Panel）</h2>
+<pre><code class="language-R"># 网格线（grid）
+panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25) # 主要网格线
+panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25) # 次要网格线
+# 无网格线
+panel.grid = element_blank()
+
+# 背景：建议用空白
+panel.background = element_blank()
+
+# 边界：建议用黑色
+panel.border = element_rect(fill=NA,color = &quot;black&quot;)
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1597161263926.jpg" alt="" loading="lazy"></figure>
+<h2 id="13-条带strip">1.3 条带（Strip）</h2>
+<pre><code class="language-R"># 边界颜色（color）建议用黑色
+# 填充色（fill）建议用默认的灰色，或设为白色
+strip.background = element_rect(color = &quot;black&quot;)
+strip.background.x = element_rect(color = &quot;black&quot;,fill = &quot;white&quot;)
+strip.background.y = element_rect(color = &quot;black&quot;)
+
+# 位置：建议用inside（默认，不用特别设置）
+strip.placement = &quot;outside&quot;
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1597161273003.png" alt="" loading="lazy"></figure>
+<h2 id="14-图例legend">1.4 图例（Legend）</h2>
+<pre><code class="language-R"># 位置：建议放底部
+legend.position = &quot;bottom&quot;
+
+# 图标：建议设为空白
+legend.key = element_blank()
+
+# 背景：建议不设（默认），或边界用黑色
+legend.background = element_rect(color = &quot;black&quot;),
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
+<h2 id="15-字体字号">1.5 字体字号</h2>
+<pre><code class="language-R"># 字体设置
+windowsFonts(Times=windowsFont(&quot;Times New Roman&quot;)) # 将Windows系统中的某字体赋值给Times
+
+# 统一设置：使用text()，各元素也可在各个地方分别设置
+text = element_text(family=&quot;Times&quot;, face=&quot;bold&quot;, size=12)
+
+# 标题
+plot.title = element_text(hjust = 0.5) # 标题居中
+plot.subtitle = element_text(hjust = 0.5) # 副标题
+plot.caption = element_text() # 说明文字
+
+# 各元素
+axis.title.x = element_text(size = 10)
+strip.text.y = element_text(size = 10)
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1597161290232.jpg" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#1-%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE">1. 主题设置</a>
+<ul>
+<li><a href="#11-%E4%B8%80%E5%A5%97%E5%B8%B8%E7%94%A8%E4%B8%BB%E9%A2%98">1.1 一套常用主题</a></li>
+<li><a href="#12-%E7%94%BB%E6%9D%BFpanel">1.2 画板（Panel）</a></li>
+<li><a href="#13-%E6%9D%A1%E5%B8%A6strip">1.3 条带（Strip）</a></li>
+<li><a href="#14-%E5%9B%BE%E4%BE%8Blegend">1.4 图例（Legend）</a></li>
+<li><a href="#15-%E5%AD%97%E4%BD%93%E5%AD%97%E5%8F%B7">1.5 字体字号</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/github-note/">
+              <h3 class="post-title">
+                GitHub使用笔记
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

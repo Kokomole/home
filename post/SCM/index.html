@@ -2,20 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SCM | Kokomo</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1597980618380">
+<title>PsN笔记之一——SCM | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598030169943">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="SCM | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="PsN笔记之一——SCM | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
     <meta name="description" content="SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：
-SCM -config_file = xxx.scm
+SCM -config_file=xxx.scm
 
 同时需要一份SCM文件，示例如下：
-model =..." />
+model = 3..." />
     <meta name="keywords" content="NONMEM,PsN" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -25,7 +25,7 @@ model =..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1597980618380" alt="">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598030169943" alt="">
   </a>
   <h1 class="site-title">
     Kokomo
@@ -90,7 +90,7 @@ model =..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              SCM
+              PsN笔记之一——SCM
             </h2>
             <div class="post-info">
               <span>
@@ -113,10 +113,10 @@ model =..." />
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
-<pre><code>SCM -config_file = xxx.scm
+<pre><code>SCM -config_file=xxx.scm
 </code></pre>
 <p>同时需要一份SCM文件，示例如下：</p>
-<pre><code>model = 3.mod
+<pre><code class="language-Fortran">model = 3.mod
 search_direction = both
 p_forward = 0.05
 p_backward = 0.01
@@ -134,9 +134,9 @@ categorical = 1,2
 [code]
 CL:AST-5 = exponential
 </code></pre>
-<h1 id="数据文件与控制文件">数据文件与控制文件</h1>
+<h1 id="1-数据文件与控制文件">1. 数据文件与控制文件</h1>
 <p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxxx</code>的形式。</p>
-<h1 id="基本变量">基本变量</h1>
+<h1 id="2-基本变量">2. 基本变量</h1>
 <h2 id="必需的变量">必需的变量</h2>
 <table>
 <thead>
@@ -181,7 +181,7 @@ CL:AST-5 = exponential
 $SIGMA
 	1 FIX
 </code></pre>
-<h1 id="scm文件的配置">SCM文件的配置</h1>
+<h1 id="3-scm文件的配置">3. SCM文件的配置</h1>
 <h2 id="test_relations">[test_relations]</h2>
 <p>定义协变量应该加到哪个参数上。</p>
 <h2 id="valid_states">[valid_states]</h2>
@@ -237,28 +237,28 @@ $SIGMA
 <p>定义在一开始就加入的协变量。示例：</p>
 <pre><code>CL = WT-2,AGE-4
 </code></pre>
-<h1 id="结果文件">结果文件</h1>
+<h1 id="4-结果文件">4. 结果文件</h1>
 <h2 id="logfile">logfile</h2>
 <p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%96%87%E4%BB%B6">数据文件与控制文件</a></li>
-<li><a href="#%E5%9F%BA%E6%9C%AC%E5%8F%98%E9%87%8F">基本变量</a>
+<li><a href="#1-%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%96%87%E4%BB%B6">1. 数据文件与控制文件</a></li>
+<li><a href="#2-%E5%9F%BA%E6%9C%AC%E5%8F%98%E9%87%8F">2. 基本变量</a>
 <ul>
 <li><a href="#%E5%BF%85%E9%9C%80%E7%9A%84%E5%8F%98%E9%87%8F">必需的变量</a></li>
 <li><a href="#%E5%8F%AF%E9%80%89%E7%9A%84%E5%8F%98%E9%87%8F">可选的变量</a></li>
 </ul>
 </li>
-<li><a href="#scm%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE">SCM文件的配置</a>
+<li><a href="#3-scm%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE">3. SCM文件的配置</a>
 <ul>
 <li><a href="#test_relations">[test_relations]</a></li>
 <li><a href="#valid_states">[valid_states]</a></li>
 <li><a href="#included_relations">[included_relations]</a></li>
 </ul>
 </li>
-<li><a href="#%E7%BB%93%E6%9E%9C%E6%96%87%E4%BB%B6">结果文件</a>
+<li><a href="#4-%E7%BB%93%E6%9E%9C%E6%96%87%E4%BB%B6">4. 结果文件</a>
 <ul>
 <li><a href="#logfile">logfile</a></li>
 </ul>
