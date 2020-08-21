@@ -1,0 +1,487 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PopPK绘图（1）——GOF图 | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598031401240">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="PopPK绘图（1）——GOF图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1. GOF图概述
+1.1 GOF图是什么？
+拟合优度（Goodness of fitness，GOF）图可以显示预测值对实测值的拟合程度。
+在对PopPK模型进行评价时，所用的GOF图主要包括以下4个：
+
+DV -  PRED
+DV - ..." />
+    <meta name="keywords" content="PopPK,ggplot2" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598031401240" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              PopPK绘图（1）——GOF图
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-22
+              </span>
+              <span>
+                11 min read
+              </span>
+              
+                <a href="https://kokomole.github.io/tag/UaOhGznwo/" class="post-tag">
+                  # PopPK
+                </a>
+              
+                <a href="https://kokomole.github.io/tag/p-XbLjM2CJ/" class="post-tag">
+                  # ggplot2
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="1-gof图概述">1. GOF图概述</h1>
+<h2 id="11-gof图是什么">1.1 GOF图是什么？</h2>
+<p>拟合优度（Goodness of fitness，GOF）图可以显示预测值对实测值的拟合程度。</p>
+<p>在对PopPK模型进行评价时，所用的GOF图主要包括以下4个：</p>
+<ul>
+<li>DV -  PRED</li>
+<li>DV - IPRED</li>
+<li>CWRES - PRED</li>
+<li>CWRES - TIME</li>
+</ul>
+<h2 id="12-画图步骤">1.2 画图步骤</h2>
+<h3 id="121-读入数据">1.2.1 读入数据</h3>
+<p>NM输出的表格第一行会带有<code>TABLE NO. 1</code>，因此读取时第一行要跳过：</p>
+<pre><code>data &lt;- read.table(&quot;final.fit&quot;,skip = 1,header = T)
+</code></pre>
+<p>由于NM数据文件的要求，每行对应不同的事件，因此在多次给药的PK数据中，后面的给药事件对应的DV是0，但实际上是有浓度的。这些点会对画图产生影响，需要去掉。</p>
+<pre><code>data &lt;- data[-which(data$DV==0),]
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1598030766361.png" alt="" loading="lazy"></figure>
+<h3 id="122-实测值-预测值">1.2.2 实测值 - 预测值</h3>
+<p>DV - PRED图和DV - IPRED图属于一类。一般包括以下元素：</p>
+<ul>
+<li>点：x轴坐标为PRED/IPRED，y轴坐标为DV</li>
+<li>回归曲线：通常用loess回归，光滑程度可以用<code>span</code>参数适当调节，可以选择是否显示回归曲线的置信区间</li>
+<li>参考线：经过原点的斜率为1的直线</li>
+</ul>
+<p>将x轴与y轴的范围设为一致，图形会美观一点，但是设定了范围就无法将使用对数坐标。</p>
+<pre><code>ggplot(data)+
+  geom_point(aes(x = PRED,y = DV),shape = 1,col = &quot;blue&quot;) +
+  geom_smooth(aes(x = PRED,y = DV),se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) + 
+  geom_abline(slope = 1,linetype = 2,col = &quot;black&quot;) +
+  labs(title = &quot;DV - PRED&quot;,x = &quot;PRED&quot;,y = &quot;DV&quot;) +
+  xlim(0,10) + ylim(0,10) +
+  mytheme 
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1598030794716.png" alt="" loading="lazy"></figure>
+<h3 id="123-cwres">1.2.3 CWRES</h3>
+<p>CWRES - PRED图和CWRES - TIME图属于一类。一般包括以下元素：</p>
+<ul>
+<li>点：x轴坐标为PRED/TIME，y轴坐标为CWRES</li>
+<li>回归曲线：通常用loess回归</li>
+<li>参考线：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mo>±</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">y=\pm 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">±</span><span class="mord">2</span></span></span></span></li>
+</ul>
+<p>这2张图不需要限定x轴或y轴的范围。</p>
+<pre><code>ggplot(data) +
+  geom_point(aes(x = TIME,y = CWRES),shape = 1,col = &quot;blue&quot;) +
+  geom_smooth(aes(x = TIME,y = CWRES),se = T,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+  geom_hline(aes(yintercept = 0),linetype = 2) +
+  geom_hline(aes(yintercept = -2),linetype = 2) +
+  geom_hline(aes(yintercept = 2),linetype = 2) +
+  labs(title = &quot;CWRES - TIME&quot;,x = &quot;TIME&quot;,y = &quot;CWRES&quot;) +
+  mytheme 
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1598030812116.png" alt="" loading="lazy"></figure>
+<h1 id="2-常用gof图模板">2. 常用GOF图模板</h1>
+<h2 id="21-gof图">2.1 GOF图</h2>
+<pre><code>plot_GOF &lt;- function(input_file){
+
+  data &lt;- read.table(input_file,skip = 1,header = T)
+  data &lt;- data[-which(data$DV==0),]
+  
+  # DV - PRED
+  p1 &lt;- ggplot(data,aes(x = PRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +  
+    geom_abline(slope = 1,linetype = 2,col = &quot;black&quot;) +
+    labs(x = &quot;PRED&quot;,y = &quot;DV&quot;) +
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+    
+  # DV - IPRED
+  p2 &lt;- ggplot(data,aes(x = IPRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_abline(slope = 1,linetype = 2) +
+    labs(x = &quot;IPRED&quot;,y = &quot;DV&quot;) +
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+    
+  # CWRES - PRED
+  p3 &lt;- ggplot(data,aes(x = PRED,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) +
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x = &quot;PRED&quot;,y = &quot;CWRES&quot;) +
+    mytheme 
+    
+  # CWRES - TIME
+  p4 &lt;- ggplot(data,aes(x = TIME,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept=0),linetype = 2) +
+    geom_hline(aes(yintercept=-2),linetype = 2) +
+    geom_hline(aes(yintercept=2),linetype = 2) +
+    labs(x = &quot;TIME&quot;,y = &quot;CWRES&quot;) +
+   mytheme 
+  
+  plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+}
+</code></pre>
+<pre><code>pdf(&quot;GOF-final.pdf&quot;,width = 7,height = 7)
+plot_GOF(input_file = &quot;final.fit&quot;)
+dev.off()
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1598030845194.png" alt="" loading="lazy"></figure>
+<h2 id="22-对数坐标">2.2 对数坐标</h2>
+<pre><code>plot_GOF &lt;- function(input_file,log){
+
+  data &lt;- read.table(input_file,skip = 1,header = T)
+  data &lt;- data[-which(data$DV==0),]
+  
+  p1 &lt;- ggplot(data,aes(x = PRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +  
+    geom_abline(slope = 1,linetype = 2,col = &quot;black&quot;) +
+    labs(x = &quot;PRED&quot;,y = &quot;DV&quot;) +
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+
+  p2 &lt;- ggplot(data,aes(x = IPRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_abline(slope = 1,linetype = 2) +
+    labs(x = &quot;IPRED&quot;,y = &quot;DV&quot;) +
+    xlim(0,10) + ylim(0,10) +
+    mytheme 
+
+  p3 &lt;- ggplot(data,aes(x = PRED,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) +
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x = &quot;PRED&quot;,y = &quot;CWRES&quot;) +
+    mytheme 
+
+  p4 &lt;- ggplot(data,aes(x = TIME,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept=0),linetype = 2) +
+    geom_hline(aes(yintercept=-2),linetype = 2) +
+    geom_hline(aes(yintercept=2),linetype = 2) +
+    labs(x = &quot;TIME&quot;,y = &quot;CWRES&quot;) +
+   mytheme 
+  
+  if (log==F) {
+    plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+  } else {
+    p1 &lt;- p1 + scale_x_log10() + scale_y_log10()
+    p2 &lt;- p2 + scale_x_log10() + scale_y_log10()
+    p3 &lt;- p3 + scale_x_log10() 
+    p4 &lt;- p4 + scale_x_log10()
+    plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+  }
+}
+</code></pre>
+<pre><code>plot_GOF(input_file = &quot;final.fit&quot;,log = T)
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1598030876823.png" alt="" loading="lazy"></figure>
+<h1 id="3-分组gof图">3. 分组GOF图</h1>
+<p>在某些情况下，如药物浓度含有总浓度和游离浓度，或纳入了来自不同来源的试验数据等，数据的模型拟合是同时进行的，但想看一下这些亚组各自的拟合效果，则需要对不同的实测值、预测值分别画GOF图。</p>
+<p>区分的方法主要有2种：</p>
+<ul>
+<li>画在同一张图里，用颜色、形状等区分</li>
+<li>画在不同的图里</li>
+</ul>
+<h2 id="31-使用颜色区分">3.1 使用颜色区分</h2>
+<p>区分变量为<code>FLAG</code>，它必须是一个向量。</p>
+<pre><code>plot_GOF_color &lt;- function(input_file){
+  
+  data &lt;- read.table(input_file,skip = 1,header = T)
+  data &lt;- data[-which(data$DV==0),]
+  data[,&quot;FLAG&quot;] &lt;- as.factor(data[,&quot;FLAG&quot;])
+  
+  p1 &lt;- ggplot(data,aes(x = PRED,y = DV,col = FLAG)) +
+    geom_point(shape = 1) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_abline(slope = 1,linetype = 2)+
+    labs(x = &quot;PRED&quot;,y = &quot;DV&quot;) +
+    mytheme + xlim(0,160) + ylim(0,160) +
+    scale_color_manual(values = c(&quot;blue&quot;,&quot;red&quot;),
+                       name = &quot;VPA concentraion&quot;,
+                       labels = c(&quot;total&quot;, &quot;unbound&quot;))
+  
+  p2 &lt;- ggplot(data,aes(x = IPRED,y = DV,col = FLAG)) +
+    geom_point(shape = 1) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_abline(slope = 1,linetype = 2) +
+    labs(x = &quot;IPRED&quot;,y = &quot;DV&quot;) +
+    mytheme + xlim(0,160) + ylim(0,160) +
+    scale_color_manual(values = c(&quot;blue&quot;,&quot;red&quot;),
+                       name = &quot;VPA concentraion&quot;,
+                       labels = c(&quot;total&quot;, &quot;unbound&quot;))
+  
+  p3 &lt;- ggplot(data,aes(x = PRED,y = CWRES,col = FLAG)) +
+    geom_point(shape = 1) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) +
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x = &quot;PRED&quot;,y = &quot;CWRES&quot;) +
+    mytheme +
+    scale_color_manual(values = c(&quot;blue&quot;,&quot;red&quot;),
+                       name =&quot;VPA concentraion&quot;,
+                       labels = c(&quot;total&quot;, &quot;unbound&quot;))
+  
+  p4 &lt;- ggplot(data,aes(x = TIME,y = CWRES,col = FLAG)) +
+    geom_point(shape = 1) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) +
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x = &quot;Time&quot;,y = &quot;CWRES&quot;) +
+    mytheme + 
+    scale_color_manual(values = c(&quot;blue&quot;,&quot;red&quot;),
+                       name = &quot;VPA concentraion&quot;,
+                       labels = c(&quot;total&quot;, &quot;unbound&quot;))
+  
+  plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+}
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://kokomole.github.io/post-images/1598030892704.png" alt="" loading="lazy"></figure>
+<h2 id="32-画在不同的图中">3.2 画在不同的图中</h2>
+<pre><code>plot_GOF &lt;- function(input_file){
+  
+  data &lt;- read.table(input_file,skip = 1,header = T)
+  data &lt;- data[-which(data$DV==0),]
+  data[,&quot;FLAG&quot;] &lt;- as.factor(data[,&quot;FLAG&quot;])
+  
+  p1 &lt;- ggplot(data,aes(x = PRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;)+
+    geom_abline(slope = 1,linetype = 2) +
+    labs(x=&quot;PRED&quot;,y=&quot;DV&quot;) +
+    mytheme +
+    facet_wrap(~FLAG,scales = &quot;free&quot;)
+  
+  p2 &lt;- ggplot(data,aes(x = IPRED,y = DV)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_abline(slope = 1,linetype = 2) +
+    labs(x=&quot;IPRED&quot;,y=&quot;DV&quot;)+
+    mytheme + 
+    facet_wrap(~FLAG,scales = &quot;free&quot;)
+  
+  p3 &lt;- ggplot(data,aes(x = PRED,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;) +
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) +
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x=&quot;PRED&quot;,y=&quot;CWRES&quot;) +
+    mytheme + 
+    facet_wrap(~FLAG,scales = &quot;free&quot;)
+  
+  p4 &lt;- ggplot(data,aes(x = TIME,y = CWRES)) +
+    geom_point(shape = 1,col = &quot;blue&quot;)+
+    geom_smooth(se = F,size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2) + 
+    geom_hline(aes(yintercept = -2),linetype = 2) +
+    geom_hline(aes(yintercept = 2),linetype = 2) +
+    labs(x = &quot;TIME&quot;,y = &quot;CWRES&quot;) +
+    mytheme +
+    facet_wrap(~FLAG,scales = &quot;free&quot;)
+  
+  plot_grid(p1,p2,p3,p4,ncol = 2,labels = LETTERS[1:4])
+}
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://kokomole.github.io/post-images/1598030906062.png" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#1-gof%E5%9B%BE%E6%A6%82%E8%BF%B0">1. GOF图概述</a>
+<ul>
+<li><a href="#11-gof%E5%9B%BE%E6%98%AF%E4%BB%80%E4%B9%88">1.1 GOF图是什么？</a></li>
+<li><a href="#12-%E7%94%BB%E5%9B%BE%E6%AD%A5%E9%AA%A4">1.2 画图步骤</a>
+<ul>
+<li><a href="#121-%E8%AF%BB%E5%85%A5%E6%95%B0%E6%8D%AE">1.2.1 读入数据</a></li>
+<li><a href="#122-%E5%AE%9E%E6%B5%8B%E5%80%BC-%E9%A2%84%E6%B5%8B%E5%80%BC">1.2.2 实测值 - 预测值</a></li>
+<li><a href="#123-cwres">1.2.3 CWRES</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-%E5%B8%B8%E7%94%A8gof%E5%9B%BE%E6%A8%A1%E6%9D%BF">2. 常用GOF图模板</a>
+<ul>
+<li><a href="#21-gof%E5%9B%BE">2.1 GOF图</a></li>
+<li><a href="#22-%E5%AF%B9%E6%95%B0%E5%9D%90%E6%A0%87">2.2 对数坐标</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%88%86%E7%BB%84gof%E5%9B%BE">3. 分组GOF图</a>
+<ul>
+<li><a href="#31-%E4%BD%BF%E7%94%A8%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86">3.1 使用颜色区分</a></li>
+<li><a href="#32-%E7%94%BB%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E5%9B%BE%E4%B8%AD">3.2 画在不同的图中</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/FIH/">
+              <h3 class="post-title">
+                FIH
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
