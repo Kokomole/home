@@ -524,8 +524,8 @@ td {
   font-size: 32px;
   font-family: "Georgia", "NSimSun";
   text-align: center;
-  padding: 24px 0;
-  letter-spacing: 0.02em;
+  padding: 0 0;
+  letter-spacing: 0.04em;
 }
 .post-detail .post .post-info {
   text-align: center;
@@ -603,17 +603,9 @@ td {
 .post-detail .post .post-content blockquote {
   color: rgba(0, 0, 0, 0.98);
   position: relative;
-  padding: 0.4em 0 0 2.2em;
+  padding: 0.4em 2.2em 0 2.2em;
   font-size: 0.96em;
   font-family: "KaiTi", "Times New Roman";
-}
-.post-detail .post .post-content blockquote:before {
-  position: absolute;
-  top: -4px;
-  left: 0;
-  content: "\201c";
-  font: 700 62px/1 serif;
-  color: rgba(0, 0, 0, 0.1);
 }
 .post-detail .post .post-content table {
   border-collapse: collapse;
@@ -835,7 +827,7 @@ td {
   flex: 1;
 }
 .archives-container .year {
-  font-size: 1.375rem;
+  font-size: 3rem;
   font-weight: bold;
   margin: 24px 0 16px;
   color: #868e96;
@@ -851,7 +843,7 @@ td {
   letter-spacing: 0.02em;
 }
 .archives-container .post .time {
-  font-size: 0.75rem;
+  font-size: 1.2rem;
   margin-top: 8px;
   color: #ced4da;
 }
