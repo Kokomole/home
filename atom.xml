@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-21T17:50:25.718Z</updated>
+    <updated>2020-08-23T01:22:39.212Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -11,8 +11,8 @@
     <rights>All rights reserved 2020, Kokomo</rights>
     <entry>
         <title type="html"><![CDATA[PopPK绘图（2）——参数-协变量关系图]]></title>
-        <id>https://kokomole.github.io/post/Wz3nMj3Nq/</id>
-        <link href="https://kokomole.github.io/post/Wz3nMj3Nq/">
+        <id>https://kokomole.github.io/post/ppkplot-par-cov/</id>
+        <link href="https://kokomole.github.io/post/ppkplot-par-cov/">
         </link>
         <updated>2020-08-21T17:30:01.000Z</updated>
         <content type="html"><![CDATA[<h1 id="1-参数-协变量关系图是什么">1. 参数 - 协变量关系图是什么？</h1>

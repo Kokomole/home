@@ -1,0 +1,443 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PopPK绘图（2）——参数-协变量关系图 | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598145725695">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="PopPK绘图（2）——参数-协变量关系图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1. 参数 - 协变量关系图是什么？
+1.1 PK参数的分布
+PopPK可以估计PK参数的变异。将PK参数视为随机变量，假设其服从或经对数变换后服从正态分布：
+θ∼N(θTV,ω2)\theta \sim N(\theta_{TV},\om..." />
+    <meta name="keywords" content="PopPK,ggplot2" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598145725695" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              PopPK绘图（2）——参数-协变量关系图
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-22
+              </span>
+              <span>
+                13 min read
+              </span>
+              
+                <a href="https://kokomole.github.io/tag/UaOhGznwo/" class="post-tag">
+                  # PopPK
+                </a>
+              
+                <a href="https://kokomole.github.io/tag/p-XbLjM2CJ/" class="post-tag">
+                  # ggplot2
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="1-参数-协变量关系图是什么">1. 参数 - 协变量关系图是什么？</h1>
+<h2 id="11-pk参数的分布">1.1 PK参数的分布</h2>
+<p>PopPK可以估计PK参数的变异。将PK参数视为随机变量，假设其服从或经对数变换后服从正态分布：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi><mo>∼</mo><mi>N</mi><mo>(</mo><msub><mi>θ</mi><mrow><mi>T</mi><mi>V</mi></mrow></msub><mo separator="true">,</mo><msup><mi>ω</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">\theta \sim N(\theta_{TV},\omega^2)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mord mathdefault mtight" style="margin-right:0.22222em;">V</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>模型会估计出这个正态分布的均值和方差，均值即为参数的群体典型值。将均值去掉之后，参数的个体间变异服从均值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，方差为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>ω</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\omega^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的正态分布：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi><mo>∼</mo><mi>N</mi><mo>(</mo><mn>0</mn><mo separator="true">,</mo><msup><mi>ω</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">\eta \sim N(0,\omega^2)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>参数的变异近似等于该正态分布的标准差：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>V</mi><mi mathvariant="normal">%</mi><mo>≈</mo><mi>ω</mi></mrow><annotation encoding="application/x-tex">CV \% \approx \omega
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord">%</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span></span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span></span></span></span>的分布如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1598031294821.png" alt="" loading="lazy"></figure>
+<h2 id="12-协变量">1.2 协变量</h2>
+<p>针对PK参数的分布，如果我们给其增加一个维度（如体重、基因型等），可能会发现这些值的分布会出现一定的趋势。</p>
+<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1598031278700.png" alt="" loading="lazy"></figure>
+<p>即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span></span></span></span>的值与体重、基因型等因素具有一定的相关性。如果这样的相关性具有显著的统计学意义，则将这样的因素称为显著协变量。所以画参数 - 协变量图，是为了可视化PK参数（变异）与潜在影响因素的相关性，为协变量的筛选提供参考。</p>
+<h1 id="2-参数-协变量关系图的绘制">2. 参数 - 协变量关系图的绘制</h1>
+<p>协变量有连续性和分类型2种：</p>
+<ul>
+<li>连续性协变量：以散点图呈现</li>
+<li>分类型协变量：以并列箱线图呈现</li>
+</ul>
+<h2 id="21-连续性协变量">2.1 连续性协变量</h2>
+<p>主要包括以下要素：</p>
+<ul>
+<li>散点：x轴坐标为协变量的值，y轴坐标为参数值（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>L</mi><mi mathvariant="normal">、</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">CL、V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">L</span><span class="mord cjk_fallback">、</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span>等）或参数的变异值（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span></span></span></span>）</li>
+<li>回归曲线：通常用loess回归</li>
+<li>参考线：y轴为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span></span></span></span>时，以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>为参考线</li>
+</ul>
+<pre><code>ggplot(data,aes(x = data[,&quot;WT&quot;],y = data[,&quot;ETA1&quot;])) +
+  geom_point(shape = 1,col = &quot;blue&quot;) +
+  geom_smooth(size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+  geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+  labs(x = &quot;WT&quot;,y = &quot;ETA1&quot;) +
+  mytheme
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1598031246961.png" alt="" loading="lazy"></figure>
+<h2 id="22-分类性协变量">2.2 分类性协变量</h2>
+<p>主要包括以下要素：</p>
+<ul>
+<li>箱体：按协变量的类型并列，为了美观可将errorbar画上</li>
+<li>散点：这里的散点是指箱线图上的抖动（jitter），将点画上去可以更好地表现数据的分布特征，尤其是在样本较少的情况下</li>
+<li>参考线：y轴为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">η</span></span></span></span>时，以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>为参考线</li>
+</ul>
+<pre><code>ggplot(data,aes(x=data[,&quot;CYP3A5&quot;],y=data[,&quot;ETA1&quot;])) +
+  stat_boxplot(geom = &quot;errorbar&quot;,width = 0.3,col = &quot;red&quot;,size = 1) +
+  geom_boxplot(show.legend = F,outlier.shape = 1,col = &quot;red&quot;,size = 1) +
+  geom_jitter(width = 0.15,shape = 1,col = &quot;blue&quot;) +
+  geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+  labs(x = &quot;CYP3A5&quot;,y = &quot;ETA1&quot;) +
+  mytheme
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1598031223914.png" alt="" loading="lazy"></figure>
+<h2 id="23-画图函数">2.3 画图函数</h2>
+<pre><code>plot_COV&lt;-function(input_file,cov,eta,ylab,type){
+  # 读取数据
+  data &lt;- read.table(input_file,skip = 1,header = T)
+  # 参数和协变量所对应的列
+  xcol &lt;- which(colnames(data)==cov)
+  ycol &lt;- which(colnames(data)==eta)
+  # 连续变量
+  if (type==&quot;co&quot;){
+    ggplot(data,aes(x = data[,xcol],y = data[,ycol])) +
+      geom_point(shape = 1,col = &quot;blue&quot;) +
+      geom_smooth(size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+      geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+      labs(x = cov,y = ylab) +
+      mytheme
+  } else {
+    # 分类变量
+    data[,xcol] &lt;- as.factor(data[,xcol])
+    ggplot(data,aes(x=data[,xcol],y=data[,ycol])) +
+    stat_boxplot(geom = &quot;errorbar&quot;,width = 0.3,col = &quot;red&quot;,size = 1) +
+    geom_boxplot(show.legend = F,outlier.shape = 1,col = &quot;red&quot;,size = 1) +
+    geom_jitter(width = 0.15,shape = 1,col = &quot;blue&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+    labs(x = cov,y = ylab) +
+    mytheme
+  }
+}
+</code></pre>
+<pre><code>plot_COV(input_file = &quot;1.fit&quot;,cov = &quot;WT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(input_file = &quot;1.fit&quot;,cov = &quot;CYP3A5&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+</code></pre>
+<h1 id="3-将所有图形画在一页">3. 将所有图形画在一页</h1>
+<h2 id="31-画图前的准备">3.1 画图前的准备</h2>
+<ul>
+<li>加载包</li>
+<li>设置主题</li>
+</ul>
+<pre><code>rm(list = ls())
+library(ggplot2)
+library(cowplot)
+
+mytheme &lt;- theme(panel.grid = element_blank(),
+                 panel.background = element_blank(),
+                 panel.border = element_rect(fill=NA,color = &quot;black&quot;),
+                 plot.title = element_text(hjust = 0.5,size = 12),
+                 axis.title.x = element_text(size = 10),
+                 axis.title.y = element_text(size = 10),
+                 legend.position = &quot;none&quot;)
+</code></pre>
+<h2 id="31-画图函数">3.1 画图函数</h2>
+<p><code>plot_COV</code>用于图形的绘制，包括数据、协变量名、参数名，坐标轴名称、协变量类型等参数。</p>
+<pre><code>plot_COV&lt;-function(data,cov,eta,ylab,type){
+
+  xcol &lt;- which(colnames(data)==cov)
+  ycol &lt;- which(colnames(data)==eta)
+  
+  if (type==&quot;co&quot;){
+    ggplot(data,aes(x = data[,xcol],y = data[,ycol])) +
+      geom_point(shape = 1,col = &quot;blue&quot;) +
+      geom_smooth(size = 1,method = &quot;loess&quot;,col = &quot;red&quot;) +
+      geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+      labs(x = cov,y = ylab) +
+      mytheme
+  } else {
+    data[,xcol] &lt;- as.factor(data[,xcol])
+    ggplot(data,aes(x=data[,xcol],y=data[,ycol])) +
+    stat_boxplot(geom = &quot;errorbar&quot;,width = 0.3,col = &quot;red&quot;,size = 1) +
+    geom_boxplot(show.legend = F,outlier.shape = 1,col = &quot;red&quot;,size = 1) +
+    geom_jitter(width = 0.15,shape = 1,col = &quot;blue&quot;) +
+    geom_hline(aes(yintercept = 0),linetype = 2,col = &quot;black&quot;,size = 1) +
+    labs(x = cov,y = ylab) +
+    mytheme
+  }
+}
+</code></pre>
+<h2 id="33-数据处理函数">3.3 数据处理函数</h2>
+<p><code>par_COV</code>用于对原数据进行整理，如数据范围限定、分类变量设置为因子类型、不同类别的名称设定等。在数据处理完毕后，会调用<code>plot_COV</code>函数进行画图，将所有的图形画好后拼接为一张图。</p>
+<pre><code>par_COV&lt;-function(input_file){
+  
+  fit &lt;- read.table(input_file,skip = 1,header = T)
+  fit&lt;-fit[-which(fit$ALP&gt;500|fit$GGT&gt;100|fit$SCR&gt;100),]
+  
+  # CYP3A5
+  fit[which(fit$CYP3A5==1),&quot;CYP3A5&quot;] &lt;- &quot;*1/*1&quot;
+  fit[which(fit$CYP3A5==2),&quot;CYP3A5&quot;] &lt;- &quot;*1/*3&quot;
+  fit[which(fit$CYP3A5==3),&quot;CYP3A5&quot;] &lt;- &quot;*3/*3&quot;
+  fit$CYP3A5 &lt;- as.factor(fit$CYP3A5)
+  fit$CYP3A5 &lt;- ordered(fit$CYP3A5,levels = c(&quot;*1/*1&quot;,&quot;*1/*3&quot;,&quot;*3/*3&quot;))
+  
+  # SEX
+  fit[which(fit$SEX==0),&quot;SEX&quot;] &lt;- &quot;Male&quot;
+  fit[which(fit$SEX==1),&quot;SEX&quot;] &lt;- &quot;Female&quot;
+  fit$SEX &lt;-as.factor(fit$SEX)
+  fit$SEX &lt;- ordered(fit$SEX,levels = c(&quot;Male&quot;,&quot;Female&quot;))
+  
+  # GQH
+  fit[which(fit$GQH==0),&quot;GQH&quot;]&lt;-&quot;No co-therapy&quot;
+  fit[which(fit$GQH==1),&quot;GQH&quot;]&lt;-&quot;Co-therapy&quot;
+  fit$GQH&lt;-as.factor(fit$GQH)
+  fit$GQH&lt;-ordered(fit$GQH,levels=c(&quot;Co-therapy&quot;,&quot;Not co-therapy&quot;))
+  
+  p1 &lt;- plot_COV(data = fit, cov = &quot;CYP3A5&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+  p2 &lt;- plot_COV(data = fit, cov = &quot;SEX&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+  p3 &lt;- plot_COV(data = fit, cov = &quot;GQH&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+  p4 &lt;- plot_COV(data = fit, cov = &quot;DD&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p5 &lt;- plot_COV(data = fit, cov = &quot;WT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p6 &lt;- plot_COV(data = fit, cov = &quot;DILT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p7 &lt;- plot_COV(data = fit, cov = &quot;TB&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p8 &lt;- plot_COV(data = fit, cov = &quot;AST&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p9 &lt;- plot_COV(data = fit, cov = &quot;ALP&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p10 &lt;- plot_COV(data = fit, cov = &quot;GGT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p11 &lt;- plot_COV(data = fit, cov = &quot;BUN&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p12 &lt;- plot_COV(data = fit, cov = &quot;SCR&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p13 &lt;- plot_COV(data = fit, cov = &quot;UA&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p14 &lt;- plot_COV(data = fit, cov = &quot;ALB&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+  p15 &lt;- plot_COV(data = fit, cov = &quot;CYSC&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+
+  plot_grid(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,nrow = 3)
+}
+</code></pre>
+<h2 id="34-图形输出">3.4 图形输出</h2>
+<p>设定原数据存放路径和画图结果输出路径，设置图片名。调用<code>par_COV</code>函数，将原数据名作为唯一参数，进行画图和结果输出。</p>
+<pre><code>setwd(&quot;C:/NMcode/TAC1/plot&quot;)  # 图片存放路径
+pdf(&quot;1-GOF.pdf&quot;,width = 16,height = 8)
+setwd(&quot;C:/NMcode/TAC1/model&quot;)  # 原数据存放路径
+par_COV(input_file = &quot;1.fit&quot;)
+dev.off()
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1598031187844.png" alt="" loading="lazy"></figure>
+<h1 id="4-将图形画在不同页">4. 将图形画在不同页</h1>
+<pre><code># 图片保存路径
+setwd(&quot;C:/NMcode/TAC1/plot&quot;)
+
+pdf(&quot;1-COV-P.pdf&quot;,width = 5,height = 4)
+
+# 数据读取与预处理
+setwd(&quot;C:/NMcode/TAC1/model&quot;)
+fit &lt;- read.table(&quot;1.fit&quot;,skip = 1,header = T)
+fit&lt;-fit[-which(fit$ALP&gt;500|fit$GGT&gt;100|fit$SCR&gt;100),]
+
+# 分类变量处理
+
+# CYP3A5
+fit[which(fit$CYP3A5==1),&quot;CYP3A5&quot;] &lt;- &quot;*1/*1&quot;
+fit[which(fit$CYP3A5==2),&quot;CYP3A5&quot;] &lt;- &quot;*1/*3&quot;
+fit[which(fit$CYP3A5==3),&quot;CYP3A5&quot;] &lt;- &quot;*3/*3&quot;
+fit$CYP3A5 &lt;- as.factor(fit$CYP3A5)
+fit$CYP3A5 &lt;- ordered(fit$CYP3A5,levels = c(&quot;*1/*1&quot;,&quot;*1/*3&quot;,&quot;*3/*3&quot;))
+# SEX
+fit[which(fit$SEX==0),&quot;SEX&quot;] &lt;- &quot;Male&quot;
+fit[which(fit$SEX==1),&quot;SEX&quot;] &lt;- &quot;Female&quot;
+fit$SEX &lt;-as.factor(fit$SEX)
+fit$SEX &lt;- ordered(fit$SEX,levels = c(&quot;Male&quot;,&quot;Female&quot;))
+# GQH
+fit[which(fit$GQH==0),&quot;GQH&quot;]&lt;-&quot;No co-therapy&quot;
+fit[which(fit$GQH==1),&quot;GQH&quot;]&lt;-&quot;Co-therapy&quot;
+fit$GQH&lt;-as.factor(fit$GQH)
+fit$GQH&lt;-ordered(fit$GQH,levels=c(&quot;Co-therapy&quot;,&quot;Not co-therapy&quot;))
+
+# 调用plot_COV()函数画图
+plot_COV(data = fit, cov = &quot;CYP3A5&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+plot_COV(data = fit, cov = &quot;SEX&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+plot_COV(data = fit, cov = &quot;GQH&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;ca&quot;)
+plot_COV(data = fit, cov = &quot;DD&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;WT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;DILT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;TB&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;AST&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;ALP&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;GGT&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;BUN&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;SCR&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;UA&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;ALB&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+plot_COV(data = fit, cov = &quot;CYSC&quot;,eta = &quot;ETA1&quot;,ylab = &quot;ETA_CL&quot;,type = &quot;co&quot;)
+
+dev.off()
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#1-%E5%8F%82%E6%95%B0-%E5%8D%8F%E5%8F%98%E9%87%8F%E5%85%B3%E7%B3%BB%E5%9B%BE%E6%98%AF%E4%BB%80%E4%B9%88">1. 参数 - 协变量关系图是什么？</a>
+<ul>
+<li><a href="#11-pk%E5%8F%82%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83">1.1 PK参数的分布</a></li>
+<li><a href="#12-%E5%8D%8F%E5%8F%98%E9%87%8F">1.2 协变量</a></li>
+</ul>
+</li>
+<li><a href="#2-%E5%8F%82%E6%95%B0-%E5%8D%8F%E5%8F%98%E9%87%8F%E5%85%B3%E7%B3%BB%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6">2. 参数 - 协变量关系图的绘制</a>
+<ul>
+<li><a href="#21-%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%8D%8F%E5%8F%98%E9%87%8F">2.1 连续性协变量</a></li>
+<li><a href="#22-%E5%88%86%E7%B1%BB%E6%80%A7%E5%8D%8F%E5%8F%98%E9%87%8F">2.2 分类性协变量</a></li>
+<li><a href="#23-%E7%94%BB%E5%9B%BE%E5%87%BD%E6%95%B0">2.3 画图函数</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%B0%86%E6%89%80%E6%9C%89%E5%9B%BE%E5%BD%A2%E7%94%BB%E5%9C%A8%E4%B8%80%E9%A1%B5">3. 将所有图形画在一页</a>
+<ul>
+<li><a href="#31-%E7%94%BB%E5%9B%BE%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87">3.1 画图前的准备</a></li>
+<li><a href="#31-%E7%94%BB%E5%9B%BE%E5%87%BD%E6%95%B0">3.1 画图函数</a></li>
+<li><a href="#33-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">3.3 数据处理函数</a></li>
+<li><a href="#34-%E5%9B%BE%E5%BD%A2%E8%BE%93%E5%87%BA">3.4 图形输出</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%B0%86%E5%9B%BE%E5%BD%A2%E7%94%BB%E5%9C%A8%E4%B8%8D%E5%90%8C%E9%A1%B5">4. 将图形画在不同页</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/ppkplot-gof/">
+              <h3 class="post-title">
+                PopPK绘图（1）——GOF图
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
