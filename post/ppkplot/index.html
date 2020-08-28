@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PopPK绘图 | Kokomo</title>
-<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598630194819">
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598630514688">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="PopPK绘图 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
@@ -29,7 +29,7 @@ library(resha..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://kokomole.github.io">
-  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598630194819" alt="">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598630514688" alt="">
   </a>
   <h1 class="site-title">
     Kokomo
@@ -151,16 +151,16 @@ mytheme &lt;- theme(panel.background = element_blank(),
 <h2 id="21-利用ggally包">2.1 利用GGally包</h2>
 <p>GGally包通过一个矩阵表示变量的分布。</p>
 <p>矩阵的对角线表示单个变量的分布，在<code>diag</code>中设置：</p>
-<ol>
+<ul>
 <li>连续变量（<code>continuous</code>）用密度曲线（<code>densityDiag</code>）表示；</li>
 <li>分类变量（<code>discrete</code>）用条形图（<code>barDiag</code>）表示。</li>
-</ol>
+</ul>
 <p>矩阵的上下半区表示变量之间的关系，在<code>upper</code>和<code>lower</code>中设置：</p>
-<ol>
+<ul>
 <li>连续变量之间（<code>continuous</code>）的关系：上半区用相关系数（<code>cor</code>）表示；下半区用散点图加平滑曲线（<code>smooth_loess</code>）表示；</li>
 <li>分类变量之间（<code>discrete</code>）的关系：上半区用比例图（<code>ratio</code>）表示；下半区用分面条形图（<code>facetbar</code>）表示；</li>
 <li>连续变量与分类变量之间（<code>combo</code>）的关系：上半区用分面箱型图（<code>box_no_facet</code>）表示；下半区用分面直方图（<code>facethist</code>）表示。</li>
-</ol>
+</ul>
 <pre><code>ggpairs(dataset, 
         columns =c(&quot;WT&quot;,&quot;BUN&quot;,&quot;ALB&quot;,&quot;SEX&quot;,&quot;CYP3A5&quot;),
         title = &quot;Distribution of covariates&quot;,
