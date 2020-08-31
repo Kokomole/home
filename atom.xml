@@ -2,13 +2,181 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-30T02:27:13.865Z</updated>
+    <updated>2020-08-31T15:56:01.986Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Kokomo</rights>
+    <entry>
+        <title type="html"><![CDATA[dplyr学习笔记]]></title>
+        <id>https://kokomole.github.io/post/dplyr/</id>
+        <link href="https://kokomole.github.io/post/dplyr/">
+        </link>
+        <updated>2020-08-31T08:36:54.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="数据集">数据集</h1>
+<p>所用的数据为<code>datasets</code>包提供的<code>ChickWeight</code>数据集，它描述了不同时间小鸡的体重和喂食种类。</p>
+<pre><code>library(datasets)
+head(ChickWeight)
+#Grouped Data: weight ~ Time | Chick
+#  weight Time Chick Diet
+#1     42    0     1    1
+#2     51    2     1    1
+#3     59    4     1    1
+#4     64    6     1    1
+#5     76    8     1    1
+#6     93   10     1    1
+</code></pre>
+<h1 id="基本命令">基本命令</h1>
+<h2 id="1-计数count">1. 计数：count</h2>
+<p>用于分类变量（也可用于连续变量）的统计描述，计算不同类别数据的数量。格式为：</p>
+<pre><code>count(data, group)
+</code></pre>
+<p>统计4种喂食方式的样本量：</p>
+<pre><code>count(ChickWeight, Diet)
+## A tibble: 4 x 2
+#  Diet      n
+#  &lt;fct&gt; &lt;int&gt;
+#1 1       220
+#2 2       120
+#3 3       120
+#4 4       118
+</code></pre>
+<h2 id="2-总结summarise">2. 总结：summarise</h2>
+<p>对连续变量进行统计描述，计算均值、最值、分位数等。格式为：</p>
+<pre><code>summarise(data, function)
+</code></pre>
+<p>可选择是否移除NA值。示例如下：</p>
+<pre><code>summarise(ChickWeight, 
+          mean(weight, na.rm = T), min(weight), max(weight),
+          median(weight), quantile(weight,0.05), quantile(weight,0.95))
+#  mean(weight, na.rm = T) min(weight) max(weight) median(weight)
+#1                121.8183          35         373            103
+#  quantile(weight, 0.05) quantile(weight, 0.95)
+#1                     41                    264
+</code></pre>
+<h2 id="3-分组group_by">3. 分组：group_by</h2>
+<p>将数按照某项内容进行分组，方面后续分析。格式为：</p>
+<pre><code>group_by(data, group_by(group))
+</code></pre>
+<p>根据喂食方式（4种）分组：</p>
+<pre><code>group_by(ChickWeight, Diet)
+## A tibble: 578 x 4
+## Groups:   Diet [4]
+#   weight  Time Chick Diet 
+# *  &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt; &lt;fct&gt;
+# 1     42     0 1     1    
+# 2     51     2 1     1    
+# 3     59     4 1     1    
+# 4     64     6 1     1    
+# 5     76     8 1     1    
+# 6     93    10 1     1    
+# 7    106    12 1     1    
+# 8    125    14 1     1    
+# 9    149    16 1     1    
+#10    171    18 1     1    
+## ... with 568 more rows
+</code></pre>
+<p><code>group_by</code>命令可以与<code>summarise</code>联用，分组进行连续变量的描述。格式为：</p>
+<pre><code>summarise(group_by(data,group), function)
+</code></pre>
+<p>示例如下：</p>
+<pre><code>summarise(group_by(ChickWeight,Diet), 
+          mean(weight),median(weight))
+## A tibble: 4 x 3
+#  Diet  `mean(weight)` `median(weight)`
+#  &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;
+#1 1               103.              88 
+#2 2               123.             104.
+#3 3               143.             126.
+#4 4               135.             130.
+</code></pre>
+<h2 id="4-筛选filter">4. 筛选：filter</h2>
+<p>可设置多个筛选条件，“与”用<code>,</code>连接，“或”用<code>|</code>连接。格式为：</p>
+<pre><code>filter(data, condition 1, condition 2, ...)
+</code></pre>
+<p>挑选出体重大于320，喂食种类为2或4的数据：</p>
+<pre><code>filter(ChickWeight, weight &gt;= 320)
+#  weight Time Chick Diet
+#1    331   21    21    2
+#2    327   20    34    3
+#3    341   21    34    3
+#4    332   18    35    3
+#5    361   20    35    3
+#6    373   21    35    3
+#7    321   21    40    3
+#8    322   21    48    4
+
+filter(ChickWeight, weight &gt;= 320, Diet == 2|Diet == 4)
+#  weight Time Chick Diet
+#1    331   21    21    2
+#2    322   21    48    4
+</code></pre>
+<h2 id="5-选择select">5. 选择：select</h2>
+<p>用于选出数据中某些变量（列），可以用列名，也可以用列号，前面加<code>-</code>表示去掉该列。格式为：</p>
+<pre><code>select(data, var1, var2)
+</code></pre>
+<p>示例如下，由于dplyr中的<code>select</code>与MASS包中的同名命令冲突，因此需指定来自dplyr包：</p>
+<pre><code>dplyr::select(ChickWeight, Time, weight)
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+
+dplyr::select(ChickWeight, c(2,1))
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+
+dplyr::select(ChickWeight, Time:weight)
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+</code></pre>
+<h2 id="6-增加变量mutate">6. 增加变量：mutate</h2>
+<p>用于在原数据集上增加新的列，格式为：</p>
+<pre><code>mutate(data, name = value)
+</code></pre>
+<p>增加<code>Diff</code>变量，表示改行体重与均值之差：</p>
+<pre><code>mutate(ChickWeight, Diff = weight - mean(weight))
+#    weight Time Chick Diet        Diff
+#1       42    0     1    1 -79.8183391
+#2       51    2     1    1 -70.8183391
+#3       59    4     1    1 -62.8183391
+#4       64    6     1    1 -57.8183391
+</code></pre>
+<h2 id="7-管道命令pipe">7. 管道命令：pipe</h2>
+<p>在R中，pipe命令用<code>$&gt;$</code>表示。使用管道命令的格式为：</p>
+<pre><code>data %&gt;%
+	operation 1 %&gt;%
+	operation 2 %&gt;%
+	...
+	last opration
+</code></pre>
+<p>对数据依次执行以下操作：</p>
+<ul>
+<li>增加Diff列，存放体重与均值之差</li>
+<li>去掉weight这一列</li>
+<li>选择编号为1或2的小鸡</li>
+<li>根据Diet分组</li>
+<li>计算Diff的中位数和95%分位数</li>
+</ul>
+<pre><code>ChickWeight %&gt;%
+  mutate(Diff = weight - mean(weight)) %&gt;%
+  dplyr::select(-weight) %&gt;%
+  filter(Chick == 1|Chick == 2) %&gt;%
+  group_by(Diet) %&gt;%
+  summarise(quantile(Diff,0.05), median(Diff), quantile(Diff,0.95))
+## A tibble: 1 x 4
+#  Diet  `quantile(Diff, 0.05)` `median(Diff)` `quantile(Diff, 0.95)`
+#  &lt;fct&gt;                  &lt;dbl&gt;          &lt;dbl&gt;                  &lt;dbl&gt;
+#1 1                      -78.8          -17.3                   86.6
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[晚秋]]></title>
         <id>https://kokomole.github.io/post/old-poetry/</id>
@@ -1162,23 +1330,6 @@ $SIGMA
 <h1 id="4-结果文件">4. 结果文件</h1>
 <h2 id="logfile">logfile</h2>
 <p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[大咕咕咕鸡作品]]></title>
-        <id>https://kokomole.github.io/post/dgggj/</id>
-        <link href="https://kokomole.github.io/post/dgggj/">
-        </link>
-        <updated>2020-07-08T16:07:32.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="说一说在我老家庄稼的种植情况">说一说在我老家，庄稼的种植情况</h1>
-<blockquote>
-<p>我老家，加利福利亚深处的一个小村子。安第斯山脚下，叶尼塞河入海口。终年云雾缭绕。每家都有很大的一块地，靠农业为生。首先我们种上“bobo”，这是一种速生的草本植物，三个月左右成熟。果实粉红色，足球大小。表面光滑。每株能结两到三枚。采摘的时机在夏天的某个夜晚，云层低沉，风从北边刮来。我们举着火把在田间守候。当月亮升起到最高点的时候，成年雌性土拨鼠们会聚集在bobo树下，深情合唱加利福利亚民间歌曲“一个没有骆驼的人”，这时村里的海豹们迅速爬上树梢，用双前手有节奏的交替敲击果实根部，与歌声对位。歌曲结束时bobo果愉悦的脱落，被守候在树下的村民用网兜提留走。一定要在太阳升起之前完成采摘工作，bobo果见光会长出粗壮鸡腿，向南方逃逸。速度极快。</p>
-<p>接下来我们给田里注稀释过的咳嗽糖浆，撒糖醋鲤鱼鱼苗，种上水稻。一种南加利福利亚特有的品种。植株极大，参天，浓荫，阳光从叶面间漏下，扎入水中。糖醋鲤鱼们顺着光柱攀爬，在林间嬉戏。而年轻的人们会划船在水面幽会，捕捉糖醋鲤鱼，互诉衷肠。那是一年中最美好的时刻。</p>
-<p>成熟的稻子被用来祭祀。在秋天的最后一个晚上，日落后人们闭门不出，熄灭所有火光。等待大片的黑甲虫涌入，洪水般席卷稻田，等待黑色吞噬黄色，瞬间将水稻连根采摘干净。等待离去。</p>
-<p>然后我们迅速把水排干，种上棉花。</p>
-<p>在冬天我们结伴打猎。雪地里有一种野生老王出没，成群。一月底是最肥美的时候。老猎人集体，套大皮袄子，扛双开叉弹弓。牵大狼一个狗。</p>
-<p>狩猎冬天。</p>
-</blockquote>
 ]]></content>
     </entry>
 </feed>

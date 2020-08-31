@@ -1,0 +1,359 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>dplyr学习笔记 | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598889354454">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="dplyr学习笔记 | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="数据集
+所用的数据为datasets包提供的ChickWeight数据集，它描述了不同时间小鸡的体重和喂食种类。
+library(datasets)
+head(ChickWeight)
+#Grouped Data: weight ~ Tim..." />
+    <meta name="keywords" content="R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598889354454" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+</form>
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              dplyr学习笔记
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-31
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://kokomole.github.io/tag/5HFVLJKS7/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="数据集">数据集</h1>
+<p>所用的数据为<code>datasets</code>包提供的<code>ChickWeight</code>数据集，它描述了不同时间小鸡的体重和喂食种类。</p>
+<pre><code>library(datasets)
+head(ChickWeight)
+#Grouped Data: weight ~ Time | Chick
+#  weight Time Chick Diet
+#1     42    0     1    1
+#2     51    2     1    1
+#3     59    4     1    1
+#4     64    6     1    1
+#5     76    8     1    1
+#6     93   10     1    1
+</code></pre>
+<h1 id="基本命令">基本命令</h1>
+<h2 id="1-计数count">1. 计数：count</h2>
+<p>用于分类变量（也可用于连续变量）的统计描述，计算不同类别数据的数量。格式为：</p>
+<pre><code>count(data, group)
+</code></pre>
+<p>统计4种喂食方式的样本量：</p>
+<pre><code>count(ChickWeight, Diet)
+## A tibble: 4 x 2
+#  Diet      n
+#  &lt;fct&gt; &lt;int&gt;
+#1 1       220
+#2 2       120
+#3 3       120
+#4 4       118
+</code></pre>
+<h2 id="2-总结summarise">2. 总结：summarise</h2>
+<p>对连续变量进行统计描述，计算均值、最值、分位数等。格式为：</p>
+<pre><code>summarise(data, function)
+</code></pre>
+<p>可选择是否移除NA值。示例如下：</p>
+<pre><code>summarise(ChickWeight, 
+          mean(weight, na.rm = T), min(weight), max(weight),
+          median(weight), quantile(weight,0.05), quantile(weight,0.95))
+#  mean(weight, na.rm = T) min(weight) max(weight) median(weight)
+#1                121.8183          35         373            103
+#  quantile(weight, 0.05) quantile(weight, 0.95)
+#1                     41                    264
+</code></pre>
+<h2 id="3-分组group_by">3. 分组：group_by</h2>
+<p>将数按照某项内容进行分组，方面后续分析。格式为：</p>
+<pre><code>group_by(data, group_by(group))
+</code></pre>
+<p>根据喂食方式（4种）分组：</p>
+<pre><code>group_by(ChickWeight, Diet)
+## A tibble: 578 x 4
+## Groups:   Diet [4]
+#   weight  Time Chick Diet 
+# *  &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt; &lt;fct&gt;
+# 1     42     0 1     1    
+# 2     51     2 1     1    
+# 3     59     4 1     1    
+# 4     64     6 1     1    
+# 5     76     8 1     1    
+# 6     93    10 1     1    
+# 7    106    12 1     1    
+# 8    125    14 1     1    
+# 9    149    16 1     1    
+#10    171    18 1     1    
+## ... with 568 more rows
+</code></pre>
+<p><code>group_by</code>命令可以与<code>summarise</code>联用，分组进行连续变量的描述。格式为：</p>
+<pre><code>summarise(group_by(data,group), function)
+</code></pre>
+<p>示例如下：</p>
+<pre><code>summarise(group_by(ChickWeight,Diet), 
+          mean(weight),median(weight))
+## A tibble: 4 x 3
+#  Diet  `mean(weight)` `median(weight)`
+#  &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;
+#1 1               103.              88 
+#2 2               123.             104.
+#3 3               143.             126.
+#4 4               135.             130.
+</code></pre>
+<h2 id="4-筛选filter">4. 筛选：filter</h2>
+<p>可设置多个筛选条件，“与”用<code>,</code>连接，“或”用<code>|</code>连接。格式为：</p>
+<pre><code>filter(data, condition 1, condition 2, ...)
+</code></pre>
+<p>挑选出体重大于320，喂食种类为2或4的数据：</p>
+<pre><code>filter(ChickWeight, weight &gt;= 320)
+#  weight Time Chick Diet
+#1    331   21    21    2
+#2    327   20    34    3
+#3    341   21    34    3
+#4    332   18    35    3
+#5    361   20    35    3
+#6    373   21    35    3
+#7    321   21    40    3
+#8    322   21    48    4
+
+filter(ChickWeight, weight &gt;= 320, Diet == 2|Diet == 4)
+#  weight Time Chick Diet
+#1    331   21    21    2
+#2    322   21    48    4
+</code></pre>
+<h2 id="5-选择select">5. 选择：select</h2>
+<p>用于选出数据中某些变量（列），可以用列名，也可以用列号，前面加<code>-</code>表示去掉该列。格式为：</p>
+<pre><code>select(data, var1, var2)
+</code></pre>
+<p>示例如下，由于dplyr中的<code>select</code>与MASS包中的同名命令冲突，因此需指定来自dplyr包：</p>
+<pre><code>dplyr::select(ChickWeight, Time, weight)
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+
+dplyr::select(ChickWeight, c(2,1))
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+
+dplyr::select(ChickWeight, Time:weight)
+#Grouped Data: weight ~ Time | Chick
+#    Time weight
+#1      0     42
+#2      2     51
+</code></pre>
+<h2 id="6-增加变量mutate">6. 增加变量：mutate</h2>
+<p>用于在原数据集上增加新的列，格式为：</p>
+<pre><code>mutate(data, name = value)
+</code></pre>
+<p>增加<code>Diff</code>变量，表示改行体重与均值之差：</p>
+<pre><code>mutate(ChickWeight, Diff = weight - mean(weight))
+#    weight Time Chick Diet        Diff
+#1       42    0     1    1 -79.8183391
+#2       51    2     1    1 -70.8183391
+#3       59    4     1    1 -62.8183391
+#4       64    6     1    1 -57.8183391
+</code></pre>
+<h2 id="7-管道命令pipe">7. 管道命令：pipe</h2>
+<p>在R中，pipe命令用<code>$&gt;$</code>表示。使用管道命令的格式为：</p>
+<pre><code>data %&gt;%
+	operation 1 %&gt;%
+	operation 2 %&gt;%
+	...
+	last opration
+</code></pre>
+<p>对数据依次执行以下操作：</p>
+<ul>
+<li>增加Diff列，存放体重与均值之差</li>
+<li>去掉weight这一列</li>
+<li>选择编号为1或2的小鸡</li>
+<li>根据Diet分组</li>
+<li>计算Diff的中位数和95%分位数</li>
+</ul>
+<pre><code>ChickWeight %&gt;%
+  mutate(Diff = weight - mean(weight)) %&gt;%
+  dplyr::select(-weight) %&gt;%
+  filter(Chick == 1|Chick == 2) %&gt;%
+  group_by(Diet) %&gt;%
+  summarise(quantile(Diff,0.05), median(Diff), quantile(Diff,0.95))
+## A tibble: 1 x 4
+#  Diet  `quantile(Diff, 0.05)` `median(Diff)` `quantile(Diff, 0.95)`
+#  &lt;fct&gt;                  &lt;dbl&gt;          &lt;dbl&gt;                  &lt;dbl&gt;
+#1 1                      -78.8          -17.3                   86.6
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a></li>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4">基本命令</a>
+<ul>
+<li><a href="#1-%E8%AE%A1%E6%95%B0count">1. 计数：count</a></li>
+<li><a href="#2-%E6%80%BB%E7%BB%93summarise">2. 总结：summarise</a></li>
+<li><a href="#3-%E5%88%86%E7%BB%84group_by">3. 分组：group_by</a></li>
+<li><a href="#4-%E7%AD%9B%E9%80%89filter">4. 筛选：filter</a></li>
+<li><a href="#5-%E9%80%89%E6%8B%A9select">5. 选择：select</a></li>
+<li><a href="#6-%E5%A2%9E%E5%8A%A0%E5%8F%98%E9%87%8Fmutate">6. 增加变量：mutate</a></li>
+<li><a href="#7-%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4pipe">7. 管道命令：pipe</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/old-poetry/">
+              <h3 class="post-title">
+                晚秋
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
