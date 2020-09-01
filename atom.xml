@@ -2,13 +2,229 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-08-31T16:55:22.462Z</updated>
+    <updated>2020-09-01T17:04:14.455Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Kokomo</rights>
+    <entry>
+        <title type="html"><![CDATA[RxODE]]></title>
+        <id>https://kokomole.github.io/post/2fjNs-43i/</id>
+        <link href="https://kokomole.github.io/post/2fjNs-43i/">
+        </link>
+        <updated>2020-09-01T16:33:48.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="安装">安装</h1>
+<p>使用RxODE需要C编译器。使用以下命令检查是否存在编译器：</p>
+<pre><code>pkgbuild::has_build_tools(debug = TRUE)
+</code></pre>
+<p>如果没有编译器，需要安装Rtools：</p>
+<pre><code>library(installr)
+install.rtools()
+</code></pre>
+<p>报错如下：</p>
+<pre><code>&gt; install.rtools()
+#Loading required namespace: pkgbuild
+#Loading required package: htmltab
+#No encoding supplied: defaulting to UTF-8.
+#Error in loadNamespace(name) : there is no package called ‘XML’
+</code></pre>
+<p>提示需要安装<code>XML</code>包，但是这个包只支持4.0以上版本的R。可使用以下命令：</p>
+<pre><code>install.packages(&quot;XML&quot;, repos = &quot;http://www.omegahat.net/R&quot;)
+</code></pre>
+<p>报错配置失败：</p>
+<pre><code>ERROR: configuration failed for package ‘XML’
+</code></pre>
+<p>这个版本的XML包依然不兼容。尝试另一种方法，但依然报错：</p>
+<pre><code>&gt; devtools::install_version('XML', '3.99-0.3')
+Error in download_version_url(package, version, repos, type) : 
+  couldn't find package 'XML'
+</code></pre>
+<p>不过CRAN上提供了之前的版本（3.99-0.3）。载到本地后安装，终于成功：</p>
+<pre><code>&gt; utils:::menuInstallLocal()
+package ‘XML’ successfully unpacked and MD5 sums checked
+</code></pre>
+<p>安装好XML后，继续安装Rtools：</p>
+<pre><code>&gt; install.rtools()
+No encoding supplied: defaulting to UTF-8.
+Argument 'which' was left unspecified. Choosing first table.
+Error: Couldn't find a table.
+</code></pre>
+<p>后面未再尝试。不过数日后RxODE突然可以顺利运行，原因不知。</p>
+<h1 id="给药和观测事件">给药和观测事件</h1>
+<p>与NONMEM一样，RxODE也是以事件来区分的，包括给药和采样2种事件类型。NM数据文件中的AMT、II、ADDL、RATE等变量，在RxODE中同样使用。</p>
+<p>在官网中，我发现有2种创建事件表格的函数：<code>et</code>和<code>eventTable</code>。我还没有搞清楚这2者的区别是什么，也不知道作者为什么提供2种方法。由于<code>eventTable</code>函数可以自动补全，我选择了后者。</p>
+<h2 id="一种给药方案">一种给药方案</h2>
+<p>无论是给药事件，还是观测事件，都需要先利用<code>eventTable</code>函数生成一个用以存放的对象，然后增加事件。<code>eventTable</code>函数中可以指定时间和剂量的单位。使用<code>add.dosing</code>增加给药事件。</p>
+<pre><code>eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
+</code></pre>
+<h2 id="多种给药方案">多种给药方案</h2>
+<p>如果使用了不同的给药方案（剂量、给药间隔的调整等等），需要将2种给药方案分别赋值给变量，然后用<code>seq</code>函数连接起来。这样做的目的是使时间能对得上。</p>
+<p>给药方案：首先给予5天的10mg、bid给药，共计10次给药；再给予5天的20mg、qd给药给药，共计5次。</p>
+<ul>
+<li>
+<p>错误写法：</p>
+<pre><code>eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12) %&gt;%
+  add.dosing(dose = 20000, nbr.doses = 5, dosing.interval = 24) 
+</code></pre>
+<p>结果如下，可以发现2次给药事件的<code>time</code>都等于0：</p>
+<pre><code>#--------------------------- EventTable with 2 records --------------------------
+#   2 dosing records (see $get.dosing(); add with add.dosing or et)
+#   0 observation times (see $get.sampling(); add with add.sampling or et)
+#   multiple doses in `addl` columns, expand with $expand(); or etExpand()
+#-- First part of : -------------------------------------------------------------
+# A tibble: 2 x 5
+#   time   amt    ii  addl evid        
+#    [h]  [µg]   [h] &lt;int&gt; &lt;evid&gt;      
+#1     0 10000    12     9 1:Dose (Add)
+#2     0 20000    24     4 1:Dose (Add)
+#--------------------------------------------------------------------------------
+</code></pre>
+</li>
+<li>
+<p>正确写法</p>
+<pre><code>dose1 &lt;- eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
+
+dose2 &lt;- eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 20000, nbr.doses = 5, dosing.interval = 24) 
+
+seq(dose1, dose2)
+</code></pre>
+<p>首次给药方案开始于第0小时，经过10次间隔为12小时的给药之后（12*10 = 120），开始下一给药方案：</p>
+<pre><code>--------------------------- EventTable with 2 records --------------------------
+   2 dosing records (see $get.dosing(); add with add.dosing or et)
+   0 observation times (see $get.sampling(); add with add.sampling or et)
+   multiple doses in `addl` columns, expand with $expand(); or etExpand()
+-- First part of : -------------------------------------------------------------
+# A tibble: 2 x 5
+   time   amt    ii  addl evid        
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;evid&gt;      
+1     0 10000    12     9 1:Dose (Add)
+2   120 20000    24     4 1:Dose (Add)
+--------------------------------------------------------------------------------
+</code></pre>
+</li>
+</ul>
+<h2 id="观测事件">观测事件</h2>
+<p>在给药事件的基础上，使用<code>add.sampling</code>函数增加观测事件，指定开始时间，结束时间，步长，其中步长可以用次数代替：</p>
+<pre><code>et &lt;- seq(dose1, dose2) %&gt;% 
+  add.sampling(seq(from = 0, to = 10*24, by = 1))
+</code></pre>
+<h1 id="结构模型">结构模型</h1>
+<pre><code>model &lt;- RxODE({
+  
+  # 参数
+  t_KA = 2.94E-01
+  eta_KA = 0
+  KA ~ t_KA*exp(eta_KA)
+  
+  t_CL = 1.86E+01
+  eta_CL = 0
+  CL ~ t_CL*exp(eta_CL)
+  
+  t_V2 = 4.02E+01 
+  eta_V2 = 0
+  V2 ~ t_V2*exp(eta_V2)
+  
+  t_Q = 1.05E+01
+  eta_Q = 0
+  Q ~ t_Q*exp(eta_Q)
+  
+  t_V3 = 2.97E+02
+  eta_V3 = 0
+  V3 ~ t_V3*exp(eta_V3)
+  
+  t_Kin = 1
+  eta_Kin = 0
+  Kin ~ t_Kin*exp(eta_Kin)
+  
+  t_Kout = 1
+  eta_Kout = 0
+  Kout ~ t_Kout*exp(eta_Kout)
+  
+  t_EC50 = 200
+  eta_EC50 = 0
+  EC50 ~ t_EC50*exp(eta_EC50)
+  
+  # 微分方程
+  C2 = centr/V2
+  C3 = peri/V3
+  
+  d/dt(depot) =-KA*depot
+  d/dt(centr) = KA*depot - CL*C2 - Q*C2 + Q*C3
+  d/dt(peri)  =                    Q*C2 - Q*C3
+  d/dt(eff)  = Kin - Kout*(1 - C2/(EC50 + C2))*eff 
+  
+  # 残差模型
+  err_PK_prop &lt;- 0
+  C2 &lt;- centr*(1 + err_PK_prop)
+  
+  # 微分方程初始条件
+  eff(0) = 1
+})
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901160745931.png" alt="image-20200901160745931" loading="lazy"></figure>
+<h1 id="个体间变异">个体间变异</h1>
+<pre><code>omega &lt;- lotri({
+  eta_KA ~ 0.04
+  eta_CL ~ 0.09
+  eta_V2 ~ 0.04
+  eta_Q ~ 0.01
+  eta_V3 ~ 0.01
+  eta_Kin ~ 0.01
+  eta_Kout ~ 0.01
+  eta_EC50 ~ 0.04
+})
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162657489.png" alt="image-20200901162657489" loading="lazy"></figure>
+<h1 id="残差变异">残差变异</h1>
+<pre><code>sigma &lt;- lotri(err_PK_prop ~ 0.09)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162915565.png" alt="image-20200901162915565" loading="lazy"></figure>
+<pre><code>rxSolve(object = model_name, events = et, 
+        omega = omega, nSub = 3, sigma = sigma) %&gt;%
+  plot(C2,eff)
+</code></pre>
+<h1 id="协方差矩阵">协方差矩阵</h1>
+<pre><code>rseVar &lt;- function(est, rse){
+  return(est*rse/100)^2
+}
+
+thetaMat &lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
+                  t_CL ~ rseVar(1.86E+01, 7),
+                  t_V2 ~ rseVar(4.02E+01, 16),
+                  t_Q ~ rseVar(1.05E+01, 35),
+                  t_V3 ~ rseVar(2.97E+02, 21),
+                  t_Kin ~ rseVar(1, 37),
+                  t_Kout ~ rseVar(1, 33),
+                  t_EC50 ~ rseVar(200,5)
+)
+</code></pre>
+<pre><code>&gt; thetaMat
+#         t_KA  t_CL  t_V2   t_Q  t_V3 t_Kin t_Kout t_EC50
+#t_KA   0.0147 0.000 0.000 0.000  0.00  0.00   0.00      0
+#t_CL   0.0000 1.302 0.000 0.000  0.00  0.00   0.00      0
+#t_V2   0.0000 0.000 6.432 0.000  0.00  0.00   0.00      0
+#t_Q    0.0000 0.000 0.000 3.675  0.00  0.00   0.00      0
+#t_V3   0.0000 0.000 0.000 0.000 62.37  0.00   0.00      0
+#t_Kin  0.0000 0.000 0.000 0.000  0.00  0.37   0.00      0
+#t_Kout 0.0000 0.000 0.000 0.000  0.00  0.00   0.33      0
+#t_EC50 0.0000 0.000 0.000 0.000  0.00  0.00   0.00     10
+</code></pre>
+<h1 id="最终结果">最终结果</h1>
+<pre><code>rxSolve(object = model_name,events = et,dfSub=760,
+        nSub = 60, nStud = 60, omega = omega, sigma = sigma,
+        thetaMat = thetaMat, thetaLower = 0) %&gt;% 
+  confint(c(&quot;C2&quot;,&quot;eff&quot;),level = 0.90) %&gt;% 
+  plot()
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200902003335430.png" alt="image-20200902003335430" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[dplyr学习笔记]]></title>
         <id>https://kokomole.github.io/post/dplyr/</id>
@@ -1195,142 +1411,6 @@ RFORMAT=&quot;7(s1PE11.4))&quot;
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>E</mi><mi>m</mi></msub><mo>⋅</mo><mfrac><msup><mi>τ</mi><mi>n</mi></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>τ</mi><mi>n</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">y=E_m \cdot\frac{\tau^n}{1+\tau^n}
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.110722em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.341392em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.590392em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
 <p>事实上，直角双曲线仅仅是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时的特例。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[PsN笔记（1）——SCM]]></title>
-        <id>https://kokomole.github.io/post/SCM/</id>
-        <link href="https://kokomole.github.io/post/SCM/">
-        </link>
-        <updated>2020-07-11T07:19:56.000Z</updated>
-        <content type="html"><![CDATA[<p>SCM (stepwise covariate model) 是由PSN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
-<pre><code>SCM -config_file=xxx.scm
-</code></pre>
-<p>同时需要一份SCM文件，示例如下：</p>
-<pre><code>model = 3.mod
-search_direction = both
-p_forward = 0.05
-p_backward = 0.01
-continuous_covariates = WT,AST,ALT,ALB
-categorical_covariates = SEX,CYP3A5
-time_varying = WT,AST,ALT,ALB
-
-[test_relations]
-CL = WT,AST,ALT,ALB,SEX,CYP3A5
-
-[valid_states]
-continuous = 1,5
-categorical = 1,2
-
-[code]
-CL:AST-5 = exponential
-</code></pre>
-<h1 id="1-数据文件与控制文件">1. 数据文件与控制文件</h1>
-<p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxxx</code>的形式。</p>
-<h1 id="2-基本变量">2. 基本变量</h1>
-<h2 id="必需的变量">必需的变量</h2>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>目的</th>
-<th>要求</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>model</td>
-<td>基础模型</td>
-<td>默认没有</td>
-</tr>
-<tr>
-<td>search_direction</td>
-<td>筛选方向</td>
-<td>forward / backward / both</td>
-</tr>
-<tr>
-<td>continuous_covariates</td>
-<td>连续型协变量</td>
-<td>逗号分隔，不能加空格</td>
-</tr>
-<tr>
-<td>categorical_covariates</td>
-<td>分类型协变量</td>
-<td>逗号分隔，不能加空格</td>
-</tr>
-</tbody>
-</table>
-<h2 id="可选的变量">可选的变量</h2>
-<p>time_varying用于个体的协变量在整个过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。</p>
-<p>所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
-<pre><code>$ERROR
-	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
-	Y = IPRED + ERR(1)*W
-	IRES = DV - IPRED
-	IWRES = IPRES / W
-
-$SIGMA
-	1 FIX
-</code></pre>
-<h1 id="3-scm文件的配置">3. SCM文件的配置</h1>
-<h2 id="test_relations">[test_relations]</h2>
-<p>定义协变量应该加到哪个参数上。</p>
-<h2 id="valid_states">[valid_states]</h2>
-<p>定义协变量加入的形式。列表中的第一个是1。</p>
-<p>states可以自己在<code>[code]</code>里面自己定义，也可使用固定的。固定的states如下：</p>
-<table>
-<thead>
-<tr>
-<th>变量</th>
-<th>states</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>连续型</td>
-<td>1</td>
-<td>none</td>
-</tr>
-<tr>
-<td>连续型</td>
-<td>2</td>
-<td>linear</td>
-</tr>
-<tr>
-<td>连续型</td>
-<td>3</td>
-<td>hockey-stick (分段线性)</td>
-</tr>
-<tr>
-<td>连续型</td>
-<td>4</td>
-<td>exponential</td>
-</tr>
-<tr>
-<td>连续型</td>
-<td>5</td>
-<td>power</td>
-</tr>
-<tr>
-<td>分类型</td>
-<td>1</td>
-<td>none</td>
-</tr>
-<tr>
-<td>分类型</td>
-<td>2</td>
-<td>linear</td>
-</tr>
-</tbody>
-</table>
-<h2 id="included_relations">[included_relations]</h2>
-<p>定义在一开始就加入的协变量。示例：</p>
-<pre><code>CL = WT-2,AGE-4
-</code></pre>
-<h1 id="4-结果文件">4. 结果文件</h1>
-<h2 id="logfile">logfile</h2>
-<p>记录文件是<code>scmlog1.txt</code>，其中包含了OFV值和p值。</p>
 ]]></content>
     </entry>
 </feed>

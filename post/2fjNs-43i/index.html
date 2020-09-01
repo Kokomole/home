@@ -1,0 +1,406 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RxODE | Kokomo</title>
+<link rel="shortcut icon" href="https://kokomole.github.io/favicon.ico?v=1598978096954">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://kokomole.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="RxODE | Kokomo - Atom Feed" href="https://kokomole.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="安装
+使用RxODE需要C编译器。使用以下命令检查是否存在编译器：
+pkgbuild::has_build_tools(debug = TRUE)
+
+如果没有编译器，需要安装Rtools：
+library(installr)
+install..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kokomole.github.io">
+  <img class="avatar" src="https://kokomole.github.io/images/avatar.png?v=1598978096954" alt="">
+  </a>
+  <h1 class="site-title">
+    Kokomo
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/post/home" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+</form>
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Kokomole" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+        <a href="https://twitter.com/Min_Zhu_" target="_blank">
+          <i class="ri-twitter-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://www.zhihu.com/people/keytruda-73" target="_blank">
+          <i class="ri-zhihu-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              RxODE
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-02
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="安装">安装</h1>
+<p>使用RxODE需要C编译器。使用以下命令检查是否存在编译器：</p>
+<pre><code>pkgbuild::has_build_tools(debug = TRUE)
+</code></pre>
+<p>如果没有编译器，需要安装Rtools：</p>
+<pre><code>library(installr)
+install.rtools()
+</code></pre>
+<p>报错如下：</p>
+<pre><code>&gt; install.rtools()
+#Loading required namespace: pkgbuild
+#Loading required package: htmltab
+#No encoding supplied: defaulting to UTF-8.
+#Error in loadNamespace(name) : there is no package called ‘XML’
+</code></pre>
+<p>提示需要安装<code>XML</code>包，但是这个包只支持4.0以上版本的R。可使用以下命令：</p>
+<pre><code>install.packages(&quot;XML&quot;, repos = &quot;http://www.omegahat.net/R&quot;)
+</code></pre>
+<p>报错配置失败：</p>
+<pre><code>ERROR: configuration failed for package ‘XML’
+</code></pre>
+<p>这个版本的XML包依然不兼容。尝试另一种方法，但依然报错：</p>
+<pre><code>&gt; devtools::install_version('XML', '3.99-0.3')
+Error in download_version_url(package, version, repos, type) : 
+  couldn't find package 'XML'
+</code></pre>
+<p>不过CRAN上提供了之前的版本（3.99-0.3）。载到本地后安装，终于成功：</p>
+<pre><code>&gt; utils:::menuInstallLocal()
+package ‘XML’ successfully unpacked and MD5 sums checked
+</code></pre>
+<p>安装好XML后，继续安装Rtools：</p>
+<pre><code>&gt; install.rtools()
+No encoding supplied: defaulting to UTF-8.
+Argument 'which' was left unspecified. Choosing first table.
+Error: Couldn't find a table.
+</code></pre>
+<p>后面未再尝试。不过数日后RxODE突然可以顺利运行，原因不知。</p>
+<h1 id="给药和观测事件">给药和观测事件</h1>
+<p>与NONMEM一样，RxODE也是以事件来区分的，包括给药和采样2种事件类型。NM数据文件中的AMT、II、ADDL、RATE等变量，在RxODE中同样使用。</p>
+<p>在官网中，我发现有2种创建事件表格的函数：<code>et</code>和<code>eventTable</code>。我还没有搞清楚这2者的区别是什么，也不知道作者为什么提供2种方法。由于<code>eventTable</code>函数可以自动补全，我选择了后者。</p>
+<h2 id="一种给药方案">一种给药方案</h2>
+<p>无论是给药事件，还是观测事件，都需要先利用<code>eventTable</code>函数生成一个用以存放的对象，然后增加事件。<code>eventTable</code>函数中可以指定时间和剂量的单位。使用<code>add.dosing</code>增加给药事件。</p>
+<pre><code>eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
+</code></pre>
+<h2 id="多种给药方案">多种给药方案</h2>
+<p>如果使用了不同的给药方案（剂量、给药间隔的调整等等），需要将2种给药方案分别赋值给变量，然后用<code>seq</code>函数连接起来。这样做的目的是使时间能对得上。</p>
+<p>给药方案：首先给予5天的10mg、bid给药，共计10次给药；再给予5天的20mg、qd给药给药，共计5次。</p>
+<ul>
+<li>
+<p>错误写法：</p>
+<pre><code>eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12) %&gt;%
+  add.dosing(dose = 20000, nbr.doses = 5, dosing.interval = 24) 
+</code></pre>
+<p>结果如下，可以发现2次给药事件的<code>time</code>都等于0：</p>
+<pre><code>#--------------------------- EventTable with 2 records --------------------------
+#   2 dosing records (see $get.dosing(); add with add.dosing or et)
+#   0 observation times (see $get.sampling(); add with add.sampling or et)
+#   multiple doses in `addl` columns, expand with $expand(); or etExpand()
+#-- First part of : -------------------------------------------------------------
+# A tibble: 2 x 5
+#   time   amt    ii  addl evid        
+#    [h]  [µg]   [h] &lt;int&gt; &lt;evid&gt;      
+#1     0 10000    12     9 1:Dose (Add)
+#2     0 20000    24     4 1:Dose (Add)
+#--------------------------------------------------------------------------------
+</code></pre>
+</li>
+<li>
+<p>正确写法</p>
+<pre><code>dose1 &lt;- eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
+
+dose2 &lt;- eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
+  add.dosing(dose = 20000, nbr.doses = 5, dosing.interval = 24) 
+
+seq(dose1, dose2)
+</code></pre>
+<p>首次给药方案开始于第0小时，经过10次间隔为12小时的给药之后（12*10 = 120），开始下一给药方案：</p>
+<pre><code>--------------------------- EventTable with 2 records --------------------------
+   2 dosing records (see $get.dosing(); add with add.dosing or et)
+   0 observation times (see $get.sampling(); add with add.sampling or et)
+   multiple doses in `addl` columns, expand with $expand(); or etExpand()
+-- First part of : -------------------------------------------------------------
+# A tibble: 2 x 5
+   time   amt    ii  addl evid        
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;evid&gt;      
+1     0 10000    12     9 1:Dose (Add)
+2   120 20000    24     4 1:Dose (Add)
+--------------------------------------------------------------------------------
+</code></pre>
+</li>
+</ul>
+<h2 id="观测事件">观测事件</h2>
+<p>在给药事件的基础上，使用<code>add.sampling</code>函数增加观测事件，指定开始时间，结束时间，步长，其中步长可以用次数代替：</p>
+<pre><code>et &lt;- seq(dose1, dose2) %&gt;% 
+  add.sampling(seq(from = 0, to = 10*24, by = 1))
+</code></pre>
+<h1 id="结构模型">结构模型</h1>
+<pre><code>model &lt;- RxODE({
+  
+  # 参数
+  t_KA = 2.94E-01
+  eta_KA = 0
+  KA ~ t_KA*exp(eta_KA)
+  
+  t_CL = 1.86E+01
+  eta_CL = 0
+  CL ~ t_CL*exp(eta_CL)
+  
+  t_V2 = 4.02E+01 
+  eta_V2 = 0
+  V2 ~ t_V2*exp(eta_V2)
+  
+  t_Q = 1.05E+01
+  eta_Q = 0
+  Q ~ t_Q*exp(eta_Q)
+  
+  t_V3 = 2.97E+02
+  eta_V3 = 0
+  V3 ~ t_V3*exp(eta_V3)
+  
+  t_Kin = 1
+  eta_Kin = 0
+  Kin ~ t_Kin*exp(eta_Kin)
+  
+  t_Kout = 1
+  eta_Kout = 0
+  Kout ~ t_Kout*exp(eta_Kout)
+  
+  t_EC50 = 200
+  eta_EC50 = 0
+  EC50 ~ t_EC50*exp(eta_EC50)
+  
+  # 微分方程
+  C2 = centr/V2
+  C3 = peri/V3
+  
+  d/dt(depot) =-KA*depot
+  d/dt(centr) = KA*depot - CL*C2 - Q*C2 + Q*C3
+  d/dt(peri)  =                    Q*C2 - Q*C3
+  d/dt(eff)  = Kin - Kout*(1 - C2/(EC50 + C2))*eff 
+  
+  # 残差模型
+  err_PK_prop &lt;- 0
+  C2 &lt;- centr*(1 + err_PK_prop)
+  
+  # 微分方程初始条件
+  eff(0) = 1
+})
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901160745931.png" alt="image-20200901160745931" loading="lazy"></figure>
+<h1 id="个体间变异">个体间变异</h1>
+<pre><code>omega &lt;- lotri({
+  eta_KA ~ 0.04
+  eta_CL ~ 0.09
+  eta_V2 ~ 0.04
+  eta_Q ~ 0.01
+  eta_V3 ~ 0.01
+  eta_Kin ~ 0.01
+  eta_Kout ~ 0.01
+  eta_EC50 ~ 0.04
+})
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162657489.png" alt="image-20200901162657489" loading="lazy"></figure>
+<h1 id="残差变异">残差变异</h1>
+<pre><code>sigma &lt;- lotri(err_PK_prop ~ 0.09)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162915565.png" alt="image-20200901162915565" loading="lazy"></figure>
+<pre><code>rxSolve(object = model_name, events = et, 
+        omega = omega, nSub = 3, sigma = sigma) %&gt;%
+  plot(C2,eff)
+</code></pre>
+<h1 id="协方差矩阵">协方差矩阵</h1>
+<pre><code>rseVar &lt;- function(est, rse){
+  return(est*rse/100)^2
+}
+
+thetaMat &lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
+                  t_CL ~ rseVar(1.86E+01, 7),
+                  t_V2 ~ rseVar(4.02E+01, 16),
+                  t_Q ~ rseVar(1.05E+01, 35),
+                  t_V3 ~ rseVar(2.97E+02, 21),
+                  t_Kin ~ rseVar(1, 37),
+                  t_Kout ~ rseVar(1, 33),
+                  t_EC50 ~ rseVar(200,5)
+)
+</code></pre>
+<pre><code>&gt; thetaMat
+#         t_KA  t_CL  t_V2   t_Q  t_V3 t_Kin t_Kout t_EC50
+#t_KA   0.0147 0.000 0.000 0.000  0.00  0.00   0.00      0
+#t_CL   0.0000 1.302 0.000 0.000  0.00  0.00   0.00      0
+#t_V2   0.0000 0.000 6.432 0.000  0.00  0.00   0.00      0
+#t_Q    0.0000 0.000 0.000 3.675  0.00  0.00   0.00      0
+#t_V3   0.0000 0.000 0.000 0.000 62.37  0.00   0.00      0
+#t_Kin  0.0000 0.000 0.000 0.000  0.00  0.37   0.00      0
+#t_Kout 0.0000 0.000 0.000 0.000  0.00  0.00   0.33      0
+#t_EC50 0.0000 0.000 0.000 0.000  0.00  0.00   0.00     10
+</code></pre>
+<h1 id="最终结果">最终结果</h1>
+<pre><code>rxSolve(object = model_name,events = et,dfSub=760,
+        nSub = 60, nStud = 60, omega = omega, sigma = sigma,
+        thetaMat = thetaMat, thetaLower = 0) %&gt;% 
+  confint(c(&quot;C2&quot;,&quot;eff&quot;),level = 0.90) %&gt;% 
+  plot()
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200902003335430.png" alt="image-20200902003335430" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E7%BB%99%E8%8D%AF%E5%92%8C%E8%A7%82%E6%B5%8B%E4%BA%8B%E4%BB%B6">给药和观测事件</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%A7%8D%E7%BB%99%E8%8D%AF%E6%96%B9%E6%A1%88">一种给药方案</a></li>
+<li><a href="#%E5%A4%9A%E7%A7%8D%E7%BB%99%E8%8D%AF%E6%96%B9%E6%A1%88">多种给药方案</a></li>
+<li><a href="#%E8%A7%82%E6%B5%8B%E4%BA%8B%E4%BB%B6">观测事件</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BB%93%E6%9E%84%E6%A8%A1%E5%9E%8B">结构模型</a></li>
+<li><a href="#%E4%B8%AA%E4%BD%93%E9%97%B4%E5%8F%98%E5%BC%82">个体间变异</a></li>
+<li><a href="#%E6%AE%8B%E5%B7%AE%E5%8F%98%E5%BC%82">残差变异</a></li>
+<li><a href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5">协方差矩阵</a></li>
+<li><a href="#%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C">最终结果</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://kokomole.github.io/post/dplyr/">
+              <h3 class="post-title">
+                dplyr学习笔记
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://kokomole.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
