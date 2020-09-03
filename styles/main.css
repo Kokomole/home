@@ -762,6 +762,7 @@ td {
 }
 .next-post .next {
   margin-bottom: 24px;
+  font-family: "Times New Roman", "NSimSun";
   color: #343a40;
   font-weight: lighter;
 }
