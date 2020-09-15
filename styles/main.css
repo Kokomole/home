@@ -667,7 +667,7 @@ p > code {
 }
 .post-header .post-title {
   font-size: 26px;
-  font-family: "Georgia";
+  font-family: "Times New Roman", "NSimSun";
   text-align: center;
   word-break: break-word;
   font-weight: 400;
@@ -710,8 +710,8 @@ p > code {
 .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 12px;
+  font-family: "Times New Roman", "NSimSun";
+  font-size: 14px;
   text-align: center;
 }
 .post-meta-divider {
@@ -1715,8 +1715,7 @@ p > code {
 }
 .next-md-body h1 {
   border-top: 1px solid #212529;
-  padding-top: 0.5em;
-  padding-bottom: 1em;
+  padding-top: 1em;
 }
 .next-md-body h2 {
   font-size: 1.5em;
