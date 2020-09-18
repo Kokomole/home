@@ -263,7 +263,7 @@ p > code {
   text-align: center;
   color: inherit;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   height: 20px;
   line-height: 20px;
 }
@@ -286,7 +286,7 @@ p > code {
   text-align: center;
   color: #222;
   font-weight: 600;
-  font-size: 1em;
+  font-size: 1.3em;
 }
 .site-description {
   margin-top: 0;
@@ -415,10 +415,10 @@ p > code {
   z-index: 1050;
   padding: 0 6px;
   width: initial;
-  background: #222;
+  background: #FFFFFF;
   font-size: 12px;
   opacity: 0.6;
-  color: #fff;
+  color: #000000;
   cursor: pointer;
   text-align: center;
   -webkit-transform: translateZ(0);
@@ -711,7 +711,7 @@ p > code {
   margin: 3px 0 60px 0;
   color: #999;
   font-family: "Times New Roman", "NSimSun";
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
 }
 .post-meta-divider {
@@ -1126,7 +1126,7 @@ p > code {
   padding: 0 2px 5px 20px;
   text-align: left;
   list-style: none;
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Times New Roman", "NSimSun";
   overflow-x: hidden;
   overflow-y: scroll;
@@ -2055,7 +2055,7 @@ p > code {
   }
 }
 body {
-      background-color: #e9ecef;
+      background-color: #343a40;
     }.header {
         width: 85%;
         margin: 0 auto;
@@ -2148,40 +2148,44 @@ body {
       color: #fd7e14;
       border-bottom-color: #fd7e14;
     }.active-current > a {
-      color: #e03131 !important;
-      border-bottom-color: #e03131 !important;
+      color: #f76707 !important;
+      border-bottom-color: #f76707 !important;
     }
     .sidebar-title-active {
-      color: #e03131;
-      border-bottom-color: #e03131;
+      color: #f76707;
+      border-bottom-color: #f76707;
     }
     .sidebar-title-item:hover {
-      color: #e03131 !important;
+      color: #f76707 !important;
     }
     .active-show > a {
-      color: #e03131;
-      border-bottom-color: #e03131;
+      color: #f76707;
+      border-bottom-color: #f76707;
     }
     .active-hidden > a {
-      color: #e03131;
-      border-bottom-color: #e03131;
+      color: #f76707;
+      border-bottom-color: #f76707;
     }.bg-color {
       background-color: #FFFFFFfe;
     }
     .site-meta {
-      background: #FFFFFF !important;
+      background: #343a40 !important;
     }
     .head-top-line {
-      background: #FFFFFF;
+      background: #343a40;
     }
     .brand {
-      background: #FFFFFFfe;
+      background: #343a40fe;
     }
-    .main-title, .brand {
-      color: #000000 !important;
+    
+      .brand {
+        font-weight: bold;
+        transform: scale(1.5);
+      }.main-title, .brand {
+      color: #FFFFFF !important;
     }
     .mist .site-title i {
-      background: #000000fe;
+      background: #FFFFFFfe;
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
