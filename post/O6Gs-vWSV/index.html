@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="">
 <meta name="theme-color" content="#343a40">
-<title>首页 | Kokomo</title>
+<title>肿瘤免疫治疗 | Kokomo</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1600859106814">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -52,8 +52,8 @@
 
 
 
-  <meta name="description" content="首页" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="肿瘤免疫治疗" />
+  <meta name="keywords" content="肿瘤学,免疫学" />
 </head>
 
 <body>
@@ -192,6 +192,227 @@
 
 <div class="sidebar">
   
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number no_compress"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#1-%E5%85%8D%E7%96%AB%E7%B3%BB%E7%BB%9F">1. 免疫系统</a>
+<ul>
+<li><a href="#11-%E4%B8%A4%E7%A7%8D%E5%85%8D%E7%96%AB%E5%BA%94%E7%AD%94%E7%B1%BB%E5%9E%8B">1.1 两种免疫应答类型</a></li>
+<li><a href="#12-%E5%85%8D%E7%96%AB%E5%BA%94%E7%AD%94%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%87%E7%A8%8B">1.2 免疫应答的基本过程</a></li>
+<li><a href="#13-t%E7%BB%86%E8%83%9E%E5%85%8D%E7%96%AB%E5%BA%94%E7%AD%94%E7%9A%84%E5%90%AF%E5%8A%A8">1.3 T细胞免疫应答的启动</a>
+<ul>
+<li><a href="#131-%E4%B8%89%E4%BF%A1%E5%8F%B7%E7%90%86%E8%AE%BA">1.3.1 三信号理论</a></li>
+<li><a href="#132-%E5%85%8D%E7%96%AB%E8%80%90%E5%8F%97">1.3.2 免疫耐受</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-%E8%82%BF%E7%98%A4%E7%9A%84%E6%9C%AC%E8%B4%A8">2. 肿瘤的本质</a>
+<ul>
+<li><a href="#21-%E8%82%BF%E7%98%A4%E7%9A%84%E7%94%9F%E7%89%A9%E5%AD%A6%E5%AE%9A%E4%B9%89">2.1 肿瘤的生物学定义</a></li>
+<li><a href="#22-%E8%82%BF%E7%98%A4%E7%9A%84%E5%85%8D%E7%96%AB%E5%AD%A6%E5%AE%9A%E4%B9%89">2.2 肿瘤的免疫学定义</a></li>
+<li><a href="#23-%E8%82%BF%E7%98%A4%E7%9A%84%E5%85%8D%E7%96%AB%E7%BC%96%E8%BE%91%E7%90%86%E8%AE%BA">2.3 肿瘤的免疫编辑理论</a></li>
+</ul>
+</li>
+<li><a href="#3-%E8%82%BF%E7%98%A4%E7%9A%84%E5%85%8D%E7%96%AB%E6%B2%BB%E7%96%97">3. 肿瘤的免疫治疗</a>
+<ul>
+<li><a href="#31-%E5%85%8D%E7%96%AB%E6%A3%80%E6%9F%A5%E7%82%B9%E6%8A%91%E5%88%B6%E5%89%82">3.1 免疫检查点抑制剂</a></li>
+<li><a href="#32-%E5%BD%93%E5%89%8D%E5%85%8D%E7%96%AB%E6%B2%BB%E7%96%97%E7%9A%84%E5%9B%B0%E5%B1%80">3.2 当前免疫治疗的困局</a></li>
+<li><a href="#33-car-t">3.3 CAR-T</a></li>
+<li><a href="#34-%E9%9D%B6%E5%90%91%E8%82%BF%E7%98%A4%E7%9A%84%E9%9A%8F%E6%9C%BA%E7%AA%81%E5%8F%98">3.4 靶向肿瘤的随机突变</a></li>
+<li><a href="#35-%E8%82%BF%E7%98%A4%E5%85%8D%E7%96%AB%E6%B2%BB%E7%96%97%E7%9A%84%E5%89%AF%E4%BD%9C%E7%94%A8">3.5 肿瘤免疫治疗的副作用</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
+      </div>
+    </div>
+  
 </div>
 <script>
   const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
@@ -274,8 +495,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://kokomole.github.io/post/home/">
-      首页
+    <a class="post-title-link" href="https://kokomole.github.io/post/O6Gs-vWSV/">
+      肿瘤免疫治疗
     </a>
   </h1>
   <div class="post-meta">
@@ -283,32 +504,126 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-03-28 04:03:11">2020-03-28</span>
+      <span class="publish-time" data-t="2020-09-23 18:57:04">2020-09-23</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://kokomole.github.io/tag/fo6-cIFVt/">
+        <span>肿瘤学</span>
+      </a>、
+      
+      
+      
+      <a href="https://kokomole.github.io/tag/gWIh2ZgB1M/">
+        <span>免疫学</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1<span class="language" data-lan="minute">分钟</span></span>
+      <span>13<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>109<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>3748<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>我觉得只有输出一些东西，才是学习的最好方法；加上本人天性愚钝，如果不及时地做些记录，恐怕很快就会把刚看的知识抛诸脑后了。</p>
-<p>所以我想通过撰写博客，作为本人学习、读书、思考时的笔记，具体的内容可能包括：</p>
+              <p>最近需要补习免疫学，尤其是肿瘤免疫的内容，在Bilibili看到了清华大学医学院彭敏老师的课程。听完之后受益匪浅，因此将课程的主要内容记录下来，并结合自己的理解，写成一篇文章。目的是加深对知识的掌握，并方便今后的学习。</p>
+<blockquote>
+<p>癌症被称为“<strong>众病之王</strong>”，在经历了手术、放疗、化疗、靶向治疗等手段之后，<strong>免疫治疗</strong>似乎让人看到了肿瘤被根治的希望；但是现实情况好像又并非如此。那么肿瘤免疫治疗究竟是什么？</p>
+</blockquote>
+<p>主要内容：</p>
 <ul>
-<li>临床药理学</li>
-<li>统计学</li>
-<li>NONMEM和R语言</li>
-<li>有意思的书籍或文献</li>
-<li>……</li>
+<li>免疫应答的基本过程</li>
+<li>肿瘤与免疫系统的关系</li>
+<li>肿瘤免疫治疗的原理和应用</li>
 </ul>
+<h1 id="1-免疫系统">1. 免疫系统</h1>
+<p>人类生活在一个充满微生物的世界里。在与病原微生物（如病毒、细菌等）的漫长斗争中，人的身体进化出了免疫系统。因此免疫系统的功能是<strong>抵抗外来入侵</strong>。那么免疫系统是如何工作的？</p>
+<h2 id="11-两种免疫应答类型">1.1 两种免疫应答类型</h2>
+<p>免疫应答分为<strong>天然免疫</strong>和<strong>获得性免疫</strong>2种类型。</p>
+<p>天然免疫又称为非特异性免疫，它采用模式识别的方法。天然免疫细胞可以识别只表达在病原微生物表面的分子，而这些分子在自身细胞中不表达，由此可以实现“敌我”区分，开启免疫应答。</p>
+<p>获得性免疫又称特异性免疫，它可以特异性识别抗原。获得性免疫细胞被激活后会增殖，并产生免疫记忆。</p>
+<p><strong>天然免疫是启动获得性免疫的前提条件</strong>。如果没有天然免疫所引起的各种炎症反应，获得性免疫就不能启动；同时，获得性免疫也可以调控天然免疫，因此二者是相辅相成的。</p>
+<h2 id="12-免疫应答的基本过程">1.2 免疫应答的基本过程</h2>
+<p>免疫应答首先从天然免疫开始。病原体进入身体后的几分钟到几天内，被天然免疫细胞识别，之后募集<strong>中性粒细胞</strong>和<strong>巨噬细胞</strong>等直接攻击病原体，这一过程会引起炎症反应。</p>
+<p>同时，<strong>抗原提呈细胞</strong>将抗原提呈给<strong>T细胞</strong>；被激活的天然免疫细胞上调各种<strong>协同刺激分子</strong>和<strong>炎症细胞因子</strong>，帮助T细胞增殖和存活，并分化为效应细胞。激活的T细胞还可以辅助<strong>B细胞</strong>产生具有高度亲和力的抗体参与免疫应答。上述过程即为获得性免疫应答，通常需要1-2周才能启动。</p>
+<h2 id="13-t细胞免疫应答的启动">1.3 T细胞免疫应答的启动</h2>
+<p>在肿瘤免疫治疗中，T细胞是当之无愧的核心，因此重点介绍。</p>
+<h3 id="131-三信号理论">1.3.1 三信号理论</h3>
+<p>启动T细胞免疫应答需要3个要素，称为“三信号理论”，这3个信号均由天然免疫细胞提供。</p>
+<ul>
+<li>
+<p>信号1是<strong>抗原</strong>。与天然免疫细胞不同，T细胞无法直接识别外来物质，只能识别由抗原提呈细胞所提呈的抗原。抗原可以是任何物质，人的身体也可以产生抗原，称为自身抗原。</p>
+</li>
+<li>
+<p>信号2是<strong>协同刺激信号</strong>。这些信号只在抗原提呈细胞被微生物激活后才会表达，正常情况下不表达。</p>
+</li>
+<li>
+<p>信号3是各种<strong>炎症因子</strong>。它们可以调控免疫应答的类型。</p>
+</li>
+</ul>
+<p>在这3个信号中，信号1是告诉T细胞可以启动免疫应答，因此抗原决定了T细胞应答的<strong>特异性</strong>。但是正如上文所提到的，人的身体内有大量自身抗原，每天吃的食物里也有抗原，这些抗原实际上对身体是无害，此时就不应该启动免疫应答，所以需要信号2的存在。它可以告诉T细胞这个抗原是“危险”的，需要启动免疫应答将其清除，因此协同刺激信号决定了T细胞应答的<strong>强度</strong>。</p>
+<h3 id="132-免疫耐受">1.3.2 免疫耐受</h3>
+<p>信号1和信号2的存在，使得T细胞免疫应答在攻击外来敌人的同时，又不会误伤友军。这种不对自身组织和细胞发起攻击的现象称<strong>免疫耐受</strong>。</p>
+<p>免疫耐受可分为中枢耐受和外周耐受：</p>
+<ul>
+<li><strong>中枢耐受</strong>是指大部分识别自身抗原的T细胞在发育过程中就已经被清除。</li>
+<li><strong>外周耐受</strong>是指身体存在一些机制，可以主动抑制那些针对自身抗原的免疫应答。这些机制包括调节性T细胞、抑制性受体和抑制性细胞因子等。</li>
+</ul>
+<p>为什么肿瘤不会有效地引起T细胞免疫应答？因为启动免疫应答的3个要素都没有满足：</p>
+<ul>
+<li>肿瘤来源于自身细胞，免疫原性很弱，因此信号1非常弱。</li>
+<li>肿瘤并非外来微生物，其表面并不存在那些可以被天然免疫细胞识别的分子，天然免疫细胞就不会上调协同刺激信号，因此不存在信号2。</li>
+<li>肿瘤不会引起炎症反应，因此不存在信号3。</li>
+</ul>
+<p>总结起来就是：<strong>免疫系统对肿瘤的是处理方式是免疫耐受</strong>。我们知道免疫系统的目的是抵御外来入侵，保护机体；而肿瘤这一存在，究竟是算不算外来物质？它的免疫学本质是什么？免疫系统到底对肿瘤持有怎样的态度呢？</p>
+<h1 id="2-肿瘤的本质">2. 肿瘤的本质</h1>
+<h2 id="21-肿瘤的生物学定义">2.1 肿瘤的生物学定义</h2>
+<p>肿瘤的生物学定义为“<strong>一群不断增殖并扩散的细胞</strong>”。</p>
+<p>每一个人是由受精卵这个单细胞发育而成的，所以无限自我复制，进行生长和扩张是每一单个细胞生物的欲望和本性。但是对于多细胞生物而言，不同的细胞具有不同的分工。自我复制这一任务被授权给了生殖细胞，而体细胞的主要任务不是复制，而是执行特定的生理功能。</p>
+<p>如果追根溯源，会发现无论是生殖细胞还是体细胞，它们都来自共同的先祖，即最初的那个受精卵，它们体内流着相同的血脉（基因组）。体细胞作为受精卵的后代，依然继承着先祖自我复制的本性和能力，只是这种能力被压制了。一旦体细胞挣脱了这种束缚，重新获得这种力量，就形成了肿瘤。</p>
+<h2 id="22-肿瘤的免疫学定义">2.2 肿瘤的免疫学定义</h2>
+<p>由上文的介绍可以知道，免疫系统的作用是抵御外来入侵，其核心是“<strong>敌我识别</strong>”。对于免疫系统而言，肿瘤这样的存在，到底是该定义为“敌”还是“我”呢？</p>
+<p>在免疫学中，肿瘤被定义为“<strong>突变的自我</strong>”，这个定义有2层含义。</p>
+<p>首先是“<strong>自我</strong>”这两个字。肿瘤细胞来源于自身细胞，而病原微生物是外来入侵的物质，二者有着本质区别。正是肿瘤细胞的自身属性，导致了免疫系统对肿瘤的免疫耐受。</p>
+<p>第二是“<strong>突变</strong>”这两个字。所有肿瘤的共同遗传学基础就是<strong>基因突变</strong>。基因突变导致的生物学效应可以使细胞长得更快，或者死得更少，这些都使得体细胞重获无限增殖能力。对于免疫学而言，这些基因突变所产生的蛋白还算是机体自身的蛋白质吗？如果不算，这些突变的蛋白可以形成新的抗原表位，引起免疫应答吗？免疫系统可以清除含有突变蛋白的细胞吗？</p>
+<h2 id="23-肿瘤的免疫编辑理论">2.3 肿瘤的免疫编辑理论</h2>
+<p>肿瘤免疫中有一个“免疫编辑理论”，该理论认为肿瘤在发生过程中就不断经历着免疫系统的选择，在选择的过程中，那些免疫原性高的肿瘤细胞都被清除了，最终幸存下来并最终形成肿瘤的细胞都具有很低的免疫原性。</p>
+<p>因此，即使免疫系统可以对肿瘤细胞进行识别和清除，但是随着肿瘤细胞的不断突变和进化，双方的博弈还是会以免疫系统的失败而告终。那么，是否可以通过人为干预，使免疫系统赢得这场战争的胜利呢？如果可以，又应该怎么做呢？</p>
+<h1 id="3-肿瘤的免疫治疗">3. 肿瘤的免疫治疗</h1>
+<p>前文提到，肿瘤之所以不能产生T细胞的免疫应答，是因为启动免疫应答的3个要素没有满足：信号1（抗原）弱、信号2（协同刺激信号）和信号3（炎症因子）基本没有。因此，人为干预免疫系统与肿瘤的斗争，就需要从这3个信号入手。</p>
+<h2 id="31-免疫检查点抑制剂">3.1 免疫检查点抑制剂</h2>
+<p>信号2决定了肿瘤免疫应答的强度，但是肿瘤通常不能诱导抗原提呈细胞上调协同刺激信号，因此当前肿瘤免疫治疗的主要方向是增强信号2。</p>
+<p>T细胞表面除了表达激活性受体外，还表达抑制性受体，称为<strong>免疫检查点</strong>。抑制性受体的功能是防止免疫应答过强，造成机体损伤。如果我们用药物阻断T细胞表面的抑制性受体，就能减少T细胞激活的抑制，这样，即使在没有协同刺激信号的情况下，也能够启动免疫应答。如果把肿瘤免疫应答比作一辆汽车，激活性受体就是油门，免疫检查点就是刹车，免疫检查点抑制剂的作用相当于把肿瘤免疫的刹车松开。</p>
+<p>目前主流的免疫检查点有CTLA-4和PD-1，针对这2个免疫检查点的药物在临床试验中显示出了不俗的疗效。针对CTLA-4的有BMS的ipilimumab（伊匹单抗，商品名Yervoy）；针对PD-1的有BMS的nivolumab（纳武利尤单抗，商品名Opdivo）、Merck的pembrolizumab（帕博利珠单抗，商品名Keytruda）；针对PD-L1的有Roche的atezolizumab（阿替利珠单抗，商品名Tecentriq）、AZ的durvalumab（度伐鲁单抗，商品名Imfinzi）等。</p>
+<h2 id="32-当前免疫治疗的困局">3.2 当前免疫治疗的困局</h2>
+<p>目前的免疫检查点抑制剂只对一小部分患者有效，大部分患者却无法从中获益。</p>
+<p>第一，T细胞的抑制性受体肿瘤繁多，除了CTLA-4和PD-1之外，还存在其他的免疫检查点。这些没有被阻断的抑制性受体依然会抑制T细胞的激活。</p>
+<p>第二，也是最重要的原因，就是起效的患者体内本身就存在信号1，在这样的情况下，增强信号2就能有效地启动免疫应答。这部分患者可以通过一些生物标志物筛选出来，如PD-L1表达水平、MSI等。但是正如免疫编辑理论所提到的，在与免疫系统的斗争中存活下来的大部分肿瘤细胞免疫原性都很低，因此大部分患者体内几乎没有信号1，此时增强信号2也无济于事。如果信号2是肿瘤免疫这辆车的“油门”和“刹车”，控制着免疫应答的强度，那么信号1就相当于“车钥匙”。所以信号1的缺乏是更为棘手的问题。</p>
+<p>如何创造信号1？目前有2种方法。</p>
+<h2 id="33-car-t">3.3 CAR-T</h2>
+<p>创造信号1 的第一种方法是改变T细胞的抗原特异性。T细胞对抗原的特异性识别是由其表面的受体（TCR）决定的，所以可以通过基因工程手段，为T细胞导入识别特定抗原的TCR，这就相当于人为地引入了新的信号1。</p>
+<p>这种方法尤其适合于特异性表达某个抗原的肿瘤，如B淋巴细胞白血病都会表达一个叫做CD49的分子，当人为地给激活的T细胞导入识别CD49的TCR后，T细胞就会特异性识别并杀伤B淋巴白血病细胞，基于该原理的疗法叫做<strong>CAR-T</strong>或<strong>TCR-T</strong>。</p>
+<p>CD49是一种自身抗原，体内的正常B细胞也会表达这个分子，所以CAR-T治疗也会清除体内的B细胞。B细胞的生理功能是产生抗体，因此可以给患者补充外源性的抗体来解决B细胞的清除。但是，与B细胞不同，体内的大多数细胞都是不可替代的，不能被随意清除，所以最好的方法还是找到只表达于肿瘤细胞而不表达于正常细胞的抗原。</p>
+<h2 id="34-靶向肿瘤的随机突变">3.4 靶向肿瘤的随机突变</h2>
+<p>此时又需要回到<strong>肿瘤的本质</strong>这一问题。基因突变是所有肿瘤的共同病因。从免疫学的角度来看，发生基因突变，突变成什么样子其实不重要，而是一旦其发生了突变，它就不再是“自己人”了，理论上免疫系统可以将其清除。所以肿瘤免疫治疗的终极方案是：<strong>将肿瘤的随机突变作为靶标</strong>。肿瘤免疫应答的所需要的信号1，即开动这台车的车钥匙，就隐藏在肿瘤所赖以生存的基因突变里。</p>
+<p>具体实施方法为：将患者的肿瘤进行全基因组测序，找到肿瘤中所含有的基因突变；将突变中可能产生免疫原性的抗原肽进行化学合成，与抗原提呈细胞孵育，与患者自身的T细胞共同培养，从而选择性地激活那些可以识别肿瘤抗原的T细胞；再将这些扩增的T细胞输回患者体内消灭肿瘤细胞。</p>
+<p>由上可见，这种方法是具有患者特异性的。利用患者自己的突变基因来刺激患者自己的免疫系统，攻击患者自己的肿瘤细胞。针对一个患者有效的药物，用于另一个患者可能完全无效。因此，肿瘤的免疫治疗是一种高度个体化的治疗手段。</p>
+<h2 id="35-肿瘤免疫治疗的副作用">3.5 肿瘤免疫治疗的副作用</h2>
+<p>自身免疫和过度炎症反应。</p>
 
             </div>
             
@@ -321,7 +636,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://kokomole.github.io/post/home/" title="首页">https://kokomole.github.io/post/home/</a>
+      <a href="https://kokomole.github.io/post/O6Gs-vWSV/" title="肿瘤免疫治疗">https://kokomole.github.io/post/O6Gs-vWSV/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -330,12 +645,20 @@
   </ul>
   <div class="tags">
     
+      <a href="https://kokomole.github.io/tag/fo6-cIFVt/"># 肿瘤学</a>
+    
+      <a href="https://kokomole.github.io/tag/gWIh2ZgB1M/"># 免疫学</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="RxODE" href="https://kokomole.github.io/post/2fjNs-43i/">RxODE</a>
+        <a class="nav-mobile-next" title="RxODE" href="https://kokomole.github.io/post/2fjNs-43i/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
