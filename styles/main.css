@@ -782,7 +782,7 @@ td {
   position: fixed;
   bottom: 5px;
   /* 小按钮到浏览器底边的距离 */
-  right: 5px;
+  right: 0px;
   /* 小按钮到浏览器右边框的距离 */
   color: #000000;
   /* 小按钮中文字的颜色 */
