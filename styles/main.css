@@ -797,6 +797,8 @@ td {
   -webkit-border-radius: 4px;
   font-weight: normal;
   /* 小按钮中文字的粗细 */
+  font-size: 12px;
+  font-family: "Arial";
   text-decoration: none !important;
 }
 #backtop a:hover {

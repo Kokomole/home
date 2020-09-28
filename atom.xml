@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-09-28T03:11:38.054Z</updated>
+    <updated>2020-09-28T03:24:57.029Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -92,6 +92,8 @@
 <p>话说，</p>
 <blockquote>
 <p>20世纪20年代末一个夏日的午后，在英国剑桥，一群大学教员和他们的妻子以及一些客人围坐在一起喝下午茶。一位女士坚持认为：将茶倒进牛奶里和将牛奶倒进茶里的味道是不同的。在座的科学家都觉得这种观点很可笑：这能有什么区别呢？他们觉得两种液体的混合物在化学成分上不可能有任何区别。此时，一个带着厚厚的眼镜、留着尖髯的男子表情变得严肃起来，这个问题让他陷入了沉思。</p>
+</blockquote>
+<blockquote>
 <p>“让我们检验这个命题吧。”他激动地说。</p>
 </blockquote>
 <p>故事说到这里，大家可能猜到故事里这个“厚厚眼镜”、“留着尖髯”的男子就是费希尔。我们稍加停顿，不妨带入他的角色，深入地思考一下：如何做实验来检验这个命题。</p>
@@ -485,7 +487,11 @@ b) 还是以听众都听懂为要，即使哪个机构只准备支付一场演�
         <link href="https://kokomole.github.io/post/2fjNs-43i/">
         </link>
         <updated>2020-09-01T16:33:48.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="安装">安装</h1>
+        <summary type="html"><![CDATA[<p>RxODE是一个基于常微分方程进行PK/PD模拟的R包。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>RxODE是一个基于常微分方程进行PK/PD模拟的R包。</p>
+<!-- more -->
+<h1 id="安装">安装</h1>
 <p>使用RxODE需要C编译器。使用以下命令检查是否存在编译器：</p>
 <pre><code>pkgbuild::has_build_tools(debug = TRUE)
 </code></pre>
