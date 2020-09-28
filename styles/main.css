@@ -782,7 +782,7 @@ td {
 #backtop a {
   /* back to top button */
   position: fixed;
-  bottom: 5px;
+  bottom: 20px;
   /* 小按钮到浏览器底边的距离 */
   right: 0px;
   /* 小按钮到浏览器右边框的距离 */
