@@ -1533,7 +1533,7 @@ p > code {
   position: relative;
   padding: 0.4em 2.2em 0 2.2em;
   font-size: 0.96em;
-  font-family: "KaiTi", "Times New Roman";
+  font-family: "Times New Roman", "KaiTi";
 }
 .next-md-body ol,
 .next-md-body ul {
