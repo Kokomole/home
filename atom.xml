@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-10-15T15:58:32.260Z</updated>
+    <updated>2020-10-15T16:09:45.625Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -23,8 +23,8 @@
 <p>奥卡西平（Oxcarbapezine，OXC）是一种神经性药物，可用于局限性及全身性癫痫发作。奥卡西平口服吸收迅速，在肝脏中快速而广泛地代谢为MHD（主要抗癫痫活性成分），MHD是由R-(-)-MHD和S-(+)-MHD组成的对映异构体。</p>
 <p>单次口服奥卡西平600mg后，峰浓度可达18.8mmol/L，峰值时间为5.5h。母药的半衰期为2h，MHD的半衰期为9h，肾功能受损者（肌酐清除率小于每分钟30ml）的半衰期延长至19h。代谢物在体内分布广泛，表观分布容积为0.7～0.8L/kg，蛋白结合率为40%，易透过胎盘和血-脑脊液屏障，乳汁中药物浓度为血药浓度的50%。奥卡西平主要经肾脏排出（94%～97.7%），仅少量（1.9%～4.3%）由消化道排泄。</p>
 <h1 id="2-结构模型">2. 结构模型</h1>
-<p>母药是一个含有吸收转运室的一级消除二室模型，2种构型的代谢物均是一个一级消除的一室模型。示意图如下：</p>
-<figure data-type="image" tabindex="1"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201015230815294.png" alt="image-20201015230815294" loading="lazy"></figure>
+<p>母药是一个含有吸收转运室的一级消除二室模型，2种构型的代谢物均是一个一级消除的一室模型。示意图如下：<br>
+<img src="https://kokomole.github.io/post-images/1602778125228.JPG" alt="test" loading="lazy"></p>
 <h2 id="21-母药的吸收转运">2.1 母药的吸收转运</h2>
 <p>OXC的吸收过程使用absorption transit compartments描述，共有3个转运室（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n=3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>），吸收室之间转运速率常数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>k</mi><mrow><mi>t</mi><mi>r</mi></mrow></msub></mrow><annotation encoding="application/x-tex">k_{tr}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03148em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，平均转运时间为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">MTT</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，参数之间的关系为</p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1)</mtext></mtd><mtd><mrow><msub><mi>k</mi><mrow><mi>t</mi><mi>r</mi></mrow></msub><mo>=</mo><mfrac><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>M</mi><mi>T</mi><mi>T</mi></mrow></mfrac></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">k_{tr}=\frac{n+1}{MTT} \tag{1}
@@ -97,7 +97,7 @@
 <td>-</td>
 </tr>
 <tr>
-<td>CL_{MHD}</td>
+<td><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><msub><mi>L</mi><mrow><mi>M</mi><mi>H</mi><mi>D</mi></mrow></msub></mrow><annotation encoding="application/x-tex">CL_{MHD}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
 <td>2.01</td>
 <td>L/h</td>
 </tr>
@@ -214,9 +214,9 @@ COMP(TRANSI1)		; CMT 2
 COMP(TRANSI2)		; CMT 3
 COMP(TRANSI3)		; CMT 4
 COMP(CENT,DEFOBS)	; CMT 5
-COMP(PERI)			; CMT 6
-COMP(MHDR)			; CMT 7
-COMP(MHDS)			; CMT 8
+COMP(PERI)		; CMT 6
+COMP(MHDR)		; CMT 7
+COMP(MHDS)		; CMT 8
 
 $PK
 ; OXC
@@ -259,11 +259,11 @@ C_OXC = A(5)/VCOXC
 C_MHD_R = A(7)/VMHD_R
 C_MHD_S = A(8)/VMHD_S
 
-IPRED=C_OXC						  	 ; OXC
+IPRED=C_OXC						   ; OXC
 IF (CMT.EQ.7) IPRED=C_MHD_R   		 ; R_MHD
 IF (CMT.EQ.8) IPRED=C_MHD_S   		 ; S_MHD
 
-Y = IPRED*(1+EPS(1))   				 ; OXC
+Y = IPRED*(1+EPS(1))   			 ; OXC
 IF (CMT.EQ.7) Y = IPRED*(1+EPS(2))   ; R_MHD
 IF (CMT.EQ.8) Y = IPRED*(1+EPS(2))   ; S_MHD
 
