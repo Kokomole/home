@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#000000">
 <title>群体药动学模型 | Kokomo</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1602779391387">
+<link rel="shortcut icon" href="/favicon.ico?v=1602781388218">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1040,7 +1040,7 @@
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/hJOHM1_Gc/"" data-c="
-          &lt;p&gt;对一篇奥卡西平群体药动学文献的模型还原，该模型涉及吸收过程的房室转运和母药-代谢物建模。&lt;/p&gt;
+          &lt;p&gt;对一篇奥卡西平群体药动学文献&lt;a href=&#34;#refer-anchor-1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;的模型还原，该模型涉及吸收过程的房室转运和母药-代谢物建模。&lt;/p&gt;
 &lt;!-- more --&gt;
 &lt;h1 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h1&gt;
 &lt;p&gt;奥卡西平（Oxcarbapezine，OXC）是一种神经性药物，可用于局限性及全身性癫痫发作。奥卡西平口服吸收迅速，在肝脏中快速而广泛地代谢为MHD（主要抗癫痫活性成分），MHD是由R-(-)-MHD和S-(+)-MHD组成的对映异构体。&lt;/p&gt;
@@ -1325,6 +1325,14 @@ $SIGMA
 $SIMULATION (12345678) ONLYSIM SUBPROBLEM=100
 $TABLE ID TIME DV CMT NOAPPEND NOPRINT NOHEADER FILE=s1.fit
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;6-数据文件&#34;&gt;6. 数据文件&lt;/h1&gt;
+&lt;p&gt;各列依次为：ID、TIME、DV、AMT、II、ADDL、EVID、MDV、WT、CMT。共模拟到第12小时，房室5、7、8分别为OXC、R-(-)-MHD、S-(+)-MHD的观测。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1602780940310.JPG&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h1 id=&#34;7-模拟结果&#34;&gt;7. 模拟结果&lt;/h1&gt;
+&lt;p&gt;模拟100次。自上而下分别是R-(-)-MHD、OXC、S-(+)-MHD的浓度，左图为文献中实测浓度，右图为模拟结果。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;4&#34;&gt;&lt;img src=&#34;https://kokomole.github.io/post-images/1602780883750.JPG&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h1 id=&#34;8-参考文献&#34;&gt;8. 参考文献&lt;/h1&gt;
+&lt;div id=&#34;refer-anchor-1&#34;&gt;&lt;/div&gt;[1] Antunes NJ, van Dijkman SC, Lanchote VL, Wichert-Ana L, Coelho EB, Alexandre Junior V, Takayanagui OM, Tozatto E, van Hasselt JGC, Della Pasqua O. Population pharmacokinetics of oxcarbazepine and its metabolite 10-hydroxycarbazepine in healthy subjects. Eur J Pharm Sci. 2017 Nov 15;109S:S116-S123.(https://pubmed.ncbi.nlm.nih.gov/28528287/)
 ">母药与代谢物模型</a>
       </div>
       
