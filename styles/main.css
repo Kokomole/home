@@ -2186,6 +2186,8 @@ body {
     }
     .mist .site-title i {
       background: #fffffffe;
+    }.box-scale > #landlord {
+      transform: scale(0.3);
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
