@@ -2057,12 +2057,12 @@ p > code {
 body {
       background-color: #212529;
     }.header {
-        width: 90%;
+        width: 1060px;
         margin: 0 auto;
       }
 
       .main-continer {
-        width: 90%;
+        width: 1060px;
         margin: 0 auto;
       }
     
@@ -2081,19 +2081,19 @@ body {
     .archive-timeline-box::after, .tag-timeline-wrapper::after {
       background: #e9eceffe;
     }h1, h2, h3, h4, h5, h6 {
-      color: #000000;
+      color: #f08c00;
     }
     
     .archive-timeline-title::before {
-      background-color: #000000;
+      background-color: #f08c00;
     }
     
     .post-title-link::before {
-      background-color: #000000;
+      background-color: #f08c00;
     }
     
     .node-title::before {
-      background-color: #000000;
+      background-color: #f08c00;
     }a {
       color: #495057;
     }
