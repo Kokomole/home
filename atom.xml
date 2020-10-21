@@ -2,13 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-10-21T14:08:35.588Z</updated>
+    <updated>2020-10-21T14:12:22.738Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Kokomo</rights>
+    <entry>
+        <title type="html"><![CDATA[122]]></title>
+        <id>https://kokomole.github.io/post/hBlus4AOs/</id>
+        <link href="https://kokomole.github.io/post/hBlus4AOs/">
+        </link>
+        <updated>2020-10-21T14:11:48.000Z</updated>
+        <content type="html"><![CDATA[<p>kh</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[母药与代谢物模型]]></title>
         <id>https://kokomole.github.io/post/hJOHM1_Gc/</id>
@@ -1926,81 +1935,6 @@ text(-0.02*(max(x)-min(x)),-(max(x) - min(x))*0.1,&quot;0&quot;)
 <h1 id="参考文献">参考文献</h1>
 <div id="refer-anchor-1"></div>
 <p>[1] https://www.zsccy.xyz/post/2019-04-26-rplotarrows/</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ggplot画图]]></title>
-        <id>https://kokomole.github.io/post/ggplot-note/</id>
-        <link href="https://kokomole.github.io/post/ggplot-note/">
-        </link>
-        <updated>2020-08-11T15:40:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="1-主题设置">1. 主题设置</h1>
-<h2 id="11-一套常用主题">1.1 一套常用主题</h2>
-<pre><code>mytheme &lt;- theme(panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25), 
-                 panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25),
-                 panel.background = element_blank(),
-                 panel.border = element_rect(fill=NA,color = &quot;black&quot;),
-                 plot.title = element_text(hjust = 0.5),
-                 plot.subtitle = element_text(hjust = 0.5),
-                 plot.caption = element_text(),
-                 legend.position = &quot;bottom&quot;,
-                 legend.key = element_blank(),
-                 strip.background = element_rect(color = &quot;black&quot;))
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1597161252037.png" alt="" loading="lazy"></figure>
-<h2 id="12-画板panel">1.2 画板（Panel）</h2>
-<pre><code># 网格线（grid）
-panel.grid.major = element_line(colour = &quot;grey85&quot;, size = 0.25) # 主要网格线
-panel.grid.minor = element_line(colour = &quot;grey85&quot;, size = 0.25) # 次要网格线
-# 无网格线
-panel.grid = element_blank()
-
-# 背景：建议用空白
-panel.background = element_blank()
-
-# 边界：建议用黑色
-panel.border = element_rect(fill=NA,color = &quot;black&quot;)
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://kokomole.github.io/post-images/1597161263926.jpg" alt="" loading="lazy"></figure>
-<h2 id="13-条带strip">1.3 条带（Strip）</h2>
-<pre><code># 边界颜色（color）建议用黑色
-# 填充色（fill）建议用默认的灰色，或设为白色
-strip.background = element_rect(color = &quot;black&quot;)
-strip.background.x = element_rect(color = &quot;black&quot;,fill = &quot;white&quot;)
-strip.background.y = element_rect(color = &quot;black&quot;)
-
-# 位置：建议用inside（默认，不用特别设置）
-strip.placement = &quot;outside&quot;
-</code></pre>
-<figure data-type="image" tabindex="3"><img src="https://kokomole.github.io/post-images/1597161273003.png" alt="" loading="lazy"></figure>
-<h2 id="14-图例legend">1.4 图例（Legend）</h2>
-<pre><code># 位置：建议放底部
-legend.position = &quot;bottom&quot;
-
-# 图标：建议设为空白
-legend.key = element_blank()
-
-# 背景：建议不设（默认），或边界用黑色
-legend.background = element_rect(color = &quot;black&quot;)
-</code></pre>
-<figure data-type="image" tabindex="4"><img src="https://kokomole.github.io/post-images/1597161282047.png" alt="" loading="lazy"></figure>
-<h2 id="15-字体字号">1.5 字体字号</h2>
-<pre><code># 字体设置
-windowsFonts(Times=windowsFont(&quot;Times New Roman&quot;)) # 将Windows系统中的某字体赋值给Times
-
-# 统一设置：使用text()，各元素也可在各个地方分别设置
-text = element_text(family=&quot;Times&quot;, face=&quot;bold&quot;, size=12)
-
-# 标题
-plot.title = element_text(hjust = 0.5) # 标题居中
-plot.subtitle = element_text(hjust = 0.5) # 副标题
-plot.caption = element_text() # 说明文字
-
-# 各元素
-axis.title.x = element_text(size = 10)
-strip.text.y = element_text(size = 10)
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="https://kokomole.github.io/post-images/1597161290232.jpg" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
