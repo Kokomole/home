@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>Kokomo</title>
-    <updated>2020-12-23T16:37:34.698Z</updated>
+    <updated>2020-12-23T16:46:37.765Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -1266,6 +1266,7 @@ mytheme &lt;- theme(panel.background = element_blank(),
   mytheme
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://kokomole.github.io/post-images/1598629706783.png" alt="" loading="lazy"></figure>
+<div align=center><img src="https://img2020.cnblogs.com/blog/1724317/202012/1724317-20201217190341751-1881403588.png" width="70%" height="70%"></div>
 <h1 id="3-药时曲线">3. 药时曲线</h1>
 <h2 id="31-普通药时曲线">3.1 普通药时曲线</h2>
 <pre><code>p &lt;- ggplot(draw, aes(x = TIME, y = DV, group = ID,col = RACE, shape = RACE)) + # 按ID画
