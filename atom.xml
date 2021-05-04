@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
-    <title>Kokomo</title>
-    <updated>2021-01-08T17:32:58.735Z</updated>
+    <title>咫尺桃源</title>
+    <updated>2021-05-04T07:54:22.920Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
     <logo>https://kokomole.github.io/images/avatar.png</logo>
     <icon>https://kokomole.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Kokomo</rights>
+    <rights>All rights reserved 2021, 咫尺桃源</rights>
     <entry>
         <title type="html"><![CDATA[母药与代谢物模型]]></title>
         <id>https://kokomole.github.io/post/hJOHM1_Gc/</id>
