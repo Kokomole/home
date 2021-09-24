@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#212529">
 <title>母药与代谢物模型 | 2014色彩漫游</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1632498801653">
+<link rel="shortcut icon" href="/favicon.ico?v=1632500114257">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -2606,6 +2606,107 @@ RFORMAT=&amp;quot;7(s1PE11.4))&amp;quot;
 &lt;p&gt;代码的第1行是我们需要输出的4个变量：ID、DOSE、WT、TIME；第2行是输出表格的路径及文件名。&lt;/p&gt;
 &lt;p&gt;在第3行，我们对第1个变量（即ID）的格式进行了设置。Fortran的浮点数表示格式为&lt;code&gt;Fw.d&lt;/code&gt;，整数部分有w个字符，小数部分有d个字符。因此代码中的&lt;code&gt;F15.0&lt;/code&gt;表示ID是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位ID的使用。&lt;/p&gt;
 &lt;p&gt;在第4行，我们将剩下的变量设置为仍然使用默认格式&lt;code&gt;s1PE11.4&lt;/code&gt;。前面的&lt;code&gt;7&lt;/code&gt;表示除了第1个变量ID之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以等于7，是因为除了自己定义输出的DOSE、WT、TIME外，NONMEM还会自动输出&lt;code&gt;DV&lt;/code&gt;、&lt;code&gt;PRED&lt;/code&gt;、&lt;code&gt;RES&lt;/code&gt;、&lt;code&gt;WRES&lt;/code&gt;这4个变量，所以很多时候在设置变量数时需要加4。&lt;/p&gt;
+&lt;h1 id=&#34;psn的scm功能&#34;&gt;PsN的SCM功能&lt;/h1&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;SCM (stepwise covariate model) 是由PsN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SCM -config_file=xx.scm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同时需要一份SCM文件，示例如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;model = 3.mod
+search_direction = both
+p_forward = 0.05
+p_backward = 0.01
+continuous_covariates = WT,AST,ALT,ALB
+categorical_covariates = SEX,CYP3A5
+time_varying = WT,AST,ALT,ALB
+
+[test_relations]
+CL = WT,AST,ALT,ALB,SEX,CYP3A5
+
+[valid_states]
+continuous = 1,5
+categorical = 1,2
+
+[code]
+CL:AST-5 = exponential
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;出现在&lt;code&gt;$INPUT&lt;/code&gt;中的变量名才会用到，控制文件中参数必须写成&lt;code&gt;TVxx&lt;/code&gt;的形式。&lt;/p&gt;
+&lt;p&gt;SCM的结果可以在&lt;code&gt;scmlog1.txt&lt;/code&gt;中查看，其中包含了OFV值和p值。&lt;/p&gt;
+&lt;h2 id=&#34;scm的设置&#34;&gt;SCM的设置&lt;/h2&gt;
+&lt;p&gt;必需的变量：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;model&lt;/code&gt;：基础模型&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;search_direction&lt;/code&gt;：筛选方向，可以等于forward、backward、both&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;continuous_covariates&lt;/code&gt;：连续型协变量，逗号分隔，不能加空格&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;categorical_covariates&lt;/code&gt;：分类型协变量，逗号分隔，不能加空格&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;time_varying&lt;/code&gt;用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。&lt;/p&gt;
+&lt;p&gt;所谓“Uppsala way”，是指在&lt;code&gt;$ERROR&lt;/code&gt;或&lt;code&gt;$PRED&lt;/code&gt;模型使用变量&lt;code&gt;W&lt;/code&gt;，代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ERROR
+	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
+	Y = IPRED + ERR(1)*W
+	IRES = DV - IPRED
+	IWRES = IPRES / W
+
+$SIGMA
+	1 FIX
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;其他配置&#34;&gt;其他配置&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[test_relations]&lt;/code&gt;：定义协变量应该加到哪个参数上。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[valid_states]&lt;/code&gt;：定义协变量加入的形式。states可以自己在&lt;code&gt;[code]&lt;/code&gt;里面自己定义，也可使用固定的。固定的states如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;变量&lt;/th&gt;
+&lt;th&gt;states&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;连续型&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;none&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;连续型&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;linear&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;连续型&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;hockey-stick (分段线性)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;连续型&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;exponential&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;连续型&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;power&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分类型&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;none&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分类型&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;linear&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[included_relations]&lt;/code&gt;：定义在一开始就加入的协变量。例如：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;CL = WT-2,AGE-5
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;pirana&#34;&gt;Pirana&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;查看正在进行的任务&lt;/li&gt;

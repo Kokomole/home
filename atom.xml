@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>2014色彩漫游</title>
-    <updated>2021-09-24T15:53:37.855Z</updated>
+    <updated>2021-09-24T16:15:25.826Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -1342,6 +1342,107 @@ RFORMAT=&quot;7(s1PE11.4))&quot;
 <p>代码的第1行是我们需要输出的4个变量：ID、DOSE、WT、TIME；第2行是输出表格的路径及文件名。</p>
 <p>在第3行，我们对第1个变量（即ID）的格式进行了设置。Fortran的浮点数表示格式为<code>Fw.d</code>，整数部分有w个字符，小数部分有d个字符。因此代码中的<code>F15.0</code>表示ID是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位ID的使用。</p>
 <p>在第4行，我们将剩下的变量设置为仍然使用默认格式<code>s1PE11.4</code>。前面的<code>7</code>表示除了第1个变量ID之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以等于7，是因为除了自己定义输出的DOSE、WT、TIME外，NONMEM还会自动输出<code>DV</code>、<code>PRED</code>、<code>RES</code>、<code>WRES</code>这4个变量，所以很多时候在设置变量数时需要加4。</p>
+<h1 id="psn的scm功能">PsN的SCM功能</h1>
+<h2 id="概述">概述</h2>
+<p>SCM (stepwise covariate model) 是由PsN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
+<pre><code>SCM -config_file=xx.scm
+</code></pre>
+<p>同时需要一份SCM文件，示例如下：</p>
+<pre><code>model = 3.mod
+search_direction = both
+p_forward = 0.05
+p_backward = 0.01
+continuous_covariates = WT,AST,ALT,ALB
+categorical_covariates = SEX,CYP3A5
+time_varying = WT,AST,ALT,ALB
+
+[test_relations]
+CL = WT,AST,ALT,ALB,SEX,CYP3A5
+
+[valid_states]
+continuous = 1,5
+categorical = 1,2
+
+[code]
+CL:AST-5 = exponential
+</code></pre>
+<p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxx</code>的形式。</p>
+<p>SCM的结果可以在<code>scmlog1.txt</code>中查看，其中包含了OFV值和p值。</p>
+<h2 id="scm的设置">SCM的设置</h2>
+<p>必需的变量：</p>
+<ul>
+<li><code>model</code>：基础模型</li>
+<li><code>search_direction</code>：筛选方向，可以等于forward、backward、both</li>
+<li><code>continuous_covariates</code>：连续型协变量，逗号分隔，不能加空格</li>
+<li><code>categorical_covariates</code>：分类型协变量，逗号分隔，不能加空格</li>
+</ul>
+<p><code>time_varying</code>用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。</p>
+<p>所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
+<pre><code>$ERROR
+	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
+	Y = IPRED + ERR(1)*W
+	IRES = DV - IPRED
+	IWRES = IPRES / W
+
+$SIGMA
+	1 FIX
+</code></pre>
+<h2 id="其他配置">其他配置</h2>
+<ul>
+<li><code>[test_relations]</code>：定义协变量应该加到哪个参数上。</li>
+<li><code>[valid_states]</code>：定义协变量加入的形式。states可以自己在<code>[code]</code>里面自己定义，也可使用固定的。固定的states如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>states</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续型</td>
+<td>1</td>
+<td>none</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>2</td>
+<td>linear</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>3</td>
+<td>hockey-stick (分段线性)</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>4</td>
+<td>exponential</td>
+</tr>
+<tr>
+<td>连续型</td>
+<td>5</td>
+<td>power</td>
+</tr>
+<tr>
+<td>分类型</td>
+<td>1</td>
+<td>none</td>
+</tr>
+<tr>
+<td>分类型</td>
+<td>2</td>
+<td>linear</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>[included_relations]</code>：定义在一开始就加入的协变量。例如：</li>
+</ul>
+<pre><code>CL = WT-2,AGE-5
+</code></pre>
 <h1 id="pirana">Pirana</h1>
 <ul>
 <li>查看正在进行的任务</li>
