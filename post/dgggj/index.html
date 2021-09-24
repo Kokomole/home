@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#212529">
 <title>说一说在我老家，庄稼的种植情况 | 2014色彩漫游</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1632500323570">
+<link rel="shortcut icon" href="/favicon.ico?v=1632500598469">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -2137,8 +2137,7 @@ CL:AST-5 = exponential
 &lt;li&gt;&lt;code&gt;continuous_covariates&lt;/code&gt;：连续型协变量，逗号分隔，不能加空格&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;categorical_covariates&lt;/code&gt;：分类型协变量，逗号分隔，不能加空格&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;time_varying&lt;/code&gt;用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。&lt;/p&gt;
-&lt;p&gt;所谓“Uppsala way”，是指在&lt;code&gt;$ERROR&lt;/code&gt;或&lt;code&gt;$PRED&lt;/code&gt;模型使用变量&lt;code&gt;W&lt;/code&gt;，代码如下：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;time_varying&lt;/code&gt;用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。所谓“Uppsala way”，是指在&lt;code&gt;$ERROR&lt;/code&gt;或&lt;code&gt;$PRED&lt;/code&gt;模型使用变量&lt;code&gt;W&lt;/code&gt;，代码如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ERROR
 	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
 	Y = IPRED + ERR(1)*W

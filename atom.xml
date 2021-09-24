@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>2014色彩漫游</title>
-    <updated>2021-09-24T16:19:02.845Z</updated>
+    <updated>2021-09-24T16:23:22.769Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -1376,8 +1376,7 @@ CL:AST-5 = exponential
 <li><code>continuous_covariates</code>：连续型协变量，逗号分隔，不能加空格</li>
 <li><code>categorical_covariates</code>：分类型协变量，逗号分隔，不能加空格</li>
 </ul>
-<p><code>time_varying</code>用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。</p>
-<p>所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
+<p><code>time_varying</code>用于协变量在研究过程中变化的情况，它只能在残差写成“Uppsala way”时才能使用。所谓“Uppsala way”，是指在<code>$ERROR</code>或<code>$PRED</code>模型使用变量<code>W</code>，代码如下：</p>
 <pre><code>$ERROR
 	W = SQRT(IPRED * THETA(1)**2 + THETA(2)**2)
 	Y = IPRED + ERR(1)*W
