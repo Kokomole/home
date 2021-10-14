@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kokomole.github.io</id>
     <title>2014色彩漫游</title>
-    <updated>2021-09-24T16:25:36.181Z</updated>
+    <updated>2021-10-14T14:04:31.078Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kokomole.github.io"/>
     <link rel="self" href="https://kokomole.github.io/atom.xml"/>
@@ -795,7 +795,7 @@ b) 还是以听众都听懂为要，即使哪个机构只准备支付一场演�
 ]]></summary>
         <content type="html"><![CDATA[<p>RxODE是一个基于常微分方程进行PK/PD模拟的R包。</p>
 <!-- more -->
-<h1 id="安装">安装</h1>
+<h1 id="1-安装">1. 安装</h1>
 <p>使用RxODE需要C编译器。使用以下命令检查是否存在编译器：</p>
 <pre><code>pkgbuild::has_build_tools(debug = TRUE)
 </code></pre>
@@ -832,15 +832,15 @@ Argument 'which' was left unspecified. Choosing first table.
 Error: Couldn't find a table.
 </code></pre>
 <p>后面未再尝试。不过数日后RxODE突然可以顺利运行，原因不知。</p>
-<h1 id="给药和观测事件">给药和观测事件</h1>
+<h1 id="2-给药和观测事件">2. 给药和观测事件</h1>
 <p>与NONMEM一样，RxODE也是以事件来区分的，包括给药和采样2种事件类型。NM数据文件中的AMT、II、ADDL、RATE等变量，在RxODE中同样使用。</p>
 <p>在官网中，我发现有2种创建事件表格的函数：<code>et</code>和<code>eventTable</code>。我还没有搞清楚这2者的区别是什么，也不知道作者为什么提供2种方法。由于<code>eventTable</code>函数可以自动补全，我选择了后者。</p>
-<h2 id="一种给药方案">一种给药方案</h2>
+<h2 id="21-一种给药方案">2.1 一种给药方案</h2>
 <p>无论是给药事件，还是观测事件，都需要先利用<code>eventTable</code>函数生成一个用以存放的对象，然后增加事件。<code>eventTable</code>函数中可以指定时间和剂量的单位。使用<code>add.dosing</code>增加给药事件。</p>
 <pre><code>eventTable(time.units = &quot;hours&quot;, amount.units = &quot;μg&quot;) %&gt;%
   add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
 </code></pre>
-<h2 id="多种给药方案">多种给药方案</h2>
+<h2 id="22-多种给药方案">2.2 多种给药方案</h2>
 <p>如果使用了不同的给药方案（剂量、给药间隔的调整等等），需要将2种给药方案分别赋值给变量，然后用<code>seq</code>函数连接起来。这样做的目的是使时间能对得上。</p>
 <p>给药方案：首先给予5天的10mg、bid给药，共计10次给药；再给予5天的20mg、qd给药给药，共计5次。</p>
 <ul>
@@ -889,12 +889,12 @@ seq(dose1, dose2)
 </code></pre>
 </li>
 </ul>
-<h2 id="观测事件">观测事件</h2>
+<h2 id="23-观测事件">2.3 观测事件</h2>
 <p>在给药事件的基础上，使用<code>add.sampling</code>函数增加观测事件，指定开始时间，结束时间，步长，其中步长可以用次数代替：</p>
 <pre><code>et &lt;- seq(dose1, dose2) %&gt;% 
   add.sampling(seq(from = 0, to = 10*24, by = 1))
 </code></pre>
-<h1 id="结构模型">结构模型</h1>
+<h1 id="3-结构模型">3. 结构模型</h1>
 <pre><code>model &lt;- RxODE({
   
   # 参数
@@ -948,7 +948,7 @@ seq(dose1, dose2)
 })
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901160745931.png" alt="image-20200901160745931" loading="lazy"></figure>
-<h1 id="个体间变异">个体间变异</h1>
+<h1 id="4-个体间变异">4. 个体间变异</h1>
 <pre><code>omega &lt;- lotri({
   eta_KA ~ 0.04
   eta_CL ~ 0.09
@@ -961,7 +961,7 @@ seq(dose1, dose2)
 })
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162657489.png" alt="image-20200901162657489" loading="lazy"></figure>
-<h1 id="残差变异">残差变异</h1>
+<h1 id="5-残差变异">5. 残差变异</h1>
 <pre><code>sigma &lt;- lotri(err_PK_prop ~ 0.09)
 </code></pre>
 <figure data-type="image" tabindex="3"><img src="C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162915565.png" alt="image-20200901162915565" loading="lazy"></figure>
@@ -969,7 +969,7 @@ seq(dose1, dose2)
         omega = omega, nSub = 3, sigma = sigma) %&gt;%
   plot(C2,eff)
 </code></pre>
-<h1 id="协方差矩阵">协方差矩阵</h1>
+<h1 id="6-协方差矩阵">6. 协方差矩阵</h1>
 <pre><code>rseVar &lt;- function(est, rse){
   return(est*rse/100)^2
 }
@@ -995,7 +995,7 @@ thetaMat &lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
 #t_Kout 0.0000 0.000 0.000 0.000  0.00  0.00   0.33      0
 #t_EC50 0.0000 0.000 0.000 0.000  0.00  0.00   0.00     10
 </code></pre>
-<h1 id="最终结果">最终结果</h1>
+<h1 id="7-最终结果">7. 最终结果</h1>
 <pre><code>rxSolve(object = model_name,events = et,dfSub=760,
         nSub = 60, nStud = 60, omega = omega, sigma = sigma,
         thetaMat = thetaMat, thetaLower = 0) %&gt;% 
@@ -1011,8 +1011,7 @@ thetaMat &lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
         <link href="https://kokomole.github.io/post/dplyr/">
         </link>
         <updated>2020-08-31T08:36:54.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="数据集">数据集</h1>
-<p>所用的数据为<code>datasets</code>包提供的<code>ChickWeight</code>数据集，它描述了不同时间小鸡的体重和喂食种类。</p>
+        <content type="html"><![CDATA[<p>所用的数据为<code>datasets</code>包提供的<code>ChickWeight</code>数据集，它描述了不同时间小鸡的体重和喂食种类。</p>
 <pre><code>library(datasets)
 head(ChickWeight)
 
@@ -1025,8 +1024,7 @@ head(ChickWeight)
 # 5     76    8     1    1
 # 6     93   10     1    1
 </code></pre>
-<h1 id="基本命令">基本命令</h1>
-<h2 id="1-计数count">1. 计数：count</h2>
+<h1 id="1-计数count">1. 计数：count</h1>
 <p>用于分类变量（也可用于连续变量）的统计描述，计算不同类别数据的数量。格式为：</p>
 <pre><code>count(data, group)
 </code></pre>
@@ -1040,7 +1038,7 @@ head(ChickWeight)
 #3 3       120
 #4 4       118
 </code></pre>
-<h2 id="2-总结summarise">2. 总结：summarise</h2>
+<h1 id="2-总结summarise">2. 总结：summarise</h1>
 <p>对连续变量进行统计描述，计算均值、最值、分位数等。格式为：</p>
 <pre><code>summarise(data, function)
 </code></pre>
@@ -1053,7 +1051,7 @@ head(ChickWeight)
 #  quantile(weight, 0.05) quantile(weight, 0.95)
 #1                     41                    264
 </code></pre>
-<h2 id="3-分组group_by">3. 分组：group_by</h2>
+<h1 id="3-分组group_by">3. 分组：group_by</h1>
 <p>将数按照某项内容进行分组，方面后续分析。格式为：</p>
 <pre><code>group_by(data, group_by(group))
 </code></pre>
@@ -1089,7 +1087,7 @@ head(ChickWeight)
 #3 3               143.             126.
 #4 4               135.             130.
 </code></pre>
-<h2 id="4-筛选filter">4. 筛选：filter</h2>
+<h1 id="4-筛选filter">4. 筛选：filter</h1>
 <p>可设置多个筛选条件，“与”用<code>,</code>连接，“或”用<code>|</code>连接。格式为：</p>
 <pre><code>filter(data, condition 1, condition 2, ...)
 </code></pre>
@@ -1110,7 +1108,7 @@ filter(ChickWeight, weight &gt;= 320, Diet == 2|Diet == 4)
 #1    331   21    21    2
 #2    322   21    48    4
 </code></pre>
-<h2 id="5-选择select">5. 选择：select</h2>
+<h1 id="5-选择select">5. 选择：select</h1>
 <p>用于选出数据中某些变量（列），可以用列名，也可以用列号，前面加<code>-</code>表示去掉该列。格式为：</p>
 <pre><code>select(data, var1, var2)
 </code></pre>
@@ -1133,7 +1131,7 @@ dplyr::select(ChickWeight, Time:weight)
 #1      0     42
 #2      2     51
 </code></pre>
-<h2 id="6-增加变量mutate">6. 增加变量：mutate</h2>
+<h1 id="6-增加变量mutate">6. 增加变量：mutate</h1>
 <p>用于在原数据集上增加新的列，格式为：</p>
 <pre><code>mutate(data, name = value)
 </code></pre>
@@ -1145,7 +1143,7 @@ dplyr::select(ChickWeight, Time:weight)
 #3       59    4     1    1 -62.8183391
 #4       64    6     1    1 -57.8183391
 </code></pre>
-<h2 id="7-管道命令pipe">7. 管道命令：pipe</h2>
+<h1 id="7-管道命令pipe">7. 管道命令：pipe</h1>
 <p>在R中，pipe命令用<code>$&gt;$</code>表示。使用管道命令的格式为：</p>
 <pre><code>data %&gt;%
 	operation 1 %&gt;%
@@ -1277,7 +1275,7 @@ strip.text.y = element_text(size = 10)
         <link href="https://kokomole.github.io/post/github-note/">
         </link>
         <updated>2020-07-31T17:31:36.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="github本地仓库配置">GitHub本地仓库配置</h1>
+        <content type="html"><![CDATA[<h1 id="1-github本地仓库配置">1. GitHub本地仓库配置</h1>
 <ol>
 <li>
 <p>输入用户名和邮箱</p>
@@ -1311,7 +1309,7 @@ git config --global user.email &quot;xxx@xxx.com&quot;
 </li>
 </ol>
 <p>此时已经完成与本地仓库的连接。</p>
-<h1 id="github的基本操作">GitHub的基本操作</h1>
+<h1 id="2-github的基本操作">2. GitHub的基本操作</h1>
 <ul>
 <li>
 <p>克隆项目</p>
@@ -1327,12 +1325,12 @@ git config --global user.email &quot;xxx@xxx.com&quot;
         <link href="https://kokomole.github.io/post/NM-note/">
         </link>
         <updated>2020-07-26T15:53:42.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="id可识别位数的设置">ID可识别位数的设置</h1>
-<h2 id="问题描述">问题描述</h2>
+        <content type="html"><![CDATA[<h1 id="1-id可识别位数的设置">1. ID可识别位数的设置</h1>
+<h2 id="11-问题描述">1.1 问题描述</h2>
 <p>在NM7中，<code>ID</code>的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”的受试者，在输出的结果表格里全部显示为“101000”，即从第6位开始的都无法识别。</p>
-<h2 id="原因解析">原因解析</h2>
+<h2 id="12-原因解析">1.2 原因解析</h2>
 <p>NM使用Fortran语言编写，输出表格所有字段的默认格式是<code>s1PE11.4</code>。此格式为科学计数法，允许11个字符的总宽度，包括符号和小数位数。小数点前面有1位，后面有4位，示例如下：-1.2345E+01。因此，在默认设置下，最多显示识别5位数字。</p>
-<h2 id="解决方案">解决方案</h2>
+<h2 id="13-解决方案">1.3 解决方案</h2>
 <p>使用<code>LFORMAT</code>和<code>RFORMAT</code>选项来对数据的位数进行设置。在<code>$TABLE</code>模块加入以下代码：</p>
 <pre><code>$TABLE ID DOSE WT TIME NOPRINT 
 FILE=./filename.tbl
@@ -1342,8 +1340,8 @@ RFORMAT=&quot;7(s1PE11.4))&quot;
 <p>代码的第1行是我们需要输出的4个变量：ID、DOSE、WT、TIME；第2行是输出表格的路径及文件名。</p>
 <p>在第3行，我们对第1个变量（即ID）的格式进行了设置。Fortran的浮点数表示格式为<code>Fw.d</code>，整数部分有w个字符，小数部分有d个字符。因此代码中的<code>F15.0</code>表示ID是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位ID的使用。</p>
 <p>在第4行，我们将剩下的变量设置为仍然使用默认格式<code>s1PE11.4</code>。前面的<code>7</code>表示除了第1个变量ID之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以等于7，是因为除了自己定义输出的DOSE、WT、TIME外，NONMEM还会自动输出<code>DV</code>、<code>PRED</code>、<code>RES</code>、<code>WRES</code>这4个变量，所以很多时候在设置变量数时需要加4。</p>
-<h1 id="psn的scm功能">PsN的SCM功能</h1>
-<h2 id="概述">概述</h2>
+<h1 id="2-psn的scm功能">2. PsN的SCM功能</h1>
+<h2 id="21-概述">2.1 概述</h2>
 <p>SCM (stepwise covariate model) 是由PsN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：</p>
 <pre><code>SCM -config_file=xx.scm
 </code></pre>
@@ -1368,7 +1366,7 @@ CL:AST-5 = exponential
 </code></pre>
 <p>出现在<code>$INPUT</code>中的变量名才会用到，控制文件中参数必须写成<code>TVxx</code>的形式。</p>
 <p>SCM的结果可以在<code>scmlog1.txt</code>中查看，其中包含了OFV值和p值。</p>
-<h2 id="scm的设置">SCM的设置</h2>
+<h2 id="22-scm的设置">2.2 SCM的设置</h2>
 <p>必需的变量：</p>
 <ul>
 <li><code>model</code>：基础模型</li>
@@ -1386,7 +1384,7 @@ CL:AST-5 = exponential
 $SIGMA
 	1 FIX
 </code></pre>
-<h2 id="其他配置">其他配置</h2>
+<h2 id="23-其他配置">2.3 其他配置</h2>
 <ul>
 <li><code>[test_relations]</code>：定义协变量应该加到哪个参数上。</li>
 <li><code>[valid_states]</code>：定义协变量加入的形式。states可以自己在<code>[code]</code>里面自己定义，也可使用固定的。固定的states如下：</li>
@@ -1442,7 +1440,7 @@ $SIGMA
 </ul>
 <pre><code>CL = WT-2,AGE-5
 </code></pre>
-<h1 id="pirana">Pirana</h1>
+<h1 id="3-pirana">3. Pirana</h1>
 <ul>
 <li>查看正在进行的任务</li>
 </ul>

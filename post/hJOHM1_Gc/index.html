@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="theme-color" content="#212529">
 <title>母药与代谢物模型 | 2014色彩漫游</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1632500598469">
+<link rel="shortcut icon" href="/favicon.ico?v=1634220162265">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -2074,7 +2074,7 @@ b) 还是以听众都听懂为要，即使哪个机构只准备支付一场演�
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/2fjNs-43i/"" data-c="
           &lt;p&gt;RxODE是一个基于常微分方程进行PK/PD模拟的R包。&lt;/p&gt;
 &lt;!-- more --&gt;
-&lt;h1 id=&#34;安装&#34;&gt;安装&lt;/h1&gt;
+&lt;h1 id=&#34;1-安装&#34;&gt;1. 安装&lt;/h1&gt;
 &lt;p&gt;使用RxODE需要C编译器。使用以下命令检查是否存在编译器：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;pkgbuild::has_build_tools(debug = TRUE)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2111,15 +2111,15 @@ Argument &#39;which&#39; was left unspecified. Choosing first table.
 Error: Couldn&#39;t find a table.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;后面未再尝试。不过数日后RxODE突然可以顺利运行，原因不知。&lt;/p&gt;
-&lt;h1 id=&#34;给药和观测事件&#34;&gt;给药和观测事件&lt;/h1&gt;
+&lt;h1 id=&#34;2-给药和观测事件&#34;&gt;2. 给药和观测事件&lt;/h1&gt;
 &lt;p&gt;与NONMEM一样，RxODE也是以事件来区分的，包括给药和采样2种事件类型。NM数据文件中的AMT、II、ADDL、RATE等变量，在RxODE中同样使用。&lt;/p&gt;
 &lt;p&gt;在官网中，我发现有2种创建事件表格的函数：&lt;code&gt;et&lt;/code&gt;和&lt;code&gt;eventTable&lt;/code&gt;。我还没有搞清楚这2者的区别是什么，也不知道作者为什么提供2种方法。由于&lt;code&gt;eventTable&lt;/code&gt;函数可以自动补全，我选择了后者。&lt;/p&gt;
-&lt;h2 id=&#34;一种给药方案&#34;&gt;一种给药方案&lt;/h2&gt;
+&lt;h2 id=&#34;21-一种给药方案&#34;&gt;2.1 一种给药方案&lt;/h2&gt;
 &lt;p&gt;无论是给药事件，还是观测事件，都需要先利用&lt;code&gt;eventTable&lt;/code&gt;函数生成一个用以存放的对象，然后增加事件。&lt;code&gt;eventTable&lt;/code&gt;函数中可以指定时间和剂量的单位。使用&lt;code&gt;add.dosing&lt;/code&gt;增加给药事件。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;eventTable(time.units = &amp;quot;hours&amp;quot;, amount.units = &amp;quot;μg&amp;quot;) %&amp;gt;%
   add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;多种给药方案&#34;&gt;多种给药方案&lt;/h2&gt;
+&lt;h2 id=&#34;22-多种给药方案&#34;&gt;2.2 多种给药方案&lt;/h2&gt;
 &lt;p&gt;如果使用了不同的给药方案（剂量、给药间隔的调整等等），需要将2种给药方案分别赋值给变量，然后用&lt;code&gt;seq&lt;/code&gt;函数连接起来。这样做的目的是使时间能对得上。&lt;/p&gt;
 &lt;p&gt;给药方案：首先给予5天的10mg、bid给药，共计10次给药；再给予5天的20mg、qd给药给药，共计5次。&lt;/p&gt;
 &lt;ul&gt;
@@ -2168,12 +2168,12 @@ seq(dose1, dose2)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;观测事件&#34;&gt;观测事件&lt;/h2&gt;
+&lt;h2 id=&#34;23-观测事件&#34;&gt;2.3 观测事件&lt;/h2&gt;
 &lt;p&gt;在给药事件的基础上，使用&lt;code&gt;add.sampling&lt;/code&gt;函数增加观测事件，指定开始时间，结束时间，步长，其中步长可以用次数代替：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;et &amp;lt;- seq(dose1, dose2) %&amp;gt;% 
   add.sampling(seq(from = 0, to = 10*24, by = 1))
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;结构模型&#34;&gt;结构模型&lt;/h1&gt;
+&lt;h1 id=&#34;3-结构模型&#34;&gt;3. 结构模型&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;model &amp;lt;- RxODE({
   
   # 参数
@@ -2227,7 +2227,7 @@ seq(dose1, dose2)
 })
 &lt;/code&gt;&lt;/pre&gt;
 &lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901160745931.png&#34; alt=&#34;image-20200901160745931&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
-&lt;h1 id=&#34;个体间变异&#34;&gt;个体间变异&lt;/h1&gt;
+&lt;h1 id=&#34;4-个体间变异&#34;&gt;4. 个体间变异&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;omega &amp;lt;- lotri({
   eta_KA ~ 0.04
   eta_CL ~ 0.09
@@ -2240,7 +2240,7 @@ seq(dose1, dose2)
 })
 &lt;/code&gt;&lt;/pre&gt;
 &lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162657489.png&#34; alt=&#34;image-20200901162657489&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
-&lt;h1 id=&#34;残差变异&#34;&gt;残差变异&lt;/h1&gt;
+&lt;h1 id=&#34;5-残差变异&#34;&gt;5. 残差变异&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;sigma &amp;lt;- lotri(err_PK_prop ~ 0.09)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;C:%5CUsers%5Cmz906354%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200901162915565.png&#34; alt=&#34;image-20200901162915565&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
@@ -2248,7 +2248,7 @@ seq(dose1, dose2)
         omega = omega, nSub = 3, sigma = sigma) %&amp;gt;%
   plot(C2,eff)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;协方差矩阵&#34;&gt;协方差矩阵&lt;/h1&gt;
+&lt;h1 id=&#34;6-协方差矩阵&#34;&gt;6. 协方差矩阵&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;rseVar &amp;lt;- function(est, rse){
   return(est*rse/100)^2
 }
@@ -2274,7 +2274,7 @@ thetaMat &amp;lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
 #t_Kout 0.0000 0.000 0.000 0.000  0.00  0.00   0.33      0
 #t_EC50 0.0000 0.000 0.000 0.000  0.00  0.00   0.00     10
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;最终结果&#34;&gt;最终结果&lt;/h1&gt;
+&lt;h1 id=&#34;7-最终结果&#34;&gt;7. 最终结果&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;rxSolve(object = model_name,events = et,dfSub=760,
         nSub = 60, nStud = 60, omega = omega, sigma = sigma,
         thetaMat = thetaMat, thetaLower = 0) %&amp;gt;% 
@@ -2287,8 +2287,7 @@ thetaMat &amp;lt;- lotri(t_KA ~ rseVar(2.94E-01, 5),
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/dplyr/"" data-c="
-          &lt;h1 id=&#34;数据集&#34;&gt;数据集&lt;/h1&gt;
-&lt;p&gt;所用的数据为&lt;code&gt;datasets&lt;/code&gt;包提供的&lt;code&gt;ChickWeight&lt;/code&gt;数据集，它描述了不同时间小鸡的体重和喂食种类。&lt;/p&gt;
+          &lt;p&gt;所用的数据为&lt;code&gt;datasets&lt;/code&gt;包提供的&lt;code&gt;ChickWeight&lt;/code&gt;数据集，它描述了不同时间小鸡的体重和喂食种类。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;library(datasets)
 head(ChickWeight)
 
@@ -2301,8 +2300,7 @@ head(ChickWeight)
 # 5     76    8     1    1
 # 6     93   10     1    1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;基本命令&#34;&gt;基本命令&lt;/h1&gt;
-&lt;h2 id=&#34;1-计数count&#34;&gt;1. 计数：count&lt;/h2&gt;
+&lt;h1 id=&#34;1-计数count&#34;&gt;1. 计数：count&lt;/h1&gt;
 &lt;p&gt;用于分类变量（也可用于连续变量）的统计描述，计算不同类别数据的数量。格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;count(data, group)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2316,7 +2314,7 @@ head(ChickWeight)
 #3 3       120
 #4 4       118
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;2-总结summarise&#34;&gt;2. 总结：summarise&lt;/h2&gt;
+&lt;h1 id=&#34;2-总结summarise&#34;&gt;2. 总结：summarise&lt;/h1&gt;
 &lt;p&gt;对连续变量进行统计描述，计算均值、最值、分位数等。格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;summarise(data, function)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2329,7 +2327,7 @@ head(ChickWeight)
 #  quantile(weight, 0.05) quantile(weight, 0.95)
 #1                     41                    264
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;3-分组group_by&#34;&gt;3. 分组：group_by&lt;/h2&gt;
+&lt;h1 id=&#34;3-分组group_by&#34;&gt;3. 分组：group_by&lt;/h1&gt;
 &lt;p&gt;将数按照某项内容进行分组，方面后续分析。格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;group_by(data, group_by(group))
 &lt;/code&gt;&lt;/pre&gt;
@@ -2365,7 +2363,7 @@ head(ChickWeight)
 #3 3               143.             126.
 #4 4               135.             130.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;4-筛选filter&#34;&gt;4. 筛选：filter&lt;/h2&gt;
+&lt;h1 id=&#34;4-筛选filter&#34;&gt;4. 筛选：filter&lt;/h1&gt;
 &lt;p&gt;可设置多个筛选条件，“与”用&lt;code&gt;,&lt;/code&gt;连接，“或”用&lt;code&gt;|&lt;/code&gt;连接。格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;filter(data, condition 1, condition 2, ...)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2386,7 +2384,7 @@ filter(ChickWeight, weight &amp;gt;= 320, Diet == 2|Diet == 4)
 #1    331   21    21    2
 #2    322   21    48    4
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;5-选择select&#34;&gt;5. 选择：select&lt;/h2&gt;
+&lt;h1 id=&#34;5-选择select&#34;&gt;5. 选择：select&lt;/h1&gt;
 &lt;p&gt;用于选出数据中某些变量（列），可以用列名，也可以用列号，前面加&lt;code&gt;-&lt;/code&gt;表示去掉该列。格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;select(data, var1, var2)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2409,7 +2407,7 @@ dplyr::select(ChickWeight, Time:weight)
 #1      0     42
 #2      2     51
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;6-增加变量mutate&#34;&gt;6. 增加变量：mutate&lt;/h2&gt;
+&lt;h1 id=&#34;6-增加变量mutate&#34;&gt;6. 增加变量：mutate&lt;/h1&gt;
 &lt;p&gt;用于在原数据集上增加新的列，格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mutate(data, name = value)
 &lt;/code&gt;&lt;/pre&gt;
@@ -2421,7 +2419,7 @@ dplyr::select(ChickWeight, Time:weight)
 #3       59    4     1    1 -62.8183391
 #4       64    6     1    1 -57.8183391
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;7-管道命令pipe&#34;&gt;7. 管道命令：pipe&lt;/h2&gt;
+&lt;h1 id=&#34;7-管道命令pipe&#34;&gt;7. 管道命令：pipe&lt;/h1&gt;
 &lt;p&gt;在R中，pipe命令用&lt;code&gt;$&amp;gt;$&lt;/code&gt;表示。使用管道命令的格式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;data %&amp;gt;%
 	operation 1 %&amp;gt;%
@@ -2544,7 +2542,7 @@ strip.text.y = element_text(size = 10)
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/github-note/"" data-c="
-          &lt;h1 id=&#34;github本地仓库配置&#34;&gt;GitHub本地仓库配置&lt;/h1&gt;
+          &lt;h1 id=&#34;1-github本地仓库配置&#34;&gt;1. GitHub本地仓库配置&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;输入用户名和邮箱&lt;/p&gt;
@@ -2578,7 +2576,7 @@ git config --global user.email &amp;quot;xxx@xxx.com&amp;quot;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;此时已经完成与本地仓库的连接。&lt;/p&gt;
-&lt;h1 id=&#34;github的基本操作&#34;&gt;GitHub的基本操作&lt;/h1&gt;
+&lt;h1 id=&#34;2-github的基本操作&#34;&gt;2. GitHub的基本操作&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;克隆项目&lt;/p&gt;
@@ -2591,12 +2589,12 @@ git config --global user.email &amp;quot;xxx@xxx.com&amp;quot;
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/NM-note/"" data-c="
-          &lt;h1 id=&#34;id可识别位数的设置&#34;&gt;ID可识别位数的设置&lt;/h1&gt;
-&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;
+          &lt;h1 id=&#34;1-id可识别位数的设置&#34;&gt;1. ID可识别位数的设置&lt;/h1&gt;
+&lt;h2 id=&#34;11-问题描述&#34;&gt;1.1 问题描述&lt;/h2&gt;
 &lt;p&gt;在NM7中，&lt;code&gt;ID&lt;/code&gt;的值可以有14位数字，但是默认情况下，输出结果时只能识别前5位数字，例如ID为 “101001”、“101002”、“101003”的受试者，在输出的结果表格里全部显示为“101000”，即从第6位开始的都无法识别。&lt;/p&gt;
-&lt;h2 id=&#34;原因解析&#34;&gt;原因解析&lt;/h2&gt;
+&lt;h2 id=&#34;12-原因解析&#34;&gt;1.2 原因解析&lt;/h2&gt;
 &lt;p&gt;NM使用Fortran语言编写，输出表格所有字段的默认格式是&lt;code&gt;s1PE11.4&lt;/code&gt;。此格式为科学计数法，允许11个字符的总宽度，包括符号和小数位数。小数点前面有1位，后面有4位，示例如下：-1.2345E+01。因此，在默认设置下，最多显示识别5位数字。&lt;/p&gt;
-&lt;h2 id=&#34;解决方案&#34;&gt;解决方案&lt;/h2&gt;
+&lt;h2 id=&#34;13-解决方案&#34;&gt;1.3 解决方案&lt;/h2&gt;
 &lt;p&gt;使用&lt;code&gt;LFORMAT&lt;/code&gt;和&lt;code&gt;RFORMAT&lt;/code&gt;选项来对数据的位数进行设置。在&lt;code&gt;$TABLE&lt;/code&gt;模块加入以下代码：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$TABLE ID DOSE WT TIME NOPRINT 
 FILE=./filename.tbl
@@ -2606,8 +2604,8 @@ RFORMAT=&amp;quot;7(s1PE11.4))&amp;quot;
 &lt;p&gt;代码的第1行是我们需要输出的4个变量：ID、DOSE、WT、TIME；第2行是输出表格的路径及文件名。&lt;/p&gt;
 &lt;p&gt;在第3行，我们对第1个变量（即ID）的格式进行了设置。Fortran的浮点数表示格式为&lt;code&gt;Fw.d&lt;/code&gt;，整数部分有w个字符，小数部分有d个字符。因此代码中的&lt;code&gt;F15.0&lt;/code&gt;表示ID是一个浮点数，整数有15位，小数有0位。而NM7最多支持14位数字，因此这样设置已经足够14位ID的使用。&lt;/p&gt;
 &lt;p&gt;在第4行，我们将剩下的变量设置为仍然使用默认格式&lt;code&gt;s1PE11.4&lt;/code&gt;。前面的&lt;code&gt;7&lt;/code&gt;表示除了第1个变量ID之外，还有7个变量需要输出，但是从第1行来看，理应只有3个。这里之所以等于7，是因为除了自己定义输出的DOSE、WT、TIME外，NONMEM还会自动输出&lt;code&gt;DV&lt;/code&gt;、&lt;code&gt;PRED&lt;/code&gt;、&lt;code&gt;RES&lt;/code&gt;、&lt;code&gt;WRES&lt;/code&gt;这4个变量，所以很多时候在设置变量数时需要加4。&lt;/p&gt;
-&lt;h1 id=&#34;psn的scm功能&#34;&gt;PsN的SCM功能&lt;/h1&gt;
-&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;h1 id=&#34;2-psn的scm功能&#34;&gt;2. PsN的SCM功能&lt;/h1&gt;
+&lt;h2 id=&#34;21-概述&#34;&gt;2.1 概述&lt;/h2&gt;
 &lt;p&gt;SCM (stepwise covariate model) 是由PsN提供的一种自动筛选协变量的工具。使用SCM需要运行以下命令：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;SCM -config_file=xx.scm
 &lt;/code&gt;&lt;/pre&gt;
@@ -2632,7 +2630,7 @@ CL:AST-5 = exponential
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;出现在&lt;code&gt;$INPUT&lt;/code&gt;中的变量名才会用到，控制文件中参数必须写成&lt;code&gt;TVxx&lt;/code&gt;的形式。&lt;/p&gt;
 &lt;p&gt;SCM的结果可以在&lt;code&gt;scmlog1.txt&lt;/code&gt;中查看，其中包含了OFV值和p值。&lt;/p&gt;
-&lt;h2 id=&#34;scm的设置&#34;&gt;SCM的设置&lt;/h2&gt;
+&lt;h2 id=&#34;22-scm的设置&#34;&gt;2.2 SCM的设置&lt;/h2&gt;
 &lt;p&gt;必需的变量：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;model&lt;/code&gt;：基础模型&lt;/li&gt;
@@ -2650,7 +2648,7 @@ CL:AST-5 = exponential
 $SIGMA
 	1 FIX
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;其他配置&#34;&gt;其他配置&lt;/h2&gt;
+&lt;h2 id=&#34;23-其他配置&#34;&gt;2.3 其他配置&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;[test_relations]&lt;/code&gt;：定义协变量应该加到哪个参数上。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;[valid_states]&lt;/code&gt;：定义协变量加入的形式。states可以自己在&lt;code&gt;[code]&lt;/code&gt;里面自己定义，也可使用固定的。固定的states如下：&lt;/li&gt;
@@ -2706,7 +2704,7 @@ $SIGMA
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;CL = WT-2,AGE-5
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&#34;pirana&#34;&gt;Pirana&lt;/h1&gt;
+&lt;h1 id=&#34;3-pirana&#34;&gt;3. Pirana&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;查看正在进行的任务&lt;/li&gt;
 &lt;/ul&gt;
@@ -3416,7 +3414,7 @@ plt.show()
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://kokomole.github.io/post/optimal-sampling/"" data-c="
-          &lt;h1 id=&#34;费雪信息&#34;&gt;费雪信息&lt;/h1&gt;
+          &lt;h1 id=&#34;1-费雪信息&#34;&gt;1. 费雪信息&lt;/h1&gt;
 &lt;p&gt;有&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;个独立同分布（i.i.d）的观测样本&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mo&gt;⋯&lt;/mo&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;X_1,X_2,\cdots,X_n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8777699999999999em;vertical-align:-0.19444em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;minner&#34;&gt;⋯&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.151392em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;，它们服从概率分布&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;f(X,\theta)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.10764em;&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;，其中&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\theta&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;为概率分布表达式中的一个未知参数，它是一个标量。由于这&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;次观测互相独立，则运用概率的乘法公式，可计算出在参数&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\theta&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;的条件下，从分布中经随机抽样得到上述&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;个样本的概率：&lt;/p&gt;
 &lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mtable side=&#34;right&#34;&gt;&lt;mlabeledtr&gt;&lt;mtd&gt;&lt;mtext&gt;(1)&lt;/mtext&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;⋯&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;munderover&gt;&lt;mo&gt;∏&lt;/mo&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/munderover&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mlabeledtr&gt;&lt;/mtable&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;p(X|\theta)=f(X_1,\theta)\cdot f(X_2,\theta)\cdots f(X_n,\theta)=\prod_{i=1}^{n}f(X_i,\theta) \tag{1}
 &lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.10764em;&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;⋅&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.10764em;&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;minner&#34;&gt;⋯&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.10764em;&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.151392em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.929066em;vertical-align:-1.277669em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mop op-limits&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.6513970000000002em;&#34;&gt;&lt;span style=&#34;top:-1.872331em;margin-left:0em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.05em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;mrel mtight&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.050005em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.05em;&#34;&gt;&lt;/span&gt;&lt;span&gt;&lt;span class=&#34;mop op-symbol large-op&#34;&gt;∏&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-4.3000050000000005em;margin-left:0em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.05em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.277669em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.10764em;&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.31166399999999994em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.929066em;vertical-align:-1.277669em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord text&#34;&gt;&lt;span class=&#34;mord&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -3451,7 +3449,7 @@ plt.show()
 &lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mtable side=&#34;right&#34;&gt;&lt;mlabeledtr&gt;&lt;mtd&gt;&lt;mtext&gt;(9)&lt;/mtext&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mi&gt;V&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;Y&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;V&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;V&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;Y&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mlabeledtr&gt;&lt;/mtable&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;Var(X+Y)=Var(X)+Var(Y) \tag{9}
 &lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.22222em;&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.22222em;&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.22222em;&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.22222em;&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.22222em;&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord text&#34;&gt;&lt;span class=&#34;mord&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;我们称为“和的方差等于方差之和”。也就是说&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;I(\theta)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.07847em;&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;实际上是一个求和的形式。当独立观测的次数&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;越多时，费雪信息就越大，即得到的关于总体参数&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\theta&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;信息越多，对其估计越准确，这也是符合常理的。&lt;/p&gt;
-&lt;h1 id=&#34;费雪信息矩阵&#34;&gt;费雪信息矩阵&lt;/h1&gt;
+&lt;h1 id=&#34;2-费雪信息矩阵&#34;&gt;2. 费雪信息矩阵&lt;/h1&gt;
 &lt;p&gt;以上，我们使用费雪信息反映了对一个参数&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\theta&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;的MLE的准确度。当总体分布中含有多个参数时，我们需要将费雪信息扩展成二维的费雪信息矩阵。&lt;/p&gt;
 &lt;p&gt;当有&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;m&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;个未知参数&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mo&gt;⋯&lt;/mo&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\theta_1,\theta_2,\cdots,\theta_m&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8888799999999999em;vertical-align:-0.19444em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;minner&#34;&gt;⋯&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.16666666666666666em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;θ&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.151392em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mathdefault mtight&#34;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;时，1个观测值所能提供的信息量的期望是一个&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;×&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;m \times m&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.66666em;vertical-align:-0.08333em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;×&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;矩阵：&lt;/p&gt;
 &lt;p class=&#39;katex-block&#39;&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mtable side=&#34;right&#34;&gt;&lt;mlabeledtr&gt;&lt;mtd&gt;&lt;mtext&gt;(10)&lt;/mtext&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msubsup&gt;&lt;mrow&gt;&lt;mo fence=&#34;true&#34;&gt;[&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo fence=&#34;true&#34;&gt;]&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/msubsup&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mlabeledtr&gt;&lt;/mtable&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;I(\theta)=\left [ I_{ij}(\theta) \right ]_{m}^{m} \tag{10}
@@ -3479,7 +3477,6 @@ plt.show()
 &lt;li&gt;有意思的书籍或文献&lt;/li&gt;
 &lt;li&gt;……&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
 &lt;p&gt;博客名称来自刺猬乐队《神经元》专辑中的歌曲《2014色彩漫游》；头像是日漫《轻音少女》的中野梓。&lt;/p&gt;
 &lt;p&gt;本博客使用&lt;a href=&#34;https://github.com/getgridea/gridea&#34;&gt;Gridea&lt;/a&gt;配置，作者是&lt;a href=&#34;https://fehey.com/&#34;&gt;Eryou Hao&lt;/a&gt;。&lt;/p&gt;
 ">关于</a>
